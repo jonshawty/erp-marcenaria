@@ -1,0 +1,23 @@
+{
+  "name": "erp-marcenaria-backend",
+  "version": "2.0.0",
+  "description": "ERP Marcenaria — Backend + Frontend integrados",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "seed": "node src/db/seed.js",
+    "reset": "node -e \"try{require('fs').unlinkSync(process.env.DB_PATH || '/app/data/erp_marcenaria.db')}catch(e){}\" && node src/db/seed.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^11.8.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "uuid": "^9.0.0"
+  }
+}

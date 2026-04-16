@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ERP Marcenaria — Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0d0f12;--bg2:#13161b;--bg3:#1a1e26;--surf:#1c2030;
+  --line:rgba(255,255,255,.07);--text:#e8e6e1;--text2:#9a9896;--text3:#4a4845;
+  --amber:#e8a020;--amber2:#c47c0a;--amberg:rgba(232,160,32,.13);--red:#e05252;
+  --r:12px;--r2:7px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);
+  min-height:100vh;display:grid;place-items:center;}
+body::before{content:'';pointer-events:none;position:fixed;inset:0;
+  background:radial-gradient(ellipse 55% 35% at 12% 8%,rgba(232,160,32,.06) 0%,transparent 70%),
+             radial-gradient(ellipse 45% 40% at 88% 90%,rgba(48,201,184,.04) 0%,transparent 60%);}
+.card{position:relative;background:var(--surf);border:1px solid var(--line);
+  border-radius:var(--r);padding:40px;width:360px;max-width:90vw;}
+.logo{display:flex;align-items:center;gap:14px;margin-bottom:32px;}
+.logo-gem{width:48px;height:48px;border-radius:10px;
+  background:linear-gradient(135deg,var(--amber),var(--amber2));
+  display:grid;place-items:center;font-size:1.3rem;font-weight:900;color:var(--bg);
+  box-shadow:0 4px 16px rgba(232,160,32,.4);}
+.logo-name{font-size:1rem;font-weight:800;}
+.logo-sub{font-size:.62rem;color:var(--text3);text-transform:uppercase;letter-spacing:2px;margin-top:2px;}
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:.62rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:2px;color:var(--amber);margin-bottom:6px;}
+.field input{width:100%;padding:11px 14px;background:var(--bg3);
+  border:1.5px solid var(--line);border-radius:var(--r2);
+  font-family:'Syne',sans-serif;font-size:.9rem;color:var(--text);
+  outline:none;transition:all .16s;}
+.field input:focus{border-color:rgba(232,160,32,.5);box-shadow:0 0 0 3px rgba(232,160,32,.08);background:var(--bg2);}
+.field input::placeholder{color:var(--text3);}
+.btn-login{width:100%;padding:13px;border:none;border-radius:var(--r2);
+  background:linear-gradient(135deg,var(--amber),var(--amber2));
+  font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;
+  color:var(--bg);cursor:pointer;letter-spacing:.5px;
+  box-shadow:0 4px 16px rgba(232,160,32,.35);transition:all .16s;margin-top:6px;}
+.btn-login:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(232,160,32,.5);}
+.btn-login:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+.erro{background:rgba(224,82,82,.12);border:1px solid rgba(224,82,82,.25);
+  border-radius:var(--r2);padding:10px 14px;font-size:.8rem;color:var(--red);
+  margin-top:14px;display:none;}
+.erro.show{display:block;}
+.hint{margin-top:20px;padding:14px;background:var(--amberg);
+  border:1px solid rgba(232,160,32,.15);border-radius:var(--r2);}
+.hint p{font-size:.7rem;color:var(--text2);line-height:1.7;}
+.hint strong{color:var(--amber);font-family:'JetBrains Mono',monospace;}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(0,0,0,.3);
+  border-top-color:var(--bg);border-radius:50%;animation:spin .7s linear infinite;margin-right:6px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <div class="logo-gem">M</div>
+    <div>
+      <div class="logo-name">ERP Marcenaria</div>
+      <div class="logo-sub">Acesso ao Sistema</div>
+    </div>
+  </div>
+
+  <div class="field">
+    <label>E-mail</label>
+    <input id="inp-email" type="email" placeholder="seu@email.com.br" autocomplete="email"/>
+  </div>
+  <div class="field">
+    <label>Senha</label>
+    <input id="inp-senha" type="password" placeholder="••••••••" autocomplete="current-password"/>
+  </div>
+
+  <button class="btn-login" id="btn-login" onclick="fazerLogin()">Entrar</button>
+  <div class="erro" id="msg-erro"></div>
+
+  <div class="hint">
+    <p>🔑 Usuários de demonstração:<br>
+    <strong>admin@madeirarte.com.br</strong> / <strong>admin123</strong><br>
+    <strong>carlos@madeirarte.com.br</strong> / <strong>gerente123</strong><br>
+    <strong>ana@madeirarte.com.br</strong> / <strong>vendas123</strong></p>
+  </div>
+</div>
+
+<script>
+const API_BASE = 'http://localhost:3001/api';
+
+document.addEventListener('DOMContentLoaded', () => {
+  const token = localStorage.getItem('erp_jwt_token');
+  if (token) {
+    try {
+      const p = JSON.parse(atob(token.split('.')[1]));
+      if (p.exp > Date.now() / 1000) {
+        location.href = './frontend/index.html';
+        return;
+      }
+    } catch {}
+  }
+
+  document.getElementById('inp-senha').addEventListener('keydown', e => {
+    if (e.key === 'Enter') fazerLogin();
+  });
+
+  document.getElementById('inp-email').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('inp-senha').focus();
+  });
+});
+
+async function fazerLogin() {
+  const email = document.getElementById('inp-email').value.trim();
+  const senha = document.getElementById('inp-senha').value;
+  const btn   = document.getElementById('btn-login');
+  const erro  = document.getElementById('msg-erro');
+
+  if (!email || !senha) {
+    mostrarErro('Preencha e-mail e senha.');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Entrando...';
+  erro.classList.remove('show');
+
+  try {
+    const res = await fetch(`${API_BASE}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, senha }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.erro || 'Credenciais inválidas');
+    }
+
+    localStorage.setItem('erp_jwt_token', data.token);
+    localStorage.setItem('erp_usuario', JSON.stringify(data.usuario));
+
+    location.href = './frontend/index.html';
+  } catch (e) {
+    mostrarErro(e.message || 'Erro ao fazer login.');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Entrar';
+  }
+}
+
+function mostrarErro(msg) {
+  const el = document.getElementById('msg-erro');
+  el.textContent = '⚠️ ' + msg;
+  el.classList.add('show');
+}
+</script>
+</body>
+</html>

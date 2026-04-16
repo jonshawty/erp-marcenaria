@@ -1,0 +1,15 @@
+services:
+  erp-marcenaria:
+    build: .
+    container_name: erp-marcenaria
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: 3001
+      NODE_ENV: production
+      JWT_SECRET: sua_chave_super_forte_aqui
+      CORS_ORIGINS: http://localhost:3001,http://127.0.0.1:3001
+      DB_PATH: /app/data/erp_marcenaria.db
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped

@@ -1,0 +1,3143 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ERP · Orçamento Interno — Marcenaria</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;700&family=Fraunces:ital,wght@0,300;0,600;0,900;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#0d0f12;--bg2:#13161b;--bg3:#1a1e26;--bg4:#222736;
+  --surf:#1c2030;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.04);
+  --text:#e8e6e1;--text2:#9a9896;--text3:#4a4845;
+  --amber:#e8a020;--amber2:#c47c0a;
+  --amberg:rgba(232,160,32,.13);--amberg2:rgba(232,160,32,.06);
+  --teal:#30c9b8;--green:#3ab876;--red:#e05252;
+  --r:12px;--r2:7px;--shadow:0 8px 32px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{font-size:14px;scroll-behavior:smooth;}
+body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+body::before{content:'';pointer-events:none;position:fixed;inset:0;z-index:0;
+  background:radial-gradient(ellipse 55% 35% at 12% 8%,rgba(232,160,32,.055) 0%,transparent 70%),
+             radial-gradient(ellipse 45% 40% at 88% 90%,rgba(48,201,184,.04) 0%,transparent 60%);}
+body::after{content:'';pointer-events:none;position:fixed;inset:0;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.028'/%3E%3C/svg%3E");}
+.shell{position:relative;z-index:1;max-width:1160px;margin:0 auto;padding:0 20px 80px;}
+/* TABS */
+.tabs-bar{display:flex;align-items:center;gap:0;background:var(--bg2);border:1px solid var(--line);
+  border-radius:var(--r);padding:5px;margin-bottom:24px;overflow:hidden;}
+.tab-btn{flex:1;padding:10px 0;border:none;background:none;font-family:'Syne',sans-serif;
+  font-size:.8rem;font-weight:700;letter-spacing:.5px;cursor:pointer;border-radius:8px;
+  transition:all .18s;color:var(--text2);}
+.tab-btn.active{background:linear-gradient(135deg,var(--amber),var(--amber2));color:var(--bg);
+  box-shadow:0 2px 12px rgba(232,160,32,.35);}
+.tab-btn:not(.active):hover{color:var(--text);background:var(--line2);}
+/* HEADER */
+.top-header{display:flex;align-items:center;justify-content:space-between;
+  padding:22px 0 18px;border-bottom:1px solid var(--line);margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+.th-left{display:flex;align-items:center;gap:14px;}
+.th-gem{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--amber),var(--amber2));
+  display:grid;place-items:center;font-family:'Fraunces',serif;font-size:1.1rem;font-weight:900;
+  color:var(--bg);box-shadow:0 4px 16px rgba(232,160,32,.4);flex-shrink:0;}
+.th-name{font-size:1.05rem;font-weight:800;letter-spacing:.2px;}
+.th-sub{font-size:.62rem;color:var(--text3);text-transform:uppercase;letter-spacing:2.5px;margin-top:2px;}
+.th-right{display:flex;gap:8px;flex-wrap:wrap;}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--r2);
+  font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;border:none;
+  transition:all .16s;white-space:nowrap;letter-spacing:.3px;}
+.btn-amber{background:linear-gradient(135deg,var(--amber),var(--amber2));color:var(--bg);
+  box-shadow:0 2px 10px rgba(232,160,32,.35);}
+.btn-amber:hover{transform:translateY(-1px);box-shadow:0 4px 18px rgba(232,160,32,.5);}
+.btn-ghost{background:var(--bg3);color:var(--text2);border:1px solid var(--line);}
+.btn-ghost:hover{color:var(--text);background:var(--bg4);}
+.btn-green{background:rgba(58,184,118,.15);color:var(--green);border:1px solid rgba(58,184,118,.25);}
+.btn-green:hover{background:rgba(58,184,118,.25);}
+.btn-sm{padding:6px 12px;font-size:.72rem;}
+/* SECTION */
+.sec{margin-bottom:20px;}
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.sec-num{width:28px;height:28px;border-radius:6px;background:var(--amberg);
+  border:1px solid rgba(232,160,32,.22);display:grid;place-items:center;
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:var(--amber);flex-shrink:0;}
+.sec-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--text2);}
+.sec-title em{color:var(--amber);font-style:normal;margin-right:3px;}
+/* CARD */
+.card{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);padding:20px;
+  margin-bottom:12px;animation:fadeUp .35s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+/* GRID ID */
+.id-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+@media(max-width:700px){.id-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.id-grid{grid-template-columns:1fr;}}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field label{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--amber);}
+.field input,.field select{padding:9px 12px;background:var(--bg3);border:1.5px solid var(--line);
+  border-radius:var(--r2);font-family:'Syne',sans-serif;font-size:.85rem;color:var(--text);
+  outline:none;transition:all .16s;width:100%;}
+.field input:focus,.field select:focus{border-color:rgba(232,160,32,.5);
+  box-shadow:0 0 0 3px rgba(232,160,32,.08);background:var(--bg4);}
+.field input::placeholder{color:var(--text3);}
+.field select option{background:var(--bg3);}
+/* COST TABLE */
+.cost-table{width:100%;border-collapse:collapse;font-size:.82rem;}
+.cost-table thead th{text-align:left;font-size:.6rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:2px;color:var(--text3);padding:8px 10px;border-bottom:1px solid var(--line);}
+.cost-table tbody tr{border-bottom:1px solid var(--line2);transition:background .14s;}
+.cost-table tbody tr:hover{background:rgba(255,255,255,.02);}
+.cost-table tbody tr:last-child{border-bottom:none;}
+.cost-table td{padding:8px 10px;vertical-align:middle;}
+.cost-table input[type=number],.cost-table input[type=text]{padding:6px 10px;
+  background:var(--bg3);border:1.5px solid var(--line2);border-radius:var(--r2);
+  font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--text);
+  outline:none;transition:all .14s;width:100%;}
+.cost-table input[type=number]:focus,.cost-table input[type=text]:focus{
+  border-color:rgba(232,160,32,.4);background:var(--bg4);}
+.cost-table input[type=number]{text-align:right;}
+.cost-table .sub-cell{font-family:'JetBrains Mono',monospace;font-weight:700;
+  color:var(--amber);text-align:right;white-space:nowrap;}
+.cost-table .qty-cell{width:85px;}
+.cost-table .price-cell{width:115px;}
+.cost-table .total-cell{width:115px;text-align:right;}
+/* SUBTOTAL BAR */
+.subtotal-bar{display:flex;align-items:center;justify-content:space-between;
+  background:var(--amberg2);border:1px solid rgba(232,160,32,.12);
+  border-radius:var(--r2);padding:9px 14px;margin-top:10px;}
+.subtotal-bar .sb-label{font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--text2);font-weight:700;}
+.subtotal-bar .sb-val{font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700;color:var(--amber);}
+/* SIMPLE COSTS */
+.simple-costs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+@media(max-width:700px){.simple-costs{grid-template-columns:1fr 1fr;}}
+.sc-item{background:var(--bg3);border:1px solid var(--line);border-radius:var(--r2);padding:14px;}
+.sc-item .sc-label{font-size:.62rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);margin-bottom:6px;font-weight:700;}
+.sc-item input{width:100%;padding:8px 10px;background:var(--bg4);border:1.5px solid var(--line);
+  border-radius:var(--r2);font-family:'JetBrains Mono',monospace;font-size:.95rem;font-weight:700;
+  color:var(--amber);outline:none;text-align:right;transition:all .14s;}
+.sc-item input:focus{border-color:rgba(232,160,32,.4);background:var(--bg);}
+/* RESUMO */
+.resumo-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:700px){.resumo-grid{grid-template-columns:1fr;}}
+.resumo-table{width:100%;border-collapse:collapse;}
+.resumo-table tr{border-bottom:1px solid var(--line2);}
+.resumo-table tr:last-child{border-bottom:none;}
+.resumo-table td{padding:9px 4px;font-size:.82rem;}
+.resumo-table td:first-child{color:var(--text2);}
+.resumo-table td:last-child{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--text);text-align:right;}
+.custo-total-box{background:linear-gradient(135deg,var(--bg4),var(--bg3));
+  border:1px solid rgba(232,160,32,.25);border-radius:var(--r);padding:20px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;}
+.ctb-label{font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--text3);font-weight:700;}
+.ctb-val{font-family:'Fraunces',serif;font-size:2.4rem;font-weight:900;color:var(--amber);line-height:1;}
+.ctb-sub{font-size:.72rem;color:var(--text3);}
+/* PRECO KPIs */
+.preco-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;}
+@media(max-width:700px){.preco-grid{grid-template-columns:1fr 1fr;}}
+.preco-kpi{background:var(--bg3);border:1px solid var(--line);border-radius:var(--r);padding:16px;
+  position:relative;overflow:hidden;transition:border-color .18s,transform .18s;}
+.preco-kpi:hover{border-color:rgba(255,255,255,.12);transform:translateY(-2px);}
+.preco-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--acc,var(--amber));}
+.preco-kpi .pk-label{font-size:.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--text3);font-weight:700;margin-bottom:8px;}
+.preco-kpi .pk-val{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:900;color:var(--text);line-height:1;margin-bottom:6px;}
+.preco-kpi .pk-badge{display:inline-block;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:20px;}
+.pk-amber{--acc:var(--amber);}
+.pk-green{--acc:var(--green);}
+.pk-teal{--acc:var(--teal);}
+/* SLIDER */
+.margem-slider-wrap{background:var(--bg3);border:1px solid var(--line);border-radius:var(--r);padding:20px;}
+.ms-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.ms-label{font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--text3);font-weight:700;}
+.ms-val{font-family:'JetBrains Mono',monospace;font-size:1.3rem;font-weight:700;color:var(--amber);}
+input[type=range]{width:100%;height:5px;-webkit-appearance:none;appearance:none;
+  background:var(--line);border-radius:3px;outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;
+  border-radius:50%;background:var(--amber);cursor:pointer;
+  box-shadow:0 0 8px rgba(232,160,32,.5);border:2px solid var(--bg);}
+.ms-scale{display:flex;justify-content:space-between;margin-top:4px;}
+.ms-scale span{font-size:.62rem;color:var(--text3);font-family:'JetBrains Mono',monospace;}
+/* COMISSAO */
+.comissao-row{display:flex;align-items:center;gap:14px;background:var(--bg3);
+  border:1px solid var(--line);border-radius:var(--r2);padding:12px 16px;margin-top:10px;}
+.comissao-row label{font-size:.78rem;color:var(--text2);flex:1;cursor:pointer;}
+.comissao-row input[type=checkbox]{width:16px;height:16px;accent-color:var(--amber);cursor:pointer;}
+.comm-pct{width:80px;padding:6px 10px;background:var(--bg4);border:1.5px solid var(--line);
+  border-radius:var(--r2);font-family:'JetBrains Mono',monospace;font-size:.85rem;
+  color:var(--amber);text-align:right;outline:none;}
+.comm-pct:focus{border-color:rgba(232,160,32,.4);}
+/* PROFIT BAR */
+.profit-bar-wrap{margin-top:14px;}
+.pb-label{display:flex;justify-content:space-between;font-size:.65rem;color:var(--text3);
+  margin-bottom:5px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;}
+.pb-track{height:8px;background:var(--bg4);border-radius:4px;overflow:hidden;}
+.pb-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--amber2),var(--green));
+  transition:width 1s cubic-bezier(.4,0,.2,1);}
+/* TIPO DE PROJETO — chips multi-select */
+.amb-chip{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;padding:9px 6px 8px;
+  background:var(--bg3);border:1.5px solid var(--line);border-radius:var(--r2);
+  cursor:pointer;transition:all .15s;text-align:center;
+  font-family:'Syne',sans-serif;user-select:none;
+}
+.amb-chip:hover{border-color:rgba(232,160,32,.35);background:var(--bg4);}
+.amb-chip.selected{
+  border-color:var(--amber);background:var(--amberg);
+  box-shadow:0 0 0 1px var(--amber) inset;
+}
+.amb-chip .ac-icon{font-size:1.2rem;line-height:1;}
+.amb-chip .ac-name{font-size:.62rem;font-weight:700;color:var(--text2);
+  text-transform:uppercase;letter-spacing:.8px;line-height:1.2;margin-top:2px;}
+.amb-chip.selected .ac-name{color:var(--amber);}
+@media(max-width:700px){#f-tipo-wrap{grid-template-columns:repeat(3,1fr)!important;}}
+@media(max-width:480px){#f-tipo-wrap{grid-template-columns:repeat(2,1fr)!important;}}
+/* ── HISTÓRICO ── */
+.hist-toolbar{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  margin-bottom:18px;
+}
+.hist-search-wrap{
+  position:relative;flex:1;min-width:200px;
+}
+.hist-search-wrap input{
+  width:100%;padding:9px 12px 9px 36px;
+  background:var(--bg3);border:1.5px solid var(--line);border-radius:var(--r2);
+  font-family:'Syne',sans-serif;font-size:.85rem;color:var(--text);
+  outline:none;transition:all .16s;
+}
+.hist-search-wrap input:focus{border-color:rgba(232,160,32,.45);box-shadow:0 0 0 3px rgba(232,160,32,.08);}
+.hist-search-wrap input::placeholder{color:var(--text3);}
+.hist-search-wrap .hs-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:.85rem;color:var(--text3);pointer-events:none;}
+.hist-filters{display:flex;gap:6px;flex-wrap:wrap;}
+.hf-chip{padding:6px 14px;border-radius:20px;border:1px solid var(--line);
+  background:var(--bg3);color:var(--text2);font-size:.75rem;font-weight:600;
+  cursor:pointer;transition:all .14s;font-family:'Syne',sans-serif;}
+.hf-chip:hover{background:var(--bg4);color:var(--text);}
+.hf-chip.hfc-all.active{background:var(--amberg);border-color:rgba(232,160,32,.35);color:var(--amber);}
+.hf-chip.hfc-aberto.active{background:rgba(48,201,184,.12);border-color:rgba(48,201,184,.3);color:var(--teal);}
+.hf-chip.hfc-fechado.active{background:rgba(58,184,118,.12);border-color:rgba(58,184,118,.3);color:var(--green);}
+.hf-chip.hfc-enviado.active{background:rgba(91,141,238,.12);border-color:rgba(91,141,238,.3);color:var(--blue);}
+.hf-chip.hfc-cancelado.active{background:rgba(224,82,82,.1);border-color:rgba(224,82,82,.25);color:var(--red);}
+
+/* Stats row */
+.hist-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
+.hstat{background:var(--surf);border:1px solid var(--line);border-radius:var(--r2);
+  padding:12px 14px;position:relative;overflow:hidden;}
+.hstat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--hs-acc,var(--amber));}
+.hstat .hs-label{font-size:.58rem;text-transform:uppercase;letter-spacing:2px;color:var(--text3);font-weight:700;margin-bottom:5px;}
+.hstat .hs-val{font-family:'JetBrains Mono',monospace;font-size:1.3rem;font-weight:700;color:var(--text);}
+.hstat .hs-sub{font-size:.65rem;color:var(--text3);margin-top:2px;}
+@media(max-width:700px){.hist-stats{grid-template-columns:1fr 1fr;}}
+
+/* Cards de orçamento */
+.hist-empty{text-align:center;padding:48px 20px;color:var(--text3);}
+.hist-empty .he-icon{font-size:2.5rem;margin-bottom:10px;opacity:.4;}
+.hist-empty p{font-size:.82rem;}
+.orc-card{
+  background:var(--surf);border:1px solid var(--line);border-radius:var(--r);
+  padding:16px 18px;margin-bottom:10px;
+  display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;
+  transition:border-color .16s,transform .16s;
+  animation:fadeUp .3s ease both;
+}
+.orc-card:hover{border-color:rgba(255,255,255,.13);transform:translateY(-1px);}
+.orc-card .oc-left{}
+.orc-card .oc-id{
+  font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text3);
+  margin-bottom:3px;letter-spacing:.5px;
+}
+.orc-card .oc-cliente{font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:3px;}
+.orc-card .oc-tipo{
+  font-size:.72rem;color:var(--text2);
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:6px;
+}
+.orc-card .oc-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:.7rem;color:var(--text3);}
+.orc-card .oc-meta span{display:flex;align-items:center;gap:4px;}
+.orc-card .oc-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+.orc-card .oc-valor{
+  font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:700;color:var(--amber);
+  text-align:right;
+}
+.orc-card .oc-custo{font-size:.65rem;color:var(--text3);text-align:right;font-family:'JetBrains Mono',monospace;}
+.orc-card .oc-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
+
+/* Status badge */
+.st-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;
+  border-radius:20px;font-size:.65rem;font-weight:700;letter-spacing:.5px;}
+.st-badge::before{content:'';width:5px;height:5px;border-radius:50%;}
+.stb-aberto{background:rgba(48,201,184,.12);color:var(--teal);}
+.stb-aberto::before{background:var(--teal);box-shadow:0 0 4px var(--teal);}
+.stb-fechado{background:rgba(58,184,118,.12);color:var(--green);}
+.stb-fechado::before{background:var(--green);box-shadow:0 0 4px var(--green);}
+.stb-enviado{background:rgba(91,141,238,.12);color:var(--blue);}
+.stb-enviado::before{background:var(--blue);box-shadow:0 0 4px var(--blue);}
+.stb-cancelado{background:rgba(224,82,82,.1);color:var(--red);}
+.stb-cancelado::before{background:var(--red);box-shadow:0 0 4px var(--red);}
+
+/* Select status inline */
+.status-select{
+  padding:4px 8px;background:var(--bg3);border:1px solid var(--line);border-radius:var(--r2);
+  font-family:'Syne',sans-serif;font-size:.72rem;color:var(--text2);outline:none;cursor:pointer;
+}
+.status-select:focus{border-color:rgba(232,160,32,.4);}
+@media(max-width:600px){
+  .orc-card{grid-template-columns:1fr;}
+  .orc-card .oc-right{align-items:flex-start;}
+}
+/* ── FIM HISTÓRICO ── */
+.toast{position:fixed;bottom:24px;right:24px;z-index:9999;background:var(--bg3);
+  border:1px solid var(--line);color:var(--text);padding:11px 18px;border-radius:var(--r2);
+  font-size:.82rem;font-weight:600;box-shadow:var(--shadow);transform:translateY(60px);
+  opacity:0;transition:all .28s cubic-bezier(.4,0,.2,1);pointer-events:none;}
+.toast.show{transform:translateY(0);opacity:1;}
+/* CLIENTE */
+#panel-cliente{display:none;}
+.cliente-wrap{max-width:640px;margin:0 auto;animation:fadeUp .35s ease both;}
+.cliente-doc{background:#fff;border-radius:16px;overflow:hidden;
+  box-shadow:0 16px 60px rgba(0,0,0,.5);font-family:'Syne',sans-serif;color:#14120e;}
+.cd-head{background:#2d1f0e;padding:28px 32px 22px;position:relative;overflow:hidden;}
+.cd-head::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,#c9a84c,transparent);}
+.cd-head::after{content:'M';position:absolute;right:-10px;bottom:-20px;
+  font-family:'Fraunces',serif;font-size:8rem;font-weight:900;color:rgba(255,255,255,.04);
+  line-height:1;pointer-events:none;}
+.cd-head .cdh-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;}
+.cdh-marca{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:900;color:#c9a84c;letter-spacing:.3px;}
+.cdh-sub{font-size:.65rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:2px;margin-top:3px;}
+.cdh-num{text-align:right;font-size:.7rem;color:rgba(255,255,255,.35);line-height:1.8;}
+.cdh-num strong{color:rgba(255,255,255,.6);}
+.cd-head h1{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:900;color:#fff;line-height:1.2;margin-bottom:4px;}
+.cdh-desc{font-size:.82rem;color:rgba(255,255,255,.45);font-style:italic;}
+.cd-body{padding:28px 32px;background:#faf8f4;}
+.cd-beneficios{background:#fff;border:1px solid rgba(139,94,60,.15);border-radius:10px;padding:18px 20px;margin-bottom:20px;}
+.cd-beneficios h3{font-family:'Fraunces',serif;font-size:.88rem;font-weight:700;color:#4a2e1a;
+  margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.cd-beneficios h3::after{content:'';flex:1;height:1px;background:rgba(139,94,60,.15);}
+.bene-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.bene-item{display:flex;align-items:center;gap:8px;font-size:.8rem;color:#3a3530;padding:7px 10px;
+  background:#faf8f4;border-radius:7px;border:1px solid rgba(139,94,60,.1);}
+.bene-check{width:18px;height:18px;border-radius:50%;background:#2e7d52;display:grid;
+  place-items:center;color:#fff;font-size:.6rem;flex-shrink:0;}
+.cd-conds{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.cond-block{background:#fff;border:1px solid rgba(139,94,60,.15);border-radius:8px;padding:14px 16px;}
+.cond-block .cb-label{font-size:.6rem;text-transform:uppercase;letter-spacing:2px;color:#c9a84c;
+  font-weight:700;margin-bottom:6px;}
+.cond-block p{font-size:.8rem;color:#3a3530;line-height:1.6;}
+.cd-valor{background:#2d1f0e;border-radius:10px;padding:22px 24px;text-align:center;
+  position:relative;overflow:hidden;margin-bottom:20px;}
+.cd-valor::before{content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,rgba(201,168,76,.025) 0,rgba(201,168,76,.025) 1px,transparent 0,transparent 50%);background-size:16px 16px;}
+.cv-label{font-size:.62rem;text-transform:uppercase;letter-spacing:2.5px;color:rgba(255,255,255,.3);
+  font-weight:700;margin-bottom:8px;position:relative;z-index:1;}
+.cv-val{font-family:'Fraunces',serif;font-size:3rem;font-weight:900;color:#c9a84c;
+  line-height:1;position:relative;z-index:1;text-shadow:0 4px 20px rgba(201,168,76,.3);}
+.cv-parcela{font-size:.75rem;color:rgba(255,255,255,.3);margin-top:6px;position:relative;z-index:1;}
+.cd-foot{padding:16px 32px 22px;background:#fff;border-top:1px solid rgba(139,94,60,.12);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.cd-foot .cf-empresa{font-size:.78rem;color:#7a6e5f;}
+.cf-validade{font-size:.7rem;color:#b0a89e;background:rgba(201,168,76,.08);
+  border:1px dashed rgba(201,168,76,.3);padding:4px 12px;border-radius:6px;}
+.confidencial-badge{display:flex;align-items:center;justify-content:center;gap:8px;
+  background:rgba(224,82,82,.08);border:1px solid rgba(224,82,82,.2);border-radius:8px;
+  padding:10px 16px;margin-top:16px;font-size:.72rem;color:var(--red);font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;}
+.gerar-pdf-row{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap;}
+@media print{
+  body{background:#fff!important;}
+  .cliente-wrap{max-width:100%;}
+  .gerar-pdf-row,.tabs-bar,.top-header,.confidencial-badge{display:none!important;}
+  .cliente-doc{box-shadow:none;border-radius:0;}
+}
+@media(max-width:600px){.preco-grid{grid-template-columns:1fr 1fr;}.bene-grid{grid-template-columns:1fr;}
+  .cd-conds{grid-template-columns:1fr;}.simple-costs{grid-template-columns:1fr 1fr;}}
+
+/* ══ PROPOSTA CLIENTE (template completo) ══ */
+#panel-preview {
+  /* Slight adjustment for embedding */
+}
+#panel-preview .screen-controls {
+  display: none !important;
+}
+/* All proposal CSS from template */
+
+
+/* ══════════════════════════════════════════
+   TOKENS
+══════════════════════════════════════════ */
+:root {
+  --ink:        #0f0d0a;
+  --ink-2:      #3a3530;
+  --ink-3:      #7a736a;
+  --ink-4:      #b0a89e;
+  --paper:      #ffffff;
+  --cream:      #faf8f4;
+  --cream-2:    #f3ede4;
+  --line:       #e8e0d6;
+  --line-2:     #f0ebe3;
+  --gold:       #b8924a;
+  --gold-2:     #8a6830;
+  --gold-light: #f5edd8;
+  --wood:       #5c3d20;
+  --wood-2:     #3d2510;
+  --green-ok:   #2e7d52;
+  --serif:      'Playfair Display', Georgia, serif;
+  --sans:       'Inter', system-ui, sans-serif;
+  --mono:       'DM Mono', monospace;
+}
+
+/* ══════════════════════════════════════════
+   RESET & BASE
+══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; }
+body {
+  font-family: var(--sans);
+  background: #e8e4de;
+  color: var(--ink);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ══════════════════════════════════════════
+   SCREEN: botão de controle
+══════════════════════════════════════════ */
+.screen-controls {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+  background: #1a1a1a;
+  padding: 10px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.3);
+}
+.screen-controls h1 {
+  font-family: var(--sans); font-size: .85rem; font-weight: 600;
+  color: #f0ead8; letter-spacing: .5px;
+}
+.screen-controls .sc-right { display: flex; gap: 8px; align-items: center; }
+.btn-imprimir {
+  background: linear-gradient(135deg, var(--gold), var(--gold-2));
+  color: #fff; border: none; border-radius: 6px;
+  padding: 8px 20px; font-family: var(--sans); font-size: .82rem;
+  font-weight: 700; cursor: pointer; letter-spacing: .5px;
+  box-shadow: 0 2px 8px rgba(184,146,74,.4);
+  transition: all .16s;
+}
+.btn-imprimir:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(184,146,74,.55); }
+.btn-edit {
+  background: rgba(255,255,255,.1); color: #ccc;
+  border: 1px solid rgba(255,255,255,.15); border-radius: 6px;
+  padding: 8px 14px; font-family: var(--sans); font-size: .8rem;
+  cursor: pointer; transition: all .16s;
+}
+.btn-edit:hover { background: rgba(255,255,255,.18); color: #fff; }
+.badge-instrucao {
+  font-size: .72rem; color: #888; font-style: italic;
+}
+
+/* ══════════════════════════════════════════
+   PÁGINAS A4
+══════════════════════════════════════════ */
+.pages-wrap {
+  padding: 56px 24px 40px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  background: var(--paper);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 32px rgba(0,0,0,.18), 0 1px 4px rgba(0,0,0,.1);
+  page-break-after: always;
+  display: flex; flex-direction: column;
+}
+.page:last-child { page-break-after: auto; }
+
+/* Grain overlay */
+.page::after {
+  content: '';
+  position: absolute; inset: 0; z-index: 100;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.022'/%3E%3C/svg%3E");
+}
+
+/* ══════════════════════════════════════════
+   COMPONENTES GLOBAIS
+══════════════════════════════════════════ */
+.gold-rule {
+  width: 100%; height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  border: none;
+}
+.gold-rule-sm {
+  width: 48px; height: 1.5px;
+  background: var(--gold);
+  border: none; display: block;
+  margin: 8px 0;
+}
+
+.section-label {
+  font-family: var(--sans);
+  font-size: .58rem; font-weight: 700; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 6px;
+}
+.page-num {
+  position: absolute; bottom: 18mm; right: 16mm;
+  font-family: var(--mono); font-size: .62rem; color: var(--ink-4);
+  letter-spacing: 1px;
+}
+.footer-brand {
+  position: absolute; bottom: 14mm; left: 16mm;
+  font-size: .62rem; color: var(--ink-4);
+  font-style: italic;
+}
+
+/* ══════════════════════════════════════════
+   CAPA — PÁGINA 0
+══════════════════════════════════════════ */
+.page-capa {
+  background: var(--wood-2);
+  color: #fff;
+}
+.page-capa::after { opacity: .4; }
+
+/* Sidebar esquerda dourada */
+.capa-sidebar {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 8px;
+  background: linear-gradient(to bottom, var(--gold), var(--gold-2));
+}
+/* Sidebar direita sutil */
+.capa-sidebar-r {
+  position: absolute; right: 0; top: 0; bottom: 0; width: 2px;
+  background: rgba(255,255,255,.06);
+}
+
+/* Marca d'água de fundo */
+.capa-watermark {
+  position: absolute; bottom: -40px; right: -30px;
+  font-family: var(--serif); font-size: 14rem; font-weight: 900;
+  color: rgba(255,255,255,.025); line-height: 1;
+  pointer-events: none; user-select: none;
+  letter-spacing: -8px;
+}
+
+/* Header da capa */
+.capa-header {
+  padding: 14mm 16mm 0 20mm;
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+.capa-logo-area {
+  display: flex; align-items: center; gap: 14px;
+}
+.capa-logo-mark {
+  width: 52px; height: 52px; border-radius: 12px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-2));
+  display: grid; place-items: center;
+  font-family: var(--serif); font-size: 1.4rem; font-weight: 900;
+  color: var(--wood-2);
+  box-shadow: 0 4px 18px rgba(184,146,74,.5);
+  flex-shrink: 0;
+}
+.capa-logo-text h2 {
+  font-family: var(--serif); font-size: 1rem; font-weight: 700;
+  color: var(--gold); line-height: 1.2; letter-spacing: .3px;
+}
+.capa-logo-text p {
+  font-size: .62rem; color: rgba(255,255,255,.35);
+  text-transform: uppercase; letter-spacing: 2px; margin-top: 2px;
+}
+.capa-meta {
+  text-align: right; font-size: .72rem; color: rgba(255,255,255,.45);
+  line-height: 2;
+}
+.capa-meta strong { color: rgba(255,255,255,.7); }
+
+/* Linha divisória tênue */
+.capa-div { height: 1px; background: rgba(255,255,255,.08); margin: 10mm 16mm 0 20mm; }
+
+/* Corpo central da capa */
+.capa-body {
+  padding: 18mm 16mm 0 20mm;
+  flex: 1;
+  display: flex; flex-direction: column;
+}
+.capa-eyebrow {
+  font-size: .62rem; text-transform: uppercase; letter-spacing: 3px;
+  color: var(--gold); font-weight: 600; margin-bottom: 16px;
+}
+.capa-title-main {
+  font-family: var(--serif); font-size: 3.2rem; font-weight: 900;
+  color: #fff; line-height: 1.1; letter-spacing: -.5px;
+  margin-bottom: 8px;
+}
+.capa-title-sub {
+  font-family: var(--serif); font-size: 1.4rem; font-weight: 400;
+  font-style: italic; color: var(--gold); margin-bottom: 24px;
+  line-height: 1.3;
+}
+
+/* Render 3D placeholder */
+.capa-render {
+  width: 100%; flex: 1; max-height: 88mm;
+  background: linear-gradient(135deg, rgba(255,255,255,.04) 0%, rgba(255,255,255,.02) 100%);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px; margin-bottom: 14mm;
+  position: relative; overflow: hidden;
+}
+.capa-render::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg, rgba(255,255,255,.015) 0, rgba(255,255,255,.015) 1px, transparent 0, transparent 50%);
+  background-size: 20px 20px;
+}
+.capa-render .cr-icon { font-size: 2.2rem; opacity: .3; position: relative; z-index: 1; }
+.capa-render .cr-label {
+  font-size: .72rem; color: rgba(255,255,255,.25); font-style: italic;
+  position: relative; z-index: 1;
+}
+
+/* Footer capa */
+.capa-footer {
+  padding: 0 16mm 10mm 20mm;
+  display: flex; align-items: flex-end; justify-content: space-between;
+}
+.capa-cliente-box {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 10px; padding: 12px 16px;
+  min-width: 220px;
+}
+.capa-cliente-box .cb-label {
+  font-size: .58rem; text-transform: uppercase; letter-spacing: 2px;
+  color: var(--gold); font-weight: 700; margin-bottom: 6px;
+}
+.capa-cliente-box .cb-nome {
+  font-family: var(--serif); font-size: 1.05rem; font-weight: 600;
+  color: #fff; margin-bottom: 4px;
+}
+.capa-cliente-box .cb-amb {
+  font-size: .72rem; color: rgba(255,255,255,.45);
+}
+.capa-validade {
+  text-align: right; font-size: .7rem; color: rgba(255,255,255,.4);
+  line-height: 1.8;
+}
+.capa-validade strong { color: rgba(255,255,255,.6); }
+
+/* ══════════════════════════════════════════
+   PÁGINA 1 — RESUMO EXECUTIVO
+══════════════════════════════════════════ */
+.p-header {
+  padding: 12mm 16mm 8mm;
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.p-header .ph-logo {
+  display: flex; align-items: center; gap: 10px;
+}
+.p-header .ph-mark {
+  width: 30px; height: 30px; border-radius: 7px;
+  background: var(--wood); display: grid; place-items: center;
+  font-family: var(--serif); font-size: .85rem; font-weight: 900;
+  color: var(--gold);
+}
+.p-header .ph-name {
+  font-family: var(--serif); font-size: .88rem; font-weight: 700;
+  color: var(--wood); letter-spacing: .2px;
+}
+.p-header .ph-right {
+  font-size: .62rem; color: var(--ink-4);
+  text-align: right; line-height: 1.7;
+}
+.p-header .ph-right strong { color: var(--ink-3); }
+
+.p-content { padding: 10mm 16mm 0; flex: 1; }
+
+/* Bloco de 2 colunas */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6mm; }
+
+/* Card de dados */
+.data-block {
+  background: var(--cream); border: 1px solid var(--line);
+  border-radius: 8px; padding: 14px 16px;
+}
+.data-block .db-title {
+  font-family: var(--sans); font-size: .6rem; text-transform: uppercase;
+  letter-spacing: 2px; color: var(--gold); font-weight: 700;
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+.data-block .db-title::after {
+  content: ''; flex: 1; height: 1px; background: var(--line);
+}
+.data-row {
+  display: flex; gap: 8px; padding: 5px 0;
+  border-bottom: 1px solid var(--line-2); font-size: .8rem; line-height: 1.4;
+}
+.data-row:last-child { border-bottom: none; }
+.data-row .dr-label { color: var(--ink-3); width: 110px; flex-shrink: 0; font-size: .75rem; }
+.data-row .dr-val { color: var(--ink); font-weight: 500; flex: 1; }
+.data-row .dr-val[contenteditable="true"] { outline: none; cursor: text; }
+.data-row .dr-val[contenteditable="true"]:focus {
+  background: rgba(184,146,74,.08); border-radius: 3px; padding: 1px 4px;
+}
+
+/* Caixa de descrição do projeto */
+.desc-box {
+  background: var(--wood); border-radius: 8px;
+  padding: 16px 18px; margin: 6mm 0;
+  position: relative; overflow: hidden;
+}
+.desc-box::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--gold);
+}
+.desc-box .desc-label {
+  font-size: .58rem; text-transform: uppercase; letter-spacing: 2px;
+  color: var(--gold); font-weight: 700; margin-bottom: 8px;
+}
+.desc-box p {
+  font-size: .82rem; color: rgba(255,255,255,.8);
+  line-height: 1.7; font-style: italic;
+}
+
+/* Assinatura executiva */
+.exec-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--gold-light); border: 1px solid rgba(184,146,74,.3);
+  border-radius: 6px; padding: 8px 14px; margin-top: 5mm;
+}
+.exec-badge .eb-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gold); flex-shrink: 0;
+  box-shadow: 0 0 6px rgba(184,146,74,.6);
+}
+.exec-badge .eb-text { font-size: .72rem; color: var(--gold-2); font-weight: 600; }
+
+/* ══════════════════════════════════════════
+   PÁGINA 2 — ESPECIFICAÇÕES TÉCNICAS
+══════════════════════════════════════════ */
+.spec-grid { display: grid; gap: 4mm; }
+
+.spec-block {
+  border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+}
+.spec-block .sb-head {
+  background: var(--cream-2); padding: 10px 14px;
+  display: flex; align-items: center; gap: 8px;
+  border-bottom: 1px solid var(--line);
+}
+.spec-block .sb-head .sh-icon {
+  width: 26px; height: 26px; border-radius: 6px;
+  background: var(--wood); display: grid; place-items: center;
+  font-size: .78rem; flex-shrink: 0;
+}
+.spec-block .sb-head h4 {
+  font-family: var(--sans); font-size: .75rem; font-weight: 700;
+  color: var(--wood); text-transform: uppercase; letter-spacing: 1px;
+}
+.spec-block .sb-body { padding: 10px 14px; }
+
+.spec-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.spec-tag {
+  font-size: .72rem; padding: 4px 10px; border-radius: 20px;
+  background: var(--cream-2); border: 1px solid var(--line);
+  color: var(--ink-2); font-weight: 500;
+  display: flex; align-items: center; gap: 4px;
+}
+.spec-tag::before { content: '✔'; color: var(--green-ok); font-size: .65rem; }
+
+.spec-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+.spec-item {
+  font-size: .78rem; padding: 5px 8px; border-radius: 4px;
+  display: flex; align-items: flex-start; gap: 6px; color: var(--ink-2);
+}
+.spec-item::before { content: '—'; color: var(--gold); flex-shrink: 0; font-size: .7rem; margin-top: 1px; }
+
+.inclusos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.incluso-item {
+  background: var(--cream); border: 1px solid var(--line);
+  border-radius: 6px; padding: 10px 10px;
+  display: flex; align-items: center; gap: 7px;
+  font-size: .75rem; color: var(--ink-2); font-weight: 500;
+}
+.incluso-item .ii-check {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--green-ok); display: grid; place-items: center;
+  color: #fff; font-size: .6rem; flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════
+   PÁGINA 3 — DIFERENCIAIS
+══════════════════════════════════════════ */
+.page-diferenciais { background: var(--cream); }
+
+.dif-hero {
+  padding: 16mm 16mm 8mm;
+  text-align: center;
+}
+.dif-hero .dh-eyebrow {
+  font-size: .6rem; text-transform: uppercase; letter-spacing: 3px;
+  color: var(--gold); font-weight: 700; margin-bottom: 10px;
+}
+.dif-hero .dh-title {
+  font-family: var(--serif); font-size: 2rem; font-weight: 700;
+  color: var(--wood-2); line-height: 1.2; margin-bottom: 6px;
+}
+.dif-hero .dh-sub {
+  font-size: .82rem; color: var(--ink-3); max-width: 340px;
+  margin: 0 auto; line-height: 1.6;
+}
+
+.dif-cards {
+  padding: 0 12mm;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 5mm;
+}
+.dif-card {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: 10px; padding: 16px 18px;
+  position: relative; overflow: hidden;
+  transition: transform .2s;
+}
+.dif-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-2));
+}
+.dif-card .dc-num {
+  font-family: var(--mono); font-size: .65rem; color: var(--gold);
+  font-weight: 700; letter-spacing: 1px; margin-bottom: 8px;
+}
+.dif-card .dc-title {
+  font-family: var(--serif); font-size: .95rem; font-weight: 700;
+  color: var(--wood-2); margin-bottom: 6px; line-height: 1.3;
+}
+.dif-card .dc-desc {
+  font-size: .75rem; color: var(--ink-3); line-height: 1.6;
+}
+.dif-card .dc-icon {
+  position: absolute; bottom: 12px; right: 14px;
+  font-size: 1.5rem; opacity: .1;
+}
+
+/* Faixa de garantia */
+.guarantee-strip {
+  margin: 8mm 12mm 0;
+  background: var(--wood); border-radius: 8px;
+  padding: 14px 20px;
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+}
+.guarantee-strip .gs-text h4 {
+  font-family: var(--serif); color: var(--gold); font-size: .95rem; margin-bottom: 4px;
+}
+.guarantee-strip .gs-text p {
+  font-size: .72rem; color: rgba(255,255,255,.55); line-height: 1.5;
+}
+.guarantee-strip .gs-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.gs-badge {
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+  border-radius: 6px; padding: 7px 12px; text-align: center;
+}
+.gs-badge .gsb-val {
+  font-family: var(--mono); font-size: .85rem; color: var(--gold);
+  font-weight: 700; display: block;
+}
+.gs-badge .gsb-lbl {
+  font-size: .6rem; color: rgba(255,255,255,.35); text-transform: uppercase;
+  letter-spacing: 1px; display: block; margin-top: 2px;
+}
+
+/* ══════════════════════════════════════════
+   PÁGINA 4 — INVESTIMENTO
+══════════════════════════════════════════ */
+.page-invest { background: var(--wood-2); color: #fff; }
+.page-invest::after { opacity: .35; }
+
+.invest-header {
+  padding: 14mm 16mm 8mm;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.invest-header .ih-logo { display: flex; align-items: center; gap: 10px; }
+.invest-header .ih-mark {
+  width: 30px; height: 30px; border-radius: 7px;
+  background: var(--gold); display: grid; place-items: center;
+  font-family: var(--serif); font-size: .85rem; font-weight: 900; color: var(--wood-2);
+}
+.invest-header .ih-name {
+  font-family: var(--serif); color: var(--gold); font-size: .88rem; font-weight: 700;
+}
+.invest-header .ih-right { font-size: .62rem; color: rgba(255,255,255,.35); text-align: right; line-height: 1.7; }
+
+.invest-hero {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 12mm 16mm;
+  text-align: center;
+}
+.invest-hero .ih-eyebrow {
+  font-size: .6rem; text-transform: uppercase; letter-spacing: 3px;
+  color: rgba(255,255,255,.35); font-weight: 600; margin-bottom: 14px;
+}
+.invest-hero .ih-label {
+  font-size: .7rem; text-transform: uppercase; letter-spacing: 2px;
+  color: var(--gold); font-weight: 700; margin-bottom: 8px;
+}
+.invest-hero .ih-valor {
+  font-family: var(--serif); font-size: 5rem; font-weight: 900;
+  color: var(--gold); line-height: 1; letter-spacing: -2px;
+  margin-bottom: 6px;
+  text-shadow: 0 4px 24px rgba(184,146,74,.3);
+}
+.invest-hero .ih-valor .ih-moeda { font-size: 2.2rem; vertical-align: super; font-weight: 700; }
+.invest-hero .ih-sub {
+  font-size: .78rem; color: rgba(255,255,255,.35); margin-bottom: 20mm;
+}
+
+/* Tabela de parcelas */
+.pgto-table {
+  width: 100%; border-collapse: collapse;
+  background: rgba(255,255,255,.04); border-radius: 10px;
+  overflow: hidden;
+}
+.pgto-table thead tr { background: rgba(184,146,74,.2); }
+.pgto-table thead th {
+  font-size: .62rem; text-transform: uppercase; letter-spacing: 1.5px;
+  color: var(--gold); padding: 10px 14px; text-align: left; font-weight: 700;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.pgto-table tbody tr { border-bottom: 1px solid rgba(255,255,255,.05); }
+.pgto-table tbody tr:last-child { border-bottom: none; }
+.pgto-table tbody tr.pgto-destaque { background: rgba(184,146,74,.1); }
+.pgto-table td { padding: 10px 14px; font-size: .8rem; color: rgba(255,255,255,.7); }
+.pgto-table td:first-child { color: rgba(255,255,255,.9); font-weight: 500; }
+.pgto-table td .pgto-tag {
+  display: inline-block; background: rgba(184,146,74,.25); color: var(--gold);
+  font-size: .62rem; padding: 2px 8px; border-radius: 20px; font-weight: 700;
+}
+
+/* Formas de recebimento */
+.recebimento-row {
+  display: flex; gap: 6px; margin: 0 16mm 10mm;
+  flex-wrap: wrap;
+}
+.rec-chip {
+  flex: 1; min-width: 100px;
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+  border-radius: 7px; padding: 10px 12px; text-align: center;
+}
+.rec-chip .rc-icon { font-size: 1.1rem; margin-bottom: 4px; }
+.rec-chip .rc-label { font-size: .65rem; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: 1px; }
+.rec-chip .rc-val { font-size: .8rem; color: rgba(255,255,255,.8); font-weight: 600; margin-top: 2px; }
+
+/* ══════════════════════════════════════════
+   PÁGINA 5 — PRAZO & CRONOGRAMA
+══════════════════════════════════════════ */
+.timeline {
+  position: relative; padding-left: 14mm;
+  margin: 4mm 0;
+}
+.timeline::before {
+  content: ''; position: absolute; left: 0; top: 6px; bottom: 6px; width: 1.5px;
+  background: linear-gradient(to bottom, var(--gold), rgba(184,146,74,.15));
+}
+.tl-item { position: relative; margin-bottom: 6mm; }
+.tl-item::before {
+  content: ''; position: absolute; left: -14mm; top: 5px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--gold); box-shadow: 0 0 0 3px rgba(184,146,74,.2);
+}
+.tl-item.tl-last::before { background: var(--green-ok); box-shadow: 0 0 0 3px rgba(46,125,82,.2); }
+.tl-item .tl-step {
+  font-size: .6rem; text-transform: uppercase; letter-spacing: 1.5px;
+  color: var(--gold); font-weight: 700; margin-bottom: 2px;
+}
+.tl-item h4 {
+  font-family: var(--sans); font-size: .88rem; font-weight: 700;
+  color: var(--ink); margin-bottom: 3px;
+}
+.tl-item p { font-size: .75rem; color: var(--ink-3); line-height: 1.5; }
+.tl-item .tl-badge {
+  display: inline-block; background: var(--gold-light); border: 1px solid rgba(184,146,74,.25);
+  border-radius: 4px; padding: 2px 10px; font-size: .68rem;
+  color: var(--gold-2); font-weight: 700; margin-top: 4px;
+}
+
+/* Totais de prazo */
+.prazo-totais {
+  background: var(--cream); border: 1px solid var(--line);
+  border-radius: 8px; padding: 14px 16px; margin-top: 5mm;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+}
+.prazo-item {
+  text-align: center; padding: 0 12px;
+  border-right: 1px solid var(--line);
+}
+.prazo-item:last-child { border-right: none; }
+.prazo-item .pi-label {
+  font-size: .6rem; text-transform: uppercase; letter-spacing: 1.5px;
+  color: var(--ink-3); font-weight: 600; margin-bottom: 6px;
+}
+.prazo-item .pi-val {
+  font-family: var(--serif); font-size: 1.5rem; font-weight: 700;
+  color: var(--wood); margin-bottom: 2px;
+}
+.prazo-item .pi-unit { font-size: .7rem; color: var(--ink-3); }
+
+/* ══════════════════════════════════════════
+   PÁGINA FINAL — OBSERVAÇÕES & ASSINATURA
+══════════════════════════════════════════ */
+.obs-box {
+  background: var(--cream); border: 1px solid var(--line);
+  border-radius: 8px; padding: 14px 16px; margin-bottom: 4mm;
+}
+.obs-box .ob-label {
+  font-size: .6rem; text-transform: uppercase; letter-spacing: 2px;
+  color: var(--gold); font-weight: 700; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.obs-box .ob-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+.obs-list { list-style: none; }
+.obs-list li {
+  font-size: .78rem; color: var(--ink-2); padding: 5px 0;
+  border-bottom: 1px solid var(--line-2);
+  display: flex; align-items: flex-start; gap: 8px; line-height: 1.5;
+}
+.obs-list li:last-child { border-bottom: none; }
+.obs-list li::before { content: '→'; color: var(--gold); flex-shrink: 0; font-size: .7rem; margin-top: 2px; }
+
+/* Assinaturas */
+.assinaturas {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10mm; margin-top: 10mm;
+}
+.assin-block { text-align: center; }
+.assin-line {
+  height: 1px; background: var(--ink); margin-bottom: 8px;
+}
+.assin-block .as-cargo {
+  font-size: .72rem; color: var(--ink-3); margin-bottom: 2px;
+}
+.assin-block .as-nome {
+  font-family: var(--serif); font-size: .88rem; font-weight: 600;
+  color: var(--ink); margin-bottom: 2px;
+}
+.assin-block .as-cnpj {
+  font-size: .65rem; color: var(--ink-4); font-family: var(--mono);
+}
+
+/* Lacre de validade */
+.validade-lacre {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; margin-top: 8mm; padding: 12px 20px;
+  background: var(--gold-light); border: 1.5px dashed rgba(184,146,74,.4);
+  border-radius: 8px;
+}
+.validade-lacre .vl-icon { font-size: 1.2rem; }
+.validade-lacre .vl-text {
+  font-size: .75rem; color: var(--gold-2); font-weight: 600;
+}
+.validade-lacre .vl-text span { font-family: var(--mono); font-weight: 700; }
+
+/* ══════════════════════════════════════════
+   PRINT
+══════════════════════════════════════════ */
+@page {
+  size: A4;
+  margin: 0;
+}
+@media print {
+  body { background: transparent; }
+  .screen-controls { display: none !important; }
+  .pages-wrap { padding: 0; gap: 0; background: transparent; }
+  .page {
+    box-shadow: none;
+    width: 210mm; min-height: 297mm;
+    page-break-after: always;
+  }
+  .page:last-child { page-break-after: auto; }
+}
+
+/* ══════════════════════════════════════════
+   EDIÇÃO INLINE
+══════════════════════════════════════════ */
+[contenteditable="true"] { outline: none; cursor: text; }
+[contenteditable="true"]:focus {
+  background: rgba(184,146,74,.1);
+  border-radius: 3px;
+  box-shadow: 0 0 0 1.5px rgba(184,146,74,.4);
+  padding: 1px 4px;
+}
+.edit-mode [contenteditable="true"] {
+  box-shadow: 0 0 0 1px rgba(184,146,74,.25);
+  border-radius: 3px;
+}
+
+
+/* Override body styles that would conflict when inside ERP */
+#panel-preview .pages-wrap,
+#orc-pages-wrap {
+  padding: 0 0 20px !important;
+  background: transparent !important;
+}
+#panel-preview .page {
+  margin-bottom: 12px !important;
+}
+@media print {
+  body > *:not(#panel-preview) { display: none !important; }
+  #panel-preview { display: block !important; }
+  #panel-preview > div:first-child,
+  #panel-preview > div:nth-child(2) { display: none !important; }
+  #orc-pages-wrap { padding: 0 !important; }
+  .page { box-shadow: none !important; margin-bottom: 0 !important; page-break-after: always; }
+}
+
+/* ── API INTEGRATION STYLES ── */
+.auth-bar{display:flex;align-items:center;gap:10px;padding:8px 16px;
+  background:var(--bg2);border-bottom:1px solid var(--line);
+  font-size:.72rem;color:var(--text2);position:sticky;top:0;z-index:100;}
+.auth-bar .ab-user{display:flex;align-items:center;gap:7px;flex:1;}
+.auth-bar .ab-badge{background:var(--amberg);border:1px solid rgba(232,160,32,.2);
+  color:var(--amber);padding:2px 8px;border-radius:20px;font-size:.62rem;font-weight:700;}
+.auth-bar .btn-logout{padding:4px 12px;font-size:.68rem;}
+.api-status{display:flex;align-items:center;gap:5px;font-size:.65rem;}
+.api-dot{width:7px;height:7px;border-radius:50%;background:var(--text3);}
+.api-dot.online{background:var(--green);box-shadow:0 0 6px rgba(58,184,118,.5);}
+.api-dot.offline{background:var(--red);}
+.overlay-loading{position:fixed;inset:0;background:rgba(13,15,18,.85);
+  display:grid;place-items:center;z-index:9999;opacity:0;pointer-events:none;transition:.2s;}
+.overlay-loading.show{opacity:1;pointer-events:all;}
+.ol-spinner{width:48px;height:48px;border:3px solid var(--line);
+  border-top-color:var(--amber);border-radius:50%;animation:spin .8s linear infinite;}
+.ol-msg{color:var(--text2);font-size:.78rem;margin-top:14px;text-align:center;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.sync-badge{display:inline-flex;align-items:center;gap:4px;font-size:.62rem;
+  padding:2px 7px;border-radius:20px;margin-left:6px;}
+.sync-ok{background:rgba(58,184,118,.12);color:var(--green);border:1px solid rgba(58,184,118,.2);}
+.sync-err{background:rgba(224,82,82,.12);color:var(--red);border:1px solid rgba(224,82,82,.2);}
+.sync-pending{background:var(--amberg);color:var(--amber);border:1px solid rgba(232,160,32,.2);}
+</style>
+</head>
+<body>
+<!-- Auth Bar -->
+<div class="auth-bar" id="auth-bar">
+  <div class="ab-user">
+    <span>👤</span>
+    <span id="ab-nome">Carregando...</span>
+    <span class="ab-badge" id="ab-perfil">...</span>
+  </div>
+  <div class="api-status">
+    <div class="api-dot" id="api-dot"></div>
+    <span id="api-status-txt">Conectando...</span>
+  </div>
+  <button class="btn btn-ghost btn-sm btn-logout" onclick="fazerLogout()">Sair</button>
+</div>
+<!-- Loading Overlay -->
+<div class="overlay-loading" id="overlay-loading">
+  <div style="text-align:center">
+    <div class="ol-spinner"></div>
+    <div class="ol-msg" id="ol-msg">Carregando...</div>
+  </div>
+</div>
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+<div class="shell">
+
+  <div class="top-header">
+    <div class="th-left">
+      <div class="th-gem">M</div>
+      <div>
+        <div class="th-name">ERP Marcenaria — Orçamento Interno</div>
+        <div class="th-sub">Gestão de custos e formação de preço</div>
+      </div>
+    </div>
+    <div class="th-right">
+      <button class="btn btn-ghost btn-sm" onclick="limpar()">🗑 Limpar</button>
+      <button class="btn btn-ghost btn-sm" onclick="showTab('historico')" style="border-color:rgba(91,141,238,.3);color:var(--blue)">🗂 Histórico</button>
+      <button class="btn btn-green btn-sm" onclick="verCliente()">👁 Preview Cliente</button>
+      <button class="btn btn-amber btn-sm" onclick="salvar()">💾 Salvar</button>
+    </div>
+  </div>
+
+  <div class="tabs-bar">
+    <button class="tab-btn active" id="tab-interno" onclick="showTab('interno')">🔒 Orçamento Interno</button>
+    <button class="tab-btn" id="tab-cliente" onclick="showTab('cliente')">📄 Preview Simples</button>
+    <button class="tab-btn" id="tab-preview" onclick="showTab('preview')">🪵 Proposta Completa</button>
+    <button class="tab-btn" id="tab-historico" onclick="showTab('historico')">🗂 Histórico</button>
+  </div>
+
+  <!-- PAINEL INTERNO -->
+  <div id="panel-interno">
+
+    <!-- 1. IDENTIFICAÇÃO -->
+    <div class="sec">
+      <div class="sec-head"><div class="sec-num">01</div><div class="sec-title"><em>Identificação</em> do Projeto</div></div>
+      <div class="card">
+        <div class="id-grid">
+          <div class="field"><label>ID do Orçamento</label><input id="f-id" placeholder="ORC-2026-0001" oninput="sync()"/></div>
+          <div class="field"><label>Cliente</label><input id="f-cliente" placeholder="Nome do cliente" oninput="sync()"/></div>
+          <div class="field" style="grid-column:span 2">
+            <label>Tipo de Projeto <span style="font-size:.55rem;color:var(--text3);letter-spacing:1px;font-weight:400;text-transform:none">(selecione um ou mais ambientes)</span></label>
+            <div id="f-tipo-wrap" style="
+              display:grid;grid-template-columns:repeat(5,1fr);gap:7px;
+              margin-top:4px;
+            ">
+              <!-- chips gerados pelo JS -->
+            </div>
+            <input type="hidden" id="f-tipo" value=""/>
+          </div>
+          <div class="field"><label>Responsável Técnico</label><input id="f-resp" placeholder="Nome do responsável" oninput="sync()"/></div>
+          <div class="field"><label>Data</label><input id="f-data" type="date" oninput="sync()"/></div>
+          <div class="field"><label>Prazo de Entrega (dias)</label><input id="f-prazo" type="number" placeholder="30" min="1" oninput="sync()"/></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. MDF -->
+    <div class="sec">
+      <div class="sec-head"><div class="sec-num">02</div><div class="sec-title"><em>Matéria-Prima</em> — MDF / Chapas</div></div>
+      <div class="card">
+        <table class="cost-table">
+          <thead><tr><th style="min-width:160px">Item</th><th class="qty-cell">Qtd</th><th class="price-cell">Valor Unit. (R$)</th><th class="total-cell">Total</th><th style="width:36px"></th></tr></thead>
+          <tbody id="mdf-body"></tbody>
+        </table>
+        <button class="btn btn-ghost btn-sm" onclick="addMDF()" style="margin-top:10px">+ Adicionar Chapa</button>
+        <div class="subtotal-bar"><span class="sb-label">Subtotal MDF</span><span class="sb-val" id="st-mdf">R$ 0,00</span></div>
+      </div>
+    </div>
+
+    <!-- 3. FERRAGENS -->
+    <div class="sec">
+      <div class="sec-head"><div class="sec-num">03</div><div class="sec-title"><em>Ferragens</em> — Dobradiças, Corrediças, Parafusos</div></div>
+      <div class="card">
+        <table class="cost-table">
+          <thead><tr><th style="min-width:160px">Item</th><th class="qty-cell">Qtd</th><th class="price-cell">Valor Unit. (R$)</th><th class="total-cell">Total</th><th style="width:36px"></th></tr></thead>
+          <tbody id="ferr-body"></tbody>
+        </table>
+        <button class="btn btn-ghost btn-sm" onclick="addFerr()" style="margin-top:10px">+ Adicionar Ferragem</button>
+        <div class="subtotal-bar"><span class="sb-label">Subtotal Ferragens</span><span class="sb-val" id="st-ferr">R$ 0,00</span></div>
+      </div>
+    </div>
+
+    <!-- 4. ACESSÓRIOS -->
+    <div class="sec">
+      <div class="sec-head"><div class="sec-num">04</div><div class="sec-title"><em>Acessórios</em> — Puxadores, Trilhos, Divisores</div></div>
+      <div class="card">
+        <table class="cost-table">
+          <thead><tr><th style="min-width:160px">Item</th><th class="qty-cell">Qtd</th><th class="price-cell">Valor Unit. (R$)</th><th class="total-cell">Total</th><th style="width:36px"></th></tr></thead>
+          <tbody id="acess-body"></tbody>
+        </table>
+        <button class="btn btn-ghost btn-sm" onclick="addAcess()" style="margin-top:10px">+ Adicionar Acessório</button>
+        <div class="subtotal-bar"><span class="sb-label">Subtotal Acessórios</span><span class="sb-val" id="st-acess">R$ 0,00</span></div>
+      </div>
+    </div>
+
+    <!-- 5. CUSTOS OPERACIONAIS -->
+    <div class="sec">
+      <div class="sec-head"><div class="sec-num">05</div><div class="sec-title"><em>Custos Operacionais</em> — Produção e Logística</div></div>
+      <div class="card">
+        <div class="simple-costs">
+          <div class="sc-item"><div class="sc-label">✂️ Custo de Corte (CNC)</div><input id="c-corte" type="number" placeholder="0,00" min="0" step="0.01" oninput="calc()"/></div>
+          <div class="sc-item"><div class="sc-label">🔧 Custo de Furação</div><input id="c-furacao" type="number" placeholder="0,00" min="0" step="0.01" oninput="calc()"/></div>
+          <div class="sc-item"><div class="sc-label">🪵 Fita de Borda</div><input id="c-fita" type="number" placeholder="0,00" min="0" step="0.01" oninput="calc()"/></div>
+          <div class="sc-item"><div class="sc-label">🔨 Custo de Montagem</div><input id="c-montagem" type="number" placeholder="0,00" min="0" step="0.01" oninput="calc()"/></div>
+          <div class="sc-item"><div class="sc-label">🚚 Custo de Frete</div><input id="c-frete" type="number" placeholder="0,00" min="0" step="0.01" oninput="calc()"/></div>
+          <div class="sc-item"><div class="sc-label">📐 Custo do Projeto</div><input id="c-projeto" type="number" placeholder="0,00" min="0" step="0.01" oninput="calc()"/></div>
+        </div>
+        <div class="subtotal-bar" style="margin-top:12px"><span class="sb-label">Subtotal Operacional</span><span class="sb-val" id="st-op">R$ 0,00</span></div>
+      </div>
+    </div>
+
+    <!-- 6. RESUMO -->
+    <div class="sec">
+      <div class="sec-head"><div class="sec-num">06</div><div class="sec-title"><em>Resumo Financeiro</em> — Custo Total Real</div></div>
+      <div class="card">
+        <div class="resumo-grid">
+          <div>
+            <table class="resumo-table">
+              <tr><td>🪵 Matéria-prima (MDF)</td><td id="r-mdf">R$ 0,00</td></tr>
+              <tr><td>⚙️ Ferragens</td><td id="r-ferr">R$ 0,00</td></tr>
+              <tr><td>🔩 Acessórios</td><td id="r-acess">R$ 0,00</td></tr>
+              <tr><td>✂️ Corte CNC</td><td id="r-corte">R$ 0,00</td></tr>
+              <tr><td>🔧 Furação</td><td id="r-fur">R$ 0,00</td></tr>
+              <tr><td>🪵 Fita de Borda</td><td id="r-fita">R$ 0,00</td></tr>
+              <tr><td>🔨 Montagem</td><td id="r-mont">R$ 0,00</td></tr>
+              <tr><td>🚚 Frete / Logística</td><td id="r-frete">R$ 0,00</td></tr>
+              <tr><td>📐 Projeto (design)</td><td id="r-proj">R$ 0,00</td></tr>
+              <tr style="border-top:1px solid var(--line)!important"><td style="color:var(--red);font-weight:700">🔴 Comissão</td><td id="r-comm" style="color:var(--red)">R$ 0,00</td></tr>
+            </table>
+          </div>
+          <div class="custo-total-box">
+            <div class="ctb-label">🔒 Custo Total Real</div>
+            <div class="ctb-val" id="custo-total">R$ 0,00</div>
+            <div class="ctb-sub">Confidencial — uso interno</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. FORMAÇÃO DE PREÇO -->
+    <div class="sec">
+      <div class="sec-head"><div class="sec-num">07</div><div class="sec-title"><em>Formação de Preço</em> — Inteligência ERP</div></div>
+      <div class="card">
+        <div class="comissao-row">
+          <input type="checkbox" id="cb-comm" onchange="calc()"/>
+          <label for="cb-comm">💸 Incluir comissão de vendas / parceiros</label>
+          <input class="comm-pct" id="comm-pct" type="number" value="5" min="0" max="50" oninput="calc()"/>
+          <span style="font-size:.78rem;color:var(--text2)">%</span>
+        </div>
+        <div class="margem-slider-wrap" style="margin-top:12px">
+          <div class="ms-top">
+            <span class="ms-label">📈 Margem de Lucro</span>
+            <span class="ms-val" id="margem-val">50%</span>
+          </div>
+          <input type="range" id="margem-range" min="5" max="300" value="50" oninput="onMargem(this.value)"/>
+          <div class="ms-scale"><span>5%</span><span>50%</span><span>100%</span><span>200%</span><span>300%</span></div>
+        </div>
+        <div class="preco-grid" style="margin-top:14px">
+          <div class="preco-kpi pk-amber">
+            <div class="pk-label">🔒 Custo Total Real</div>
+            <div class="pk-val" id="pk-custo" style="font-size:1.3rem">R$ 0,00</div>
+            <span class="pk-badge" style="background:var(--amberg);color:var(--amber)">Interno</span>
+          </div>
+          <div class="preco-kpi pk-teal">
+            <div class="pk-label">💼 Valor de Venda Sugerido</div>
+            <div class="pk-val" id="pk-venda" style="color:var(--teal)">R$ 0,00</div>
+            <span class="pk-badge" style="background:rgba(48,201,184,.12);color:var(--teal)">Para o cliente</span>
+          </div>
+          <div class="preco-kpi pk-green">
+            <div class="pk-label">💰 Lucro Estimado</div>
+            <div class="pk-val" id="pk-lucro" style="color:var(--green)">R$ 0,00</div>
+            <span class="pk-badge" id="pk-lucro-badge" style="background:rgba(58,184,118,.12);color:var(--green)">▲ 0%</span>
+          </div>
+        </div>
+        <div class="profit-bar-wrap">
+          <div class="pb-label"><span>Custo</span><span id="pb-pct-label">50% de margem</span><span>Lucro</span></div>
+          <div class="pb-track"><div class="pb-fill" id="pb-fill" style="width:33%"></div></div>
+        </div>
+        <div style="margin-top:14px">
+          <div class="field">
+            <label>💰 Valor de Venda Final (editável — este valor vai para o cliente)</label>
+            <input id="venda-final" type="number" placeholder="0.00" min="0" step="0.01"
+              oninput="onVendaManual(this.value)"
+              style="font-size:1.1rem;font-weight:700;color:var(--teal);background:var(--bg3);"/>
+          </div>
+          <div style="font-size:.68rem;color:var(--text3);margin-top:4px;font-style:italic">
+            Ajuste manualmente se necessário. Margem e lucro serão recalculados automaticamente.
+          </div>
+        </div>
+
+        <!-- CONDIÇÕES DE PAGAMENTO -->
+        <div style="margin-top:18px;border-top:1px solid var(--line);padding-top:16px">
+          <div class="sec-head" style="margin-bottom:12px">
+            <div class="sec-num" style="width:24px;height:24px;font-size:.65rem">💳</div>
+            <div class="sec-title"><em>Condições de Pagamento</em> — aplicadas na Proposta Completa</div>
+          </div>
+
+          <!-- Desconto à vista -->
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px">
+            <div class="field">
+              <label>Desconto À Vista (%)</label>
+              <input id="pgto-avista-desc" type="number" value="5" min="0" max="50" step="0.5"
+                placeholder="5" oninput="calcPgto()"/>
+            </div>
+            <div class="field">
+              <label>Juros 10× (%)</label>
+              <input id="pgto-10x-juros" type="number" value="8" min="0" max="50" step="0.5"
+                placeholder="8" oninput="calcPgto()"/>
+            </div>
+            <div class="field">
+              <label>Juros 12× (%)</label>
+              <input id="pgto-12x-juros" type="number" value="12" min="0" max="50" step="0.5"
+                placeholder="12" oninput="calcPgto()"/>
+            </div>
+          </div>
+
+          <!-- Preview da tabela de parcelamento -->
+          <div style="background:var(--bg3);border:1px solid var(--line);border-radius:var(--r2);overflow:hidden;margin-bottom:12px">
+            <div style="padding:8px 14px;background:var(--amberg2);border-bottom:1px solid var(--line);
+              font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--amber)">
+              Preview — Tabela de Parcelamento (enviada para o cliente)
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:.78rem">
+              <thead>
+                <tr style="border-bottom:1px solid var(--line2)">
+                  <th style="text-align:left;padding:7px 12px;font-size:.6rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);font-weight:700">Forma</th>
+                  <th style="text-align:right;padding:7px 12px;font-size:.6rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);font-weight:700">Total</th>
+                  <th style="text-align:right;padding:7px 12px;font-size:.6rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);font-weight:700">Parcela</th>
+                </tr>
+              </thead>
+              <tbody id="pgto-preview-body"></tbody>
+            </table>
+          </div>
+
+          <!-- Dados bancários -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div class="field">
+              <label>🔑 Chave PIX</label>
+              <input id="pgto-pix" placeholder="CNPJ, celular ou e-mail" oninput="calcPgto()"/>
+            </div>
+            <div class="field">
+              <label>🏦 Dados Bancários</label>
+              <input id="pgto-banco" placeholder="Ag. 0001 · CC 00000-0 · Banco" oninput="calcPgto()"/>
+            </div>
+            <div class="field">
+              <label>💳 Cartões Aceitos</label>
+              <input id="pgto-cartao" placeholder="Visa / Master / Elo / Amex" oninput="calcPgto()"/>
+            </div>
+            <div class="field">
+              <label>📄 Boleto / Outros</label>
+              <input id="pgto-boleto" placeholder="Vencimento D+3 úteis" oninput="calcPgto()"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /panel-interno -->
+
+  <!-- PAINEL CLIENTE -->
+  <div id="panel-cliente">
+    <div class="cliente-wrap">
+      <div class="cliente-doc">
+        <div class="cd-head">
+          <div class="cdh-top">
+            <div>
+              <div class="cdh-marca">MadeirArte Marcenaria</div>
+              <div class="cdh-sub">Móveis Planejados Sob Medida</div>
+            </div>
+            <div class="cdh-num"><div>Orçamento <strong id="c-num-doc">—</strong></div><div>Data <strong id="c-data-doc">—</strong></div></div>
+          </div>
+          <h1 id="c-titulo-doc">Cozinha Planejada Completa</h1>
+          <div class="cdh-desc" id="c-desc-doc">Móveis sob medida para o seu ambiente</div>
+        </div>
+        <div class="cd-body">
+          <div class="cd-beneficios">
+            <h3>O que está incluso</h3>
+            <div class="bene-grid">
+              <div class="bene-item"><div class="bene-check">✓</div>Projeto técnico personalizado</div>
+              <div class="bene-item"><div class="bene-check">✓</div>Material de qualidade certificado</div>
+              <div class="bene-item"><div class="bene-check">✓</div>Montagem profissional especializada</div>
+              <div class="bene-item"><div class="bene-check">✓</div>Entrega garantida no prazo</div>
+              <div class="bene-item"><div class="bene-check">✓</div>Garantia de 5 anos na estrutura</div>
+              <div class="bene-item"><div class="bene-check">✓</div>Ajustes pós-instalação inclusos</div>
+            </div>
+          </div>
+          <div class="cd-conds">
+            <div class="cond-block"><div class="cb-label">⏱ Prazo de Entrega</div><p id="c-prazo-doc" style="font-weight:700;font-size:.95rem;color:#2d1f0e">30 dias úteis</p><p style="margin-top:4px;font-size:.72rem;color:#b0a89e">Após aprovação e sinal</p></div>
+            <div class="cond-block"><div class="cb-label">💳 Formas de Pagamento</div><p>À vista, 2×, 6× ou 12×</p></div>
+            <div class="cond-block"><div class="cb-label">🛡 Garantia</div><p>5 anos estrutural · 5 anos ferragens</p></div>
+            <div class="cond-block"><div class="cb-label">📅 Validade da Proposta</div><p>30 dias</p></div>
+          </div>
+          <div class="cd-valor">
+            <div class="cv-label">Investimento Total</div>
+            <div class="cv-val" id="c-valor-final">R$ —</div>
+            <div class="cv-parcela" id="c-parcela">ou 12× de R$ —</div>
+          </div>
+        </div>
+        <div class="cd-foot">
+          <span class="cf-empresa">MadeirArte · contato@madeirarte.com.br · (11) 3000-0000</span>
+          <span class="cf-validade">Válido por 30 dias</span>
+        </div>
+      </div>
+      <div class="confidencial-badge">🚫 Esta versão não contém custos internos, margem ou fornecedores</div>
+      <div class="gerar-pdf-row">
+        <button class="btn btn-amber" onclick="window.print()">🖨️ Imprimir / Salvar PDF para o Cliente</button>
+        <button class="btn btn-ghost" onclick="showTab('interno')">← Voltar ao Interno</button>
+      </div>
+    </div>
+  </div>
+
+
+<!-- ══════════════════════════════════════
+     PAINEL HISTÓRICO
+══════════════════════════════════════ -->
+<div id="panel-historico" style="display:none">
+
+  <!-- Stats -->
+  <div class="hist-stats" id="hist-stats">
+    <div class="hstat" style="--hs-acc:var(--amber)">
+      <div class="hs-label">Total de Orçamentos</div>
+      <div class="hs-val" id="hs-total">0</div>
+      <div class="hs-sub">todos os registros</div>
+    </div>
+    <div class="hstat" style="--hs-acc:var(--green)">
+      <div class="hs-label">Fechados / Aprovados</div>
+      <div class="hs-val" id="hs-fechados">0</div>
+      <div class="hs-sub" id="hs-fechados-val">R$ 0,00</div>
+    </div>
+    <div class="hstat" style="--hs-acc:var(--blue)">
+      <div class="hs-label">Enviados ao Cliente</div>
+      <div class="hs-val" id="hs-enviados">0</div>
+      <div class="hs-sub">aguardando retorno</div>
+    </div>
+    <div class="hstat" style="--hs-acc:var(--teal)">
+      <div class="hs-label">Faturamento Total</div>
+      <div class="hs-val" id="hs-faturamento" style="font-size:1rem">R$ 0</div>
+      <div class="hs-sub">orçamentos fechados</div>
+    </div>
+  </div>
+
+  <!-- Toolbar pesquisa -->
+  <div class="hist-toolbar">
+    <div class="hist-search-wrap">
+      <span class="hs-icon">🔍</span>
+      <input id="hist-search" type="text" placeholder="Pesquisar por cliente, ID, tipo de projeto..." oninput="filtrarHistorico()"/>
+    </div>
+    <div class="hist-filters">
+      <div class="hf-chip hfc-all active" data-status="todos" onclick="setFiltro(this)">Todos</div>
+      <div class="hf-chip hfc-aberto" data-status="aberto" onclick="setFiltro(this)">🔵 Aberto</div>
+      <div class="hf-chip hfc-fechado" data-status="fechado" onclick="setFiltro(this)">🟢 Fechado</div>
+      <div class="hf-chip hfc-enviado" data-status="enviado" onclick="setFiltro(this)">🔷 Enviado</div>
+      <div class="hf-chip hfc-cancelado" data-status="cancelado" onclick="setFiltro(this)">🔴 Cancelado</div>
+    </div>
+    <button class="btn btn-ghost btn-sm" onclick="exportarCSV()">⬇ Exportar CSV</button>
+    <button class="btn btn-ghost btn-sm" onclick="confirmarLimparTudo()">🗑 Limpar tudo</button>
+  </div>
+
+  <!-- Lista de orçamentos -->
+  <div id="hist-lista"></div>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     PAINEL PREVIEW CLIENTE (template completo)
+══════════════════════════════════════ -->
+<div id="panel-preview" style="display:none">
+
+  <!-- Toolbar do preview -->
+  <div style="display:flex;align-items:center;justify-content:space-between;
+       background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);
+       padding:12px 18px;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+    <div>
+      <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--amber)">
+        📄 Preview do Cliente — Proposta Completa
+      </div>
+      <div style="font-size:.68rem;color:var(--text3);margin-top:3px;font-style:italic">
+        Os dados do formulário interno foram aplicados automaticamente · Clique em ✏️ para editar qualquer texto
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn btn-ghost btn-sm" onclick="toggleEditModeOrc()" id="btn-edit-orc">✏️ Modo Edição</button>
+      <button class="btn btn-amber" onclick="window.print()" style="gap:6px">🖨️ Imprimir / Gerar PDF</button>
+      <button class="btn btn-ghost btn-sm" onclick="showTab('interno')">← Voltar</button>
+    </div>
+  </div>
+
+  <!-- Aviso confidencial -->
+  <div style="display:flex;align-items:center;justify-content:center;gap:8px;
+       background:rgba(224,82,82,.07);border:1px solid rgba(224,82,82,.18);
+       border-radius:8px;padding:9px 16px;margin-bottom:14px;
+       font-size:.7rem;color:#e05252;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;">
+    🚫 Esta versão não contém custos internos, margem ou fornecedores — seguro para enviar ao cliente
+  </div>
+
+  <div class="pages-wrap" id="orc-pages-wrap">
+
+  <!-- ════════════ CAPA ════════════ -->
+  <div class="page page-capa">
+    <div class="capa-sidebar"></div>
+    <div class="capa-sidebar-r"></div>
+    <div class="capa-watermark">M</div>
+
+    <div class="capa-header">
+      <div class="capa-logo-area">
+        <div class="capa-logo-mark">M</div>
+        <div class="capa-logo-text">
+          <h2 contenteditable="true">MadeirArte Marcenaria</h2>
+          <p>Móveis Planejados Sob Medida</p>
+        </div>
+      </div>
+      <div class="capa-meta">
+        <div>Nº <strong contenteditable="true">ORC-2026-0142</strong></div>
+        <div>Data <strong contenteditable="true">27/02/2026</strong></div>
+        <div>Válido até <strong contenteditable="true">27/03/2026</strong></div>
+      </div>
+    </div>
+
+    <div class="capa-div"></div>
+
+    <div class="capa-body">
+      <div class="capa-eyebrow">Proposta Técnica e Comercial</div>
+      <div class="capa-title-main">Móveis<br>Planejados</div>
+      <div class="capa-title-sub">Sob Medida &amp; Acabamento Premium</div>
+
+      <div class="capa-render">
+        <div class="cr-icon">🏠</div>
+        <div class="cr-label">Inserir render 3D do projeto aqui</div>
+      </div>
+    </div>
+
+    <div class="capa-footer">
+      <div class="capa-cliente-box">
+        <div class="cb-label">Proposta preparada para</div>
+        <div class="cb-nome" contenteditable="true">Maria Oliveira</div>
+        <div class="cb-amb" contenteditable="true">Cozinha + Lavanderia · Rua das Flores, 142 — Sp</div>
+      </div>
+      <div class="capa-validade">
+        <div>Responsável técnico</div>
+        <strong contenteditable="true">Carlos Madeira</strong><br>
+        <div style="margin-top:4px">Validade da proposta</div>
+        <strong contenteditable="true">30 dias</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════ PÁGINA 1 — RESUMO EXECUTIVO ════════════ -->
+  <div class="page">
+    <div class="p-header">
+      <div class="ph-logo">
+        <div class="ph-mark">M</div>
+        <span class="ph-name" contenteditable="true">MadeirArte Marcenaria</span>
+      </div>
+      <div class="ph-right">
+        <div>Orçamento <strong contenteditable="true">ORC-2026-0142</strong></div>
+        <div>Emitido em <strong contenteditable="true">27/02/2026</strong></div>
+      </div>
+    </div>
+
+    <div class="p-content">
+      <div class="section-label">Página 01 — Resumo Executivo</div>
+      <hr class="gold-rule-sm"/>
+
+      <div class="two-col" style="margin-bottom:6mm">
+        <div class="data-block">
+          <div class="db-title">Identificação do Cliente</div>
+          <div class="data-row"><span class="dr-label">Cliente</span><span class="dr-val" contenteditable="true">Maria Oliveira</span></div>
+          <div class="data-row"><span class="dr-label">CPF / CNPJ</span><span class="dr-val" contenteditable="true">000.000.000-00</span></div>
+          <div class="data-row"><span class="dr-label">Telefone</span><span class="dr-val" contenteditable="true">(11) 99999-0000</span></div>
+          <div class="data-row"><span class="dr-label">E-mail</span><span class="dr-val" contenteditable="true">maria@email.com</span></div>
+          <div class="data-row"><span class="dr-label">Endereço da obra</span><span class="dr-val" contenteditable="true">Rua das Flores, 142 — Apto 72<br>Jardim Europa · São Paulo / SP</span></div>
+        </div>
+        <div class="data-block">
+          <div class="db-title">Identificação do Projeto</div>
+          <div class="data-row"><span class="dr-label">Ambiente</span><span class="dr-val" contenteditable="true">Cozinha + Lavanderia Integradas</span></div>
+          <div class="data-row"><span class="dr-label">Metragem</span><span class="dr-val" contenteditable="true">22 m² (estimativa)</span></div>
+          <div class="data-row"><span class="dr-label">Resp. técnico</span><span class="dr-val" contenteditable="true">Carlos Madeira — CNPJ 00.000.000/0001-00</span></div>
+          <div class="data-row"><span class="dr-label">Projeto 3D</span><span class="dr-val" contenteditable="true">Incluso — entrega em 5 dias úteis</span></div>
+          <div class="data-row"><span class="dr-label">Visita técnica</span><span class="dr-val" contenteditable="true">Realizada em 25/02/2026</span></div>
+        </div>
+      </div>
+
+      <div class="desc-box">
+        <div class="desc-label">Descrição Geral do Projeto</div>
+        <p contenteditable="true">Projeto de móveis planejados desenvolvido sob medida para o ambiente descrito, utilizando materiais certificados com rastreabilidade completa, ferragens premium de marcas europeias com garantia, e acabamento profissional executado por equipe técnica especializada. Todo o processo — do projeto à instalação — é gerenciado com contrato formal e cronograma definido.</p>
+      </div>
+
+      <div class="exec-badge">
+        <div class="eb-dot"></div>
+        <span class="eb-text" contenteditable="true">Proposta elaborada após visita técnica e levantamento dimensional presencial</span>
+      </div>
+    </div>
+
+    <div class="footer-brand" contenteditable="true">MadeirArte Marcenaria · (11) 3000-0000 · contato@madeirarte.com.br</div>
+    <div class="page-num">01 / 06</div>
+  </div>
+
+  <!-- ════════════ PÁGINA 2 — ESPECIFICAÇÕES TÉCNICAS ════════════ -->
+  <div class="page">
+    <div class="p-header">
+      <div class="ph-logo">
+        <div class="ph-mark">M</div>
+        <span class="ph-name">MadeirArte Marcenaria</span>
+      </div>
+      <div class="ph-right">
+        <div>Orçamento <strong contenteditable="true">ORC-2026-0142</strong></div>
+        <div>Cliente <strong contenteditable="true">Maria Oliveira</strong></div>
+      </div>
+    </div>
+
+    <div class="p-content">
+      <div class="section-label">Página 02 — Especificações Técnicas</div>
+      <hr class="gold-rule-sm"/>
+
+      <div class="spec-grid">
+
+        <div class="spec-block">
+          <div class="sb-head">
+            <div class="sh-icon">🪵</div>
+            <h4>Materiais — Painéis e Chapas</h4>
+          </div>
+          <div class="sb-body">
+            <div class="two-col">
+              <div>
+                <div class="data-row"><span class="dr-label">Fabricante (MDF)</span><span class="dr-val" contenteditable="true">Arauco</span></div>
+                <div class="data-row"><span class="dr-label">Linha / Coleção</span><span class="dr-val" contenteditable="true">BP Soft Premium</span></div>
+                <div class="data-row"><span class="dr-label">Espessura</span><span class="dr-val" contenteditable="true">18mm (estrutural) / 15mm (lateral)</span></div>
+              </div>
+              <div>
+                <div class="data-row"><span class="dr-label">Cor / Padrão</span><span class="dr-val" contenteditable="true">BP102 — Branco Texture Soft</span></div>
+                <div class="data-row"><span class="dr-label">Acabamento</span><span class="dr-val" contenteditable="true">Texturizado soft-touch biface</span></div>
+                <div class="data-row"><span class="dr-label">Certificações</span><span class="dr-val" contenteditable="true">CARB2 / ABNT NBR 15316</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="spec-block">
+          <div class="sb-head">
+            <div class="sh-icon">⚙️</div>
+            <h4>Ferragens e Sistemas de Movimento</h4>
+          </div>
+          <div class="sb-body">
+            <div class="spec-cols">
+              <div class="spec-item" contenteditable="true">Dobradiças com amortecedor Blumotion 110°</div>
+              <div class="spec-item" contenteditable="true">Corrediças telescópicas Tandem 560H — 40kg</div>
+              <div class="spec-item" contenteditable="true">Puxadores perfil alumínio anodizado fosco</div>
+              <div class="spec-item" contenteditable="true">Pés niveladores reguláveis 10cm</div>
+              <div class="spec-item" contenteditable="true">Divisores internos em polipropileno</div>
+              <div class="spec-item" contenteditable="true">FIX SYSTEM de montagem estrutural</div>
+              <div class="spec-item" contenteditable="true">Sistema push de abertura (sem puxador)</div>
+              <div class="spec-item" contenteditable="true">Desempenadores de porta ocultos</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="spec-block">
+          <div class="sb-head">
+            <div class="sh-icon">🪨</div>
+            <h4>Tampo / Bancada</h4>
+          </div>
+          <div class="sb-body">
+            <div class="three-col">
+              <div><div class="data-row" style="flex-direction:column"><span class="dr-label">Material</span><span class="dr-val" contenteditable="true">Silestone Quartz</span></div></div>
+              <div><div class="data-row" style="flex-direction:column"><span class="dr-label">Cor / Modelo</span><span class="dr-val" contenteditable="true">Bianco Calacatta</span></div></div>
+              <div><div class="data-row" style="flex-direction:column"><span class="dr-label">Espessura</span><span class="dr-val" contenteditable="true">20mm · bordas lapadas</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="spec-block">
+          <div class="sb-head">
+            <div class="sh-icon">✨</div>
+            <h4>Itens Inclusos na Proposta</h4>
+          </div>
+          <div class="sb-body">
+            <div class="inclusos-grid">
+              <div class="incluso-item"><div class="ii-check">✓</div><span contenteditable="true">Projeto técnico completo</span></div>
+              <div class="incluso-item"><div class="ii-check">✓</div><span contenteditable="true">Projeto 3D renderizado</span></div>
+              <div class="incluso-item"><div class="ii-check">✓</div><span contenteditable="true">Fabricação CNC de precisão</span></div>
+              <div class="incluso-item"><div class="ii-check">✓</div><span contenteditable="true">Embalagem individual de peças</span></div>
+              <div class="incluso-item"><div class="ii-check">✓</div><span contenteditable="true">Transporte e frete incluso</span></div>
+              <div class="incluso-item"><div class="ii-check">✓</div><span contenteditable="true">Instalação por equipe técnica</span></div>
+              <div class="incluso-item"><div class="ii-check">✓</div><span contenteditable="true">Ajustes e regulagens finais</span></div>
+              <div class="incluso-item"><div class="ii-check">✓</div><span contenteditable="true">Contrato formal com prazo</span></div>
+              <div class="incluso-item"><div class="ii-check">✓</div><span contenteditable="true">Visita pós-instalação (30 dias)</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="footer-brand">MadeirArte Marcenaria · (11) 3000-0000 · contato@madeirarte.com.br</div>
+    <div class="page-num">02 / 06</div>
+  </div>
+
+  <!-- ════════════ PÁGINA 3 — DIFERENCIAIS ════════════ -->
+  <div class="page page-diferenciais">
+    <div class="p-header" style="background:var(--paper)">
+      <div class="ph-logo">
+        <div class="ph-mark">M</div>
+        <span class="ph-name">MadeirArte Marcenaria</span>
+      </div>
+      <div class="ph-right">
+        <div>Orçamento <strong contenteditable="true">ORC-2026-0142</strong></div>
+        <div>Cliente <strong contenteditable="true">Maria Oliveira</strong></div>
+      </div>
+    </div>
+
+    <div class="dif-hero">
+      <div class="dh-eyebrow">Por que escolher a MadeirArte</div>
+      <div class="dh-title" contenteditable="true">Nossos Diferenciais</div>
+      <div class="dh-sub" contenteditable="true">Cada projeto é tratado como único. Combinamos tecnologia de ponta com artesanato especializado para entregar excelência em cada detalhe.</div>
+    </div>
+
+    <div class="dif-cards">
+      <div class="dif-card">
+        <div class="dc-num">01</div>
+        <div class="dc-title" contenteditable="true">Corte CNC de Precisão Milimétrica</div>
+        <div class="dc-desc" contenteditable="true">Equipamentos de última geração garantem corte preciso com tolerância de 0,1mm. Sem desperdício, sem retrabalho.</div>
+        <div class="dc-icon">⚙️</div>
+      </div>
+      <div class="dif-card">
+        <div class="dc-num">02</div>
+        <div class="dc-title" contenteditable="true">Ferragens Europeias com Garantia</div>
+        <div class="dc-desc" contenteditable="true">Trabalhamos exclusivamente com Blum, Grass e Häfele — marcas líderes mundiais com garantia mínima de 5 anos.</div>
+        <div class="dc-icon">🔩</div>
+      </div>
+      <div class="dif-card">
+        <div class="dc-num">03</div>
+        <div class="dc-title" contenteditable="true">Projeto 3D Profissional Incluso</div>
+        <div class="dc-desc" contenteditable="true">Visualize seu ambiente completo antes da fabricação. Aprovação item por item com renderização fotorrealista.</div>
+        <div class="dc-icon">🖥️</div>
+      </div>
+      <div class="dif-card">
+        <div class="dc-num">04</div>
+        <div class="dc-title" contenteditable="true">Equipe Técnica Especializada</div>
+        <div class="dc-desc" contenteditable="true">Montadores certificados, uniformizados e com ferramental próprio. Obra limpa e organizada do início ao fim.</div>
+        <div class="dc-icon">👷</div>
+      </div>
+      <div class="dif-card">
+        <div class="dc-num">05</div>
+        <div class="dc-title" contenteditable="true">Contrato Formal e Prazo Definido</div>
+        <div class="dc-desc" contenteditable="true">Cada projeto tem contrato com cláusulas claras de prazo, escopo e garantias. Segurança jurídica para o cliente.</div>
+        <div class="dc-icon">📋</div>
+      </div>
+      <div class="dif-card">
+        <div class="dc-num">06</div>
+        <div class="dc-title" contenteditable="true">Materiais Certificados ABNT</div>
+        <div class="dc-desc" contenteditable="true">100% dos painéis possuem rastreabilidade, laudos técnicos e certificação CARB2 para baixa emissão de formaldeído.</div>
+        <div class="dc-icon">🏅</div>
+      </div>
+    </div>
+
+    <div class="guarantee-strip">
+      <div class="gs-text">
+        <h4>Garantia Total do Projeto</h4>
+        <p contenteditable="true">Cobertura completa contra defeitos de fabricação, instalação e ferragens durante o período de garantia.</p>
+      </div>
+      <div class="gs-badges">
+        <div class="gs-badge">
+          <span class="gsb-val" contenteditable="true">5 anos</span>
+          <span class="gsb-lbl">Estrutural</span>
+        </div>
+        <div class="gs-badge">
+          <span class="gsb-val" contenteditable="true">5 anos</span>
+          <span class="gsb-lbl">Ferragens</span>
+        </div>
+        <div class="gs-badge">
+          <span class="gsb-val" contenteditable="true">2 anos</span>
+          <span class="gsb-lbl">Montagem</span>
+        </div>
+        <div class="gs-badge">
+          <span class="gsb-val" contenteditable="true">1 ano</span>
+          <span class="gsb-lbl">Ajustes</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-brand">MadeirArte Marcenaria · (11) 3000-0000 · contato@madeirarte.com.br</div>
+    <div class="page-num">03 / 06</div>
+  </div>
+
+  <!-- ════════════ PÁGINA 4 — INVESTIMENTO ════════════ -->
+  <div class="page page-invest">
+    <div class="invest-header">
+      <div class="ih-logo">
+        <div class="ih-mark">M</div>
+        <span class="ih-name">MadeirArte Marcenaria</span>
+      </div>
+      <div class="ih-right">
+        <div>Orçamento <strong style="color:rgba(255,255,255,.6)" contenteditable="true">ORC-2026-0142</strong></div>
+        <div>Cliente <strong style="color:rgba(255,255,255,.6)" contenteditable="true">Maria Oliveira</strong></div>
+      </div>
+    </div>
+
+    <div class="invest-hero">
+      <div class="ih-eyebrow">Página 04 — Proposta Financeira</div>
+      <div class="ih-label">Investimento Total do Projeto</div>
+      <div class="ih-valor">
+        <span class="ih-moeda" contenteditable="true">R$</span>
+        <span contenteditable="true">28.500</span><span style="font-size:2.5rem;font-weight:400;opacity:.5">,00</span>
+      </div>
+      <div class="ih-sub" contenteditable="true">Cozinha completa + Lavanderia integrada · Medidas e especificações conforme projeto</div>
+
+      <table class="pgto-table" style="width:100%">
+        <thead>
+          <tr>
+            <th>Forma de Pagamento</th>
+            <th>Entrada</th>
+            <th>Parcelamento</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="pgto-destaque">
+            <td><span contenteditable="true">À vista — PIX / Transferência</span> <span class="pgto-tag">-5%</span></td>
+            <td contenteditable="true">R$ 27.075,00</td>
+            <td contenteditable="true">—</td>
+            <td contenteditable="true">R$ 27.075,00</td>
+          </tr>
+          <tr>
+            <td contenteditable="true">2× — Cheque / Transferência</td>
+            <td contenteditable="true">R$ 14.250,00</td>
+            <td contenteditable="true">2× de R$ 14.250,00</td>
+            <td contenteditable="true">R$ 28.500,00</td>
+          </tr>
+          <tr>
+            <td contenteditable="true">6× — Cartão / Boleto</td>
+            <td contenteditable="true">R$ 5.700,00</td>
+            <td contenteditable="true">5× de R$ 4.560,00</td>
+            <td contenteditable="true">R$ 28.500,00</td>
+          </tr>
+          <tr>
+            <td contenteditable="true">12× — Cartão de Crédito</td>
+            <td contenteditable="true">—</td>
+            <td contenteditable="true">12× de R$ 2.660,00</td>
+            <td contenteditable="true">R$ 31.920,00 (+12%)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="recebimento-row">
+      <div class="rec-chip">
+        <div class="rc-icon">📱</div>
+        <div class="rc-label">PIX</div>
+        <div class="rc-val" contenteditable="true">00.000.000/0001-00</div>
+      </div>
+      <div class="rec-chip">
+        <div class="rc-icon">🏦</div>
+        <div class="rc-label">Transferência</div>
+        <div class="rc-val" contenteditable="true">Ag. 0001 · CC 12345-6</div>
+      </div>
+      <div class="rec-chip">
+        <div class="rc-icon">💳</div>
+        <div class="rc-label">Cartão</div>
+        <div class="rc-val" contenteditable="true">Visa / Master / Elo</div>
+      </div>
+      <div class="rec-chip">
+        <div class="rc-icon">📄</div>
+        <div class="rc-label">Boleto</div>
+        <div class="rc-val" contenteditable="true">Vencimento D+3</div>
+      </div>
+    </div>
+
+    <div class="page-num" style="color:rgba(255,255,255,.3)">04 / 06</div>
+  </div>
+
+  <!-- ════════════ PÁGINA 5 — PRAZO & CRONOGRAMA ════════════ -->
+  <div class="page">
+    <div class="p-header">
+      <div class="ph-logo">
+        <div class="ph-mark">M</div>
+        <span class="ph-name">MadeirArte Marcenaria</span>
+      </div>
+      <div class="ph-right">
+        <div>Orçamento <strong contenteditable="true">ORC-2026-0142</strong></div>
+        <div>Cliente <strong contenteditable="true">Maria Oliveira</strong></div>
+      </div>
+    </div>
+
+    <div class="p-content">
+      <div class="section-label">Página 05 — Prazo e Cronograma</div>
+      <hr class="gold-rule-sm"/>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-step">Etapa 01</div>
+          <h4 contenteditable="true">Aprovação do Projeto 3D</h4>
+          <p contenteditable="true">Envio do projeto renderizado para aprovação do cliente. Ajustes inclusos sem custo adicional. A fabricação só inicia após aprovação formal.</p>
+          <span class="tl-badge" contenteditable="true">5 dias úteis após assinatura</span>
+        </div>
+        <div class="tl-item">
+          <div class="tl-step">Etapa 02</div>
+          <h4 contenteditable="true">Fabricação em Fábrica</h4>
+          <p contenteditable="true">Corte CNC, usinagem, colagem de bordas e acabamentos realizados em unidade própria. Cada peça é etiquetada e inspecionada.</p>
+          <span class="tl-badge" contenteditable="true">25 dias úteis de produção</span>
+        </div>
+        <div class="tl-item">
+          <div class="tl-step">Etapa 03</div>
+          <h4 contenteditable="true">Entrega e Montagem</h4>
+          <p contenteditable="true">Entrega agendada conforme disponibilidade da obra. Montagem por equipe técnica especializada com ferramental próprio e proteção do piso.</p>
+          <span class="tl-badge" contenteditable="true">3 a 5 dias de montagem</span>
+        </div>
+        <div class="tl-item">
+          <div class="tl-step">Etapa 04</div>
+          <h4 contenteditable="true">Ajustes e Vistoria Final</h4>
+          <p contenteditable="true">Regulagem completa de ferragens, alinhamento de portas, nivelamento e limpeza pós-obra. Entrega formal com checklist assinado.</p>
+          <span class="tl-badge" contenteditable="true">Incluso na montagem</span>
+        </div>
+        <div class="tl-item tl-last">
+          <div class="tl-step">Etapa 05</div>
+          <h4 contenteditable="true">Visita de Acompanhamento (30 dias)</h4>
+          <p contenteditable="true">Após 30 dias da entrega, nossa equipe realiza visita gratuita para verificar regulagens e resolver quaisquer ajustes de acomodação.</p>
+          <span class="tl-badge" style="background:rgba(46,125,82,.1);border-color:rgba(46,125,82,.3);color:#2e7d52" contenteditable="true">Gratuita — incluso no contrato</span>
+        </div>
+      </div>
+
+      <div class="prazo-totais">
+        <div class="prazo-item">
+          <div class="pi-label">Prazo de Produção</div>
+          <div class="pi-val" contenteditable="true">25</div>
+          <div class="pi-unit">dias úteis</div>
+        </div>
+        <div class="prazo-item">
+          <div class="pi-label">Prazo de Instalação</div>
+          <div class="pi-val" contenteditable="true">5</div>
+          <div class="pi-unit">dias úteis</div>
+        </div>
+        <div class="prazo-item">
+          <div class="pi-label">Prazo Total Estimado</div>
+          <div class="pi-val" contenteditable="true">35</div>
+          <div class="pi-unit">dias corridos</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-brand">MadeirArte Marcenaria · (11) 3000-0000 · contato@madeirarte.com.br</div>
+    <div class="page-num">05 / 06</div>
+  </div>
+
+  <!-- ════════════ PÁGINA 6 — OBSERVAÇÕES & ASSINATURA ════════════ -->
+  <div class="page">
+    <div class="p-header">
+      <div class="ph-logo">
+        <div class="ph-mark">M</div>
+        <span class="ph-name">MadeirArte Marcenaria</span>
+      </div>
+      <div class="ph-right">
+        <div>Orçamento <strong contenteditable="true">ORC-2026-0142</strong></div>
+        <div>Cliente <strong contenteditable="true">Maria Oliveira</strong></div>
+      </div>
+    </div>
+
+    <div class="p-content">
+      <div class="section-label">Página 06 — Observações e Contrato</div>
+      <hr class="gold-rule-sm"/>
+
+      <div class="two-col" style="margin-bottom:5mm">
+        <div class="obs-box">
+          <div class="ob-label">Itens Não Inclusos</div>
+          <ul class="obs-list">
+            <li contenteditable="true">Obras civis, elétrica e hidráulica não estão inclusos</li>
+            <li contenteditable="true">Instalação de coifas, fogões e eletrodomésticos</li>
+            <li contenteditable="true">Serviços de pintura e revestimento</li>
+            <li contenteditable="true">Rufos, rodapés e perfis de acabamento de piso</li>
+          </ul>
+        </div>
+        <div class="obs-box">
+          <div class="ob-label">Condições da Obra</div>
+          <ul class="obs-list">
+            <li contenteditable="true">Obra deve estar concluída (paredes, piso e elétrica finalizados)</li>
+            <li contenteditable="true">Local deve estar limpo e com acesso facilitado</li>
+            <li contenteditable="true">Tomadas e pontos de água conforme projeto aprovado</li>
+            <li contenteditable="true">Acesso livre para elevadores e/ou escadas de serviço</li>
+          </ul>
+        </div>
+        <div class="obs-box">
+          <div class="ob-label">Ajustes Estruturais</div>
+          <ul class="obs-list">
+            <li contenteditable="true">Paredes desniveladas acima de 5mm serão cobradas à parte</li>
+            <li contenteditable="true">Colunas ou tubulações ocultas podem alterar o projeto</li>
+            <li contenteditable="true">Medidas revisadas na visita técnica prevalecem sobre plantas</li>
+          </ul>
+        </div>
+        <div class="obs-box">
+          <div class="ob-label">Validade e Condições Gerais</div>
+          <ul class="obs-list">
+            <li contenteditable="true">Proposta válida por 30 dias da data de emissão</li>
+            <li contenteditable="true">Preços sujeitos a reajuste em caso de variação cambial superior a 8%</li>
+            <li contenteditable="true">Material confirmado apenas após sinal de 30% do valor total</li>
+            <li contenteditable="true">Foro eleito: Comarca de São Paulo / SP</li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="gold-rule" style="margin:6mm 0"/>
+
+      <div class="assinaturas">
+        <div class="assin-block">
+          <div style="height:28mm"></div>
+          <div class="assin-line"></div>
+          <div class="as-cargo">Responsável pela Empresa</div>
+          <div class="as-nome" contenteditable="true">Carlos Madeira</div>
+          <div class="as-cnpj" contenteditable="true">CNPJ 00.000.000/0001-00</div>
+        </div>
+        <div class="assin-block">
+          <div style="height:28mm"></div>
+          <div class="assin-line"></div>
+          <div class="as-cargo">Aprovação do Cliente</div>
+          <div class="as-nome" contenteditable="true">Maria Oliveira</div>
+          <div class="as-cnpj" contenteditable="true">CPF 000.000.000-00 · Data: ___/___/______</div>
+        </div>
+      </div>
+
+      <div class="validade-lacre">
+        <div class="vl-icon">⏳</div>
+        <div class="vl-text">Esta proposta é válida até <span contenteditable="true">27/03/2026</span>. Após esta data os valores deverão ser recotados.</div>
+      </div>
+    </div>
+
+    <div class="footer-brand">MadeirArte Marcenaria · (11) 3000-0000 · contato@madeirarte.com.br</div>
+    <div class="page-num">06 / 06</div>
+  </div>
+
+</div><!-- /pages-wrap -->
+
+</div>
+
+</div>
+
+
+<script>
+// ════════════════════════════════════════════════════════════════════
+// ERP MARCENARIA — Frontend v2.0 com integração API REST
+// ════════════════════════════════════════════════════════════════════
+
+// ── Config ──────────────────────────────────────────────────────────
+const API_BASE = 'http://localhost:3001/api';
+
+const TOKEN_KEY = 'erp_jwt_token';
+const USER_KEY  = 'erp_usuario';
+
+// ── Utilitários DOM ─────────────────────────────────────────────────
+const g   = id => document.getElementById(id);
+const fmt = v  => new Intl.NumberFormat('pt-BR', { style:'currency', currency:'BRL' }).format(v || 0);
+const num = v  => parseFloat((v + '').replace(',', '.')) || 0;
+let toastT, mdfId = 0, ferrId = 0, acessId = 0, manualVenda = false;
+
+// ── Toast ────────────────────────────────────────────────────────────
+function toast(msg, ms = 2600) {
+  const el = g('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => el.classList.remove('show'), ms);
+}
+
+// ── Loading overlay ──────────────────────────────────────────────────
+function loading(show, msg = 'Carregando...') {
+  const el = g('overlay-loading');
+  if (show) { g('ol-msg').textContent = msg; el.classList.add('show'); }
+  else el.classList.remove('show');
+}
+
+// ════════════════════════════════════════════════════════════════════
+// AUTENTICAÇÃO
+// ════════════════════════════════════════════════════════════════════
+function getToken()   { return localStorage.getItem(TOKEN_KEY); }
+function clearToken() { localStorage.removeItem(TOKEN_KEY); localStorage.removeItem(USER_KEY); }
+function getUsuario() {
+  try { return JSON.parse(localStorage.getItem(USER_KEY)); } catch { return null; }
+}
+
+function estaAutenticado() {
+  const t = getToken();
+  if (!t) return false;
+  try {
+    const p = JSON.parse(atob(t.split('.')[1]));
+    return p.exp > Date.now() / 1000;
+  } catch { return false; }
+}
+
+function fazerLogout() {
+  clearToken();
+  location.href = `${location.origin}/login.html`;
+}
+
+function atualizarAuthBar() {
+  const u = getUsuario();
+  if (!u) return;
+  g('ab-nome').textContent  = u.nome || u.email;
+  g('ab-perfil').textContent = (u.perfil || '').charAt(0).toUpperCase() + (u.perfil || '').slice(1);
+}
+
+// ════════════════════════════════════════════════════════════════════
+// API FETCH — com token JWT + tratamento de erros
+// ════════════════════════════════════════════════════════════════════
+async function apiFetch(path, opts = {}) {
+  const token = getToken();
+  const res = await fetch(`${API_BASE}${path}`, {
+    ...opts,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...opts.headers,
+    },
+  });
+  if (res.status === 401) { clearToken(); location.href = `${location.origin}/login.html`; throw new Error('Sessão expirada'); }
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw Object.assign(new Error(data.erro || `Erro HTTP ${res.status}`), { status: res.status });
+  return data;
+}
+
+// ── Verificar status do backend ──────────────────────────────────────
+let _apiOnline = null;
+
+async function verificarBackend() {
+  try {
+    const r = await fetch(`${API_BASE}`, { signal: AbortSignal.timeout(2500) });
+    _apiOnline = r.ok;
+  } catch { _apiOnline = false; }
+
+  const dot = g('api-dot');
+  const txt = g('api-status-txt');
+  if (_apiOnline) {
+    dot.className = 'api-dot online';
+    txt.textContent = 'API online';
+  } else {
+    dot.className = 'api-dot offline';
+    txt.textContent = 'API offline';
+  }
+  return _apiOnline;
+}
+
+// ════════════════════════════════════════════════════════════════════
+// TABS
+// ════════════════════════════════════════════════════════════════════
+function showTab(id) {
+  ['interno','cliente','preview','historico'].forEach(t => {
+    const panel = g('panel-' + t);
+    const tab   = g('tab-' + t);
+    if (panel) panel.style.display = (t === id) ? 'block' : 'none';
+    if (tab)   tab.classList.toggle('active', t === id);
+  });
+  if (id === 'historico') renderHistorico();
+  if (id === 'preview')   updateCliente();
+  if (id === 'cliente')   updateCliente();
+}
+
+// ════════════════════════════════════════════════════════════════════
+// CÁLCULOS
+// ════════════════════════════════════════════════════════════════════
+function makeRow(bodyId, rowId, cells) {
+  const tr = document.createElement('tr'); tr.id = rowId;
+  cells.forEach(c => { const td = document.createElement('td'); td.innerHTML = c; tr.appendChild(td); });
+  return tr;
+}
+
+function addMDF(desc, qty, price) {
+  mdfId++; const id = mdfId;
+  const d = desc || ''; const q = qty != null ? qty : 15; const p = price != null ? price : 0;
+  const rowId = 'mdf-r-' + id;
+  const tr = makeRow('mdf-body', rowId, [
+    `<input type="text" placeholder="Descrição" value="${d}" oninput="calcTbl('mdf')"/>`,
+    `<td class="qty-cell"><input type="number" value="${q}" min="0" step="0.5" oninput="calcTbl('mdf')"/></td>`,
+    `<td class="price-cell"><input type="number" value="${p}" min="0" step="0.01" oninput="calcTbl('mdf')"/></td>`,
+    `<td class="total-cell sub-cell" id="mdf-s-${id}">${fmt(q * p)}</td>`,
+    `<td><button class="btn btn-ghost btn-sm" style="padding:4px 8px;color:var(--red)" onclick="delRow('${rowId}','mdf')">✕</button></td>`,
+  ]);
+  g('mdf-body').appendChild(tr); calcTbl('mdf');
+}
+
+function addFerr(desc, qty, price) {
+  ferrId++; const id = ferrId;
+  const d = desc || ''; const q = qty != null ? qty : 0; const p = price != null ? price : 0;
+  const rowId = 'ferr-r-' + id;
+  const tr = makeRow('ferr-body', rowId, [
+    `<input type="text" placeholder="Descrição" value="${d}" oninput="calcTbl('ferr')"/>`,
+    `<td class="qty-cell"><input type="number" value="${q}" min="0" step="1" oninput="calcTbl('ferr')"/></td>`,
+    `<td class="price-cell"><input type="number" value="${p}" min="0" step="0.01" oninput="calcTbl('ferr')"/></td>`,
+    `<td class="total-cell sub-cell" id="ferr-s-${id}">${fmt(q * p)}</td>`,
+    `<td><button class="btn btn-ghost btn-sm" style="padding:4px 8px;color:var(--red)" onclick="delRow('${rowId}','ferr')">✕</button></td>`,
+  ]);
+  g('ferr-body').appendChild(tr); calcTbl('ferr');
+}
+
+function addAcess(desc, qty, price) {
+  acessId++; const id = acessId;
+  const d = desc || ''; const q = qty != null ? qty : 0; const p = price != null ? price : 0;
+  const rowId = 'acess-r-' + id;
+  const tr = makeRow('acess-body', rowId, [
+    `<input type="text" placeholder="Descrição" value="${d}" oninput="calcTbl('acess')"/>`,
+    `<td class="qty-cell"><input type="number" value="${q}" min="0" step="1" oninput="calcTbl('acess')"/></td>`,
+    `<td class="price-cell"><input type="number" value="${p}" min="0" step="0.01" oninput="calcTbl('acess')"/></td>`,
+    `<td class="total-cell sub-cell" id="acess-s-${id}">${fmt(q * p)}</td>`,
+    `<td><button class="btn btn-ghost btn-sm" style="padding:4px 8px;color:var(--red)" onclick="delRow('${rowId}','acess')">✕</button></td>`,
+  ]);
+  g('acess-body').appendChild(tr); calcTbl('acess');
+}
+
+function delRow(rowId, tbl) { const el = g(rowId); if (el) { el.remove(); calcTbl(tbl); } }
+
+function calcTbl(tbl) {
+  let total = 0;
+  document.querySelectorAll(`#${tbl}-body tr`).forEach(tr => {
+    const nums = tr.querySelectorAll('input[type=number]');
+    const q = num(nums[0]?.value); const p = num(nums[1]?.value);
+    const sub = q * p; total += sub;
+    const sid = tbl + '-s-' + tr.id.split('-').pop();
+    const el = g(sid); if (el) el.textContent = fmt(sub);
+  });
+  const subEl = g(`${tbl}-subtotal`);
+  if (subEl) subEl.textContent = fmt(total);
+  calc();
+}
+
+function sumTbl(tbl) {
+  let t = 0;
+  document.querySelectorAll(`#${tbl}-body tr`).forEach(tr => {
+    const ns = tr.querySelectorAll('input[type=number]');
+    const q = num(ns[0]?.value), p = num(ns[1]?.value);
+    t += q * p;
+  });
+  return t;
+}
+
+function calc() {
+  const mdf  = sumTbl('mdf');
+  const ferr = sumTbl('ferr');
+  const acess = sumTbl('acess');
+  const corte = num(g('c-corte').value);
+  const fur   = num(g('c-furacao').value);
+  const fita  = num(g('c-fita').value);
+  const mont  = num(g('c-montagem').value);
+  const frete = num(g('c-frete').value);
+  const proj  = num(g('c-projeto').value);
+  const opSub = corte + fur + fita + mont + frete + proj;
+
+  // Totais intermediários
+  const setEl = (id, v) => { const el = g(id); if (el) el.textContent = fmt(v); };
+  setEl('mdf-subtotal',  mdf);
+  setEl('ferr-subtotal', ferr);
+  setEl('acess-subtotal', acess);
+  setEl('op-subtotal',   opSub);
+
+  const base    = mdf + ferr + acess + opSub;
+  const comAtivo = g('cb-comm')?.checked;
+  const comPct   = num(g('comm-pct')?.value) / 100;
+  const comVal   = comAtivo ? base * comPct : 0;
+
+  const custo = base + comVal;
+  setEl('custo-total', custo);
+  const custoEl = g('custo-total');
+  if (custoEl) custoEl.textContent = fmt(custo);
+
+  // Resumo
+  setEl('res-mdf',  mdf);
+  setEl('res-ferr', ferr);
+  setEl('res-acess', acess);
+  setEl('res-op',   opSub);
+  setEl('res-comm', comVal);
+  setEl('res-base', custo);
+
+  if (!manualVenda) {
+    const margem = num(g('margem-range')?.value) / 100;
+    const vendaSug = custo * (1 + margem);
+    const lucro    = vendaSug - custo;
+    const lucroPct = custo > 0 ? (lucro / custo * 100) : 0;
+
+    setEl('venda-sugerida', vendaSug);
+    const vendaEl = g('venda-final');
+    if (vendaEl) vendaEl.value = vendaSug.toFixed(2);
+    setEl('lucro-val', lucro);
+    setEl('margem-display', lucroPct.toFixed(1) + '%');
+
+    const pct = custo > 0 ? Math.min((lucro / (custo + lucro)) * 100, 95) : 0;
+    const fill = g('pb-fill'); if (fill) fill.style.width = pct + '%';
+  }
+
+  calcPgtoInterno();
+}
+
+function onMargem(v) { g('margem-val').textContent = v + '%'; manualVenda = false; calc(); }
+
+function onVendaManual(v) {
+  manualVenda = true;
+  const custoEl = g('custo-total');
+  const custoStr = custoEl ? custoEl.textContent.replace(/[^\d,]/g, '').replace(',', '.') : '0';
+  const custo = parseFloat(custoStr) || 0;
+  const venda = num(v);
+  if (venda > 0 && custo > 0) {
+    const lucro = venda - custo;
+    const m = ((lucro / custo) * 100).toFixed(1);
+    g('margem-val').textContent = m + '%';
+    g('margem-range').value = Math.min(Math.max(parseFloat(m), 5), 300);
+    const el = g('lucro-val'); if (el) el.textContent = fmt(lucro);
+    const pct = Math.min((lucro / venda) * 100, 95);
+    const fill = g('pb-fill'); if (fill) fill.style.width = pct + '%';
+  }
+}
+
+function sync() { updateCliente(); }
+
+function verCliente() {
+  const v = num(g('venda-final').value);
+  showTab(v > 0 ? 'cliente' : 'interno');
+  if (v <= 0) toast('⚠️ Defina o valor de venda antes de ver o preview do cliente');
+}
+
+// ════════════════════════════════════════════════════════════════════
+// COLETAR DADOS DO FORMULÁRIO
+// ════════════════════════════════════════════════════════════════════
+function coletarDados() {
+  calc();
+  const custoEl  = g('custo-total');
+  const custoStr = custoEl ? custoEl.textContent.replace(/[^\d,]/g, '').replace(',', '.') : '0';
+  const custo    = parseFloat(custoStr) || 0;
+  const venda    = parseFloat(g('venda-final').value) || 0;
+  const margem   = parseFloat(g('margem-range').value) || 0;
+  const lucro    = venda - custo;
+
+  const id = g('f-id').value.trim() || gerarIdLocal();
+  g('f-id').value = id;
+
+  // Coleta itens das tabelas
+  const itens = [];
+  const coletarItens = (tbl, cat) => {
+    document.querySelectorAll(`#${tbl}-body tr`).forEach(tr => {
+      const inputs = tr.querySelectorAll('input');
+      const desc = inputs[0]?.value?.trim();
+      if (!desc) return;
+      const qty = num(inputs[1]?.value) || 1;
+      const vu  = num(inputs[2]?.value) || 0;
+      itens.push({ categoria: cat, descricao: desc, quantidade: qty, valor_unit: vu, total: qty * vu });
+    });
+  };
+  coletarItens('mdf',  'mdf');
+  coletarItens('ferr', 'ferragem');
+  coletarItens('acess','acessorio');
+
+  return {
+    id,
+    cliente_nome:    g('f-cliente').value.trim() || '—',
+    tipo_projeto:    getTipo() || '',
+    responsavel:     g('f-resp').value.trim() || '',
+    data_orc:        g('f-data').value || new Date().toISOString().split('T')[0],
+    prazo_dias:      parseInt(g('f-prazo').value) || 30,
+    observacoes:     g('f-obs')?.value?.trim() || '',
+    custo_mdf:       sumTbl('mdf'),
+    custo_ferr:      sumTbl('ferr'),
+    custo_acess:     sumTbl('acess'),
+    custo_corte:     num(g('c-corte').value),
+    custo_furacao:   num(g('c-furacao').value),
+    custo_fita:      num(g('c-fita').value),
+    custo_montagem:  num(g('c-montagem').value),
+    custo_frete:     num(g('c-frete').value),
+    custo_projeto:   num(g('c-projeto').value),
+    custo_total:     custo,
+    comissao_pct:    g('cb-comm')?.checked ? num(g('comm-pct')?.value) : 0,
+    comissao_val:    g('cb-comm')?.checked ? custo * num(g('comm-pct')?.value) / 100 : 0,
+    margem_pct:      margem,
+    venda_sugerida:  venda,
+    venda_final:     venda,
+    lucro,
+    pgto_desc_avista: num(g('pgto-avista-desc')?.value) || 5,
+    pgto_juros_10x:   num(g('pgto-10x-juros')?.value)  || 8,
+    pgto_juros_12x:   num(g('pgto-12x-juros')?.value)  || 12,
+    pgto_pix:        g('pgto-pix')?.value    || '',
+    pgto_banco:      g('pgto-banco')?.value  || '',
+    pgto_cartao:     g('pgto-cartao')?.value || '',
+    pgto_boleto:     g('pgto-boleto')?.value || '',
+    itens,
+  };
+}
+
+// ════════════════════════════════════════════════════════════════════
+// SALVAR — via API com fallback localStorage
+// ════════════════════════════════════════════════════════════════════
+async function salvar() {
+  const dados = coletarDados();
+  if (!dados.cliente_nome || dados.cliente_nome === '—' || !g('f-cliente').value.trim()) {
+    toast('⚠️ Preencha o nome do cliente antes de salvar'); return;
+  }
+
+  const online = _apiOnline;
+
+  if (online) {
+    loading(true, 'Salvando orçamento...');
+    try {
+      const idExiste = g('f-id').dataset.existeApi === 'true';
+      let resultado;
+      if (idExiste) {
+        resultado = await apiFetch(`/orcamentos/${dados.id}`, {
+          method: 'PUT', body: JSON.stringify(dados)
+        });
+        toast(`✅ Orçamento ${dados.id} atualizado na API`);
+      } else {
+        resultado = await apiFetch('/orcamentos', {
+          method: 'POST', body: JSON.stringify(dados)
+        });
+        g('f-id').value = resultado.id;
+        g('f-id').dataset.existeApi = 'true';
+        toast(`✅ Orçamento ${resultado.id} salvo na API`);
+      }
+      // Salva também no localStorage como cache
+      salvarLocalCache(dados);
+      renderHistorico();
+    } catch (e) {
+      toast(`⚠️ Erro API: ${e.message} — Salvo localmente`, 4000);
+      salvarLocal(dados);
+    } finally { loading(false); }
+  } else {
+    salvarLocal(dados);
+    toast('💾 Salvo localmente (API offline)');
+    renderHistorico();
+  }
+}
+
+// ── localStorage helpers ─────────────────────────────────────────────
+const DB_KEY = 'erp_orc_db';
+function dbLoad() { try { return JSON.parse(localStorage.getItem(DB_KEY) || '[]'); } catch { return []; } }
+function dbSave(arr) { localStorage.setItem(DB_KEY, JSON.stringify(arr)); }
+
+function salvarLocal(dados) {
+  const arr = dbLoad();
+  const idx = arr.findIndex(o => o.id === dados.id);
+  const local = {
+    id: dados.id, cliente: dados.cliente_nome, tipo: dados.tipo_projeto,
+    resp: dados.responsavel, data: dados.data_orc, prazo: dados.prazo_dias,
+    custo: dados.custo_total, venda: dados.venda_final, lucro: dados.lucro,
+    margem: dados.margem_pct, status: 'aberto',
+    criadoEm: new Date().toISOString(),
+    _local: true, _dados: dados,
+  };
+  if (idx >= 0) { local.status = arr[idx].status; local.criadoEm = arr[idx].criadoEm; arr[idx] = local; }
+  else arr.unshift(local);
+  dbSave(arr);
+}
+
+function salvarLocalCache(dados) {
+  // Cache da resposta da API no localStorage para uso offline
+  const arr = dbLoad();
+  const idx = arr.findIndex(o => o.id === dados.id);
+  const local = {
+    id: dados.id, cliente: dados.cliente_nome, tipo: dados.tipo_projeto,
+    resp: dados.responsavel, data: dados.data_orc, prazo: dados.prazo_dias,
+    custo: dados.custo_total, venda: dados.venda_final, lucro: dados.lucro,
+    margem: dados.margem_pct, status: 'aberto', criadoEm: new Date().toISOString(),
+    _local: false, _dados: dados,
+  };
+  if (idx >= 0) { local.status = arr[idx].status; local.criadoEm = arr[idx].criadoEm; arr[idx] = local; }
+  else arr.unshift(local);
+  dbSave(arr);
+}
+
+function gerarIdLocal() {
+  const ano = new Date().getFullYear();
+  const arr = dbLoad();
+  const seq = String(arr.length + 1).padStart(4, '0');
+  return `ORC-${ano}-${seq}`;
+}
+
+// ════════════════════════════════════════════════════════════════════
+// HISTÓRICO — combina API + localStorage
+// ════════════════════════════════════════════════════════════════════
+let filtroStatus = 'todos';
+let _todosOrc    = [];
+
+function setFiltro(chip) {
+  document.querySelectorAll('.hf-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  filtroStatus = chip.dataset.status;
+  filtrarHistorico();
+}
+
+function filtrarHistorico() {
+  const q = (g('hist-search').value || '').toLowerCase().trim();
+  const filtrado = _todosOrc.filter(o => {
+    const matchStatus = filtroStatus === 'todos' || o.status === filtroStatus;
+    const matchQ = !q ||
+      (o.cliente || '').toLowerCase().includes(q) ||
+      (o.id || '').toLowerCase().includes(q) ||
+      (o.tipo || '').toLowerCase().includes(q) ||
+      (o.resp || '').toLowerCase().includes(q);
+    return matchStatus && matchQ;
+  });
+  renderCards(filtrado);
+}
+
+async function renderHistorico() {
+  const online = _apiOnline;
+
+  if (online) {
+    loading(true, 'Carregando histórico...');
+    try {
+      const resp = await apiFetch('/orcamentos?limite=100&ordenar=criado_em&direcao=DESC');
+      const apiOrcs = (resp.dados || []).map(o => ({
+        id:       o.id,
+        cliente:  o.cliente_nome,
+        tipo:     o.tipo_projeto,
+        resp:     o.responsavel,
+        data:     o.data_orc,
+        prazo:    o.prazo_dias,
+        custo:    o.custo_total,
+        venda:    o.venda_final,
+        lucro:    o.lucro,
+        margem:   o.margem_pct,
+        status:   o.status,
+        criadoEm: o.criado_em,
+        _local:   false,
+        _raw:     o,
+      }));
+
+      // Mescla com orçamentos locais ainda não sincronizados
+      const locais = dbLoad().filter(l => l._local);
+      _todosOrc = [...apiOrcs, ...locais];
+
+      // Sincroniza cache local
+      dbSave(_todosOrc.map(o => ({ ...o, _raw: undefined })));
+    } catch (e) {
+      console.error('Erro ao carregar histórico da API:', e);
+      _todosOrc = dbLoad();
+    } finally { loading(false); }
+  } else {
+    _todosOrc = dbLoad();
+  }
+
+  // Stats
+  const fechados = _todosOrc.filter(o => o.status === 'fechado');
+  const enviados = _todosOrc.filter(o => o.status === 'enviado');
+  const fatTotal = fechados.reduce((s, o) => s + (o.venda || 0), 0);
+  const safeSet = (id, v) => { const el = g(id); if (el) el.textContent = v; };
+  safeSet('hs-total',        _todosOrc.length);
+  safeSet('hs-fechados',     fechados.length);
+  safeSet('hs-fechados-val', fmt(fatTotal));
+  safeSet('hs-enviados',     enviados.length);
+  safeSet('hs-faturamento',  fatTotal < 1000 ? fmt(fatTotal) : 'R$ ' + Math.round(fatTotal / 1000) + 'k');
+
+  filtrarHistorico();
+}
+
+function renderCards(lista) {
+  const el = g('hist-lista');
+  if (!lista.length) {
+    el.innerHTML = `<div class="hist-empty">
+      <div class="he-icon">🗂</div>
+      <p>Nenhum orçamento encontrado.<br>
+      <span style="font-size:.72rem;opacity:.6">Salve um orçamento na aba Interno para começar.</span></p>
+    </div>`;
+    return;
+  }
+
+  const stMap = {
+    aberto:   ['stb-aberto','Aberto'],
+    fechado:  ['stb-fechado','Fechado'],
+    enviado:  ['stb-enviado','Enviado'],
+    cancelado:['stb-cancelado','Cancelado'],
+  };
+
+  el.innerHTML = lista.map(o => {
+    const [stClass, stLabel] = stMap[o.status] || ['stb-aberto','Aberto'];
+    const dataFmt = o.data ? new Date(o.data + 'T12:00').toLocaleDateString('pt-BR') : '—';
+    const lucroColor = (o.lucro || 0) >= 0 ? 'var(--green)' : 'var(--red)';
+    const margemStr  = o.margem ? o.margem.toFixed(0) + '%' : '—';
+    const syncBadge  = o._local
+      ? '<span class="sync-badge sync-pending" title="Salvo localmente — pendente de sincronização">⚠ Local</span>'
+      : '<span class="sync-badge sync-ok" title="Sincronizado com o servidor">✓ API</span>';
+
+    return `<div class="orc-card" id="card-${o.id.replace(/[^a-z0-9]/gi,'_')}">
+      <div class="oc-left">
+        <div class="oc-id">${o.id} · ${dataFmt} ${syncBadge}</div>
+        <div class="oc-cliente">${o.cliente || '—'}</div>
+        <div class="oc-tipo">${o.tipo && o.tipo !== '—' ? '📐 ' + o.tipo : ''}</div>
+        <div class="oc-meta">
+          <span>👤 ${o.resp || '—'}</span>
+          <span>⏱ ${o.prazo || '—'} dias</span>
+          <span style="color:${lucroColor}">💰 Lucro ${fmt(o.lucro)} (${margemStr})</span>
+        </div>
+      </div>
+      <div class="oc-right">
+        <div>
+          <div class="oc-valor">${fmt(o.venda)}</div>
+          <div class="oc-custo">Custo: ${fmt(o.custo)}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end">
+          <span class="st-badge ${stClass}">${stLabel}</span>
+          <select class="status-select" onchange="alterarStatus('${o.id}',this.value,${!o._local})" title="Alterar status">
+            <option value="aberto"    ${o.status==='aberto'   ?'selected':''}>🔵 Aberto</option>
+            <option value="fechado"   ${o.status==='fechado'  ?'selected':''}>🟢 Fechado</option>
+            <option value="enviado"   ${o.status==='enviado'  ?'selected':''}>🔷 Enviado</option>
+            <option value="cancelado" ${o.status==='cancelado'?'selected':''}>🔴 Cancelado</option>
+          </select>
+        </div>
+        <div class="oc-actions">
+          <button class="btn btn-ghost btn-sm" onclick="carregarOrc('${o.id}',${!o._local})" title="Abrir no editor">✏️ Editar</button>
+          <button class="btn btn-ghost btn-sm" onclick="duplicarOrc('${o.id}')" title="Duplicar">⧉ Clonar</button>
+          <button class="btn btn-ghost btn-sm" onclick="excluirOrc('${o.id}',${!o._local})" style="color:var(--red);border-color:rgba(224,82,82,.2)" title="Excluir">🗑</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Alterar status ────────────────────────────────────────────────────
+async function alterarStatus(id, novoStatus, viaApi = false) {
+  const labels = { aberto:'🔵 Aberto', fechado:'🟢 Fechado', enviado:'🔷 Enviado', cancelado:'🔴 Cancelado' };
+
+  if (viaApi && _apiOnline) {
+    try {
+      await apiFetch(`/orcamentos/${id}/status`, {
+        method: 'PATCH',
+        body: JSON.stringify({ status: novoStatus }),
+      });
+    } catch (e) { toast(`⚠️ Erro ao alterar status: ${e.message}`, 3500); }
+  }
+
+  // Atualiza cache local também
+  const arr = dbLoad();
+  const idx = arr.findIndex(o => o.id === id);
+  if (idx >= 0) { arr[idx].status = novoStatus; dbSave(arr); }
+
+  toast('Status → ' + labels[novoStatus]);
+  renderHistorico();
+}
+
+// ── Carregar orçamento no editor ─────────────────────────────────────
+async function carregarOrc(id, viaApi = false) {
+  let o = null;
+
+  if (viaApi && _apiOnline) {
+    loading(true, 'Carregando orçamento...');
+    try {
+      const raw = await apiFetch(`/orcamentos/${id}`);
+      o = {
+        id: raw.id, cliente: raw.cliente_nome, tipo: raw.tipo_projeto,
+        resp: raw.responsavel, data: raw.data_orc, prazo: raw.prazo_dias,
+        custo: raw.custo_total, venda: raw.venda_final, margem: raw.margem_pct,
+        mdf: raw.custo_mdf, ferr: raw.custo_ferr, acess: raw.custo_acess,
+        corte: raw.custo_corte, furacao: raw.custo_furacao, fita: raw.custo_fita,
+        montagem: raw.custo_montagem, frete: raw.custo_frete, projeto: raw.custo_projeto,
+        itens: raw.itens || [],
+        pgto_pix: raw.pgto_pix, pgto_banco: raw.pgto_banco,
+        pgto_cartao: raw.pgto_cartao, pgto_boleto: raw.pgto_boleto,
+        pgto_desc_avista: raw.pgto_desc_avista, pgto_juros_10x: raw.pgto_juros_10x,
+        pgto_juros_12x: raw.pgto_juros_12x, comissao_pct: raw.comissao_pct,
+        _existeApi: true,
+      };
+    } catch (e) {
+      toast('⚠️ Erro ao carregar da API, usando cache local');
+    } finally { loading(false); }
+  }
+
+  if (!o) {
+    const arr = dbLoad();
+    const local = arr.find(x => x.id === id);
+    if (!local) { toast('Orçamento não encontrado'); return; }
+    o = local._dados ? { ...local, ...local._dados } : local;
+  }
+
+  // Limpa o formulário
+  g('mdf-body').innerHTML = ''; g('ferr-body').innerHTML = ''; g('acess-body').innerHTML = '';
+  mdfId = 0; ferrId = 0; acessId = 0; manualVenda = false;
+  document.querySelectorAll('.amb-chip').forEach(c => c.classList.remove('selected'));
+
+  // Preenche campos base
+  g('f-id').value      = o.id;
+  g('f-id').dataset.existeApi = o._existeApi ? 'true' : 'false';
+  g('f-cliente').value = o.cliente !== '—' ? (o.cliente || '') : '';
+  g('f-resp').value    = o.resp !== '—' ? (o.resp || '') : '';
+  g('f-data').value    = o.data || '';
+  g('f-prazo').value   = o.prazo || '';
+  if (g('f-tipo')) g('f-tipo').value = o.tipo !== '—' ? (o.tipo || '') : '';
+
+  // Chips de ambiente
+  if (o.tipo && o.tipo !== '—') {
+    const selecionados = o.tipo.split(' + ').map(s => s.trim());
+    document.querySelectorAll('.amb-chip').forEach(chip => {
+      const amb = AMBIENTES.find(a => a.id === chip.dataset.id);
+      if (amb && selecionados.includes(amb.name)) chip.classList.add('selected');
+    });
+  }
+
+  // Itens detalhados (da API) ou consolidados (do localStorage)
+  if (o.itens && o.itens.length > 0) {
+    o.itens.forEach(it => {
+      if (it.categoria === 'mdf')       addMDF(it.descricao,   it.quantidade, it.valor_unit);
+      else if (it.categoria === 'ferragem') addFerr(it.descricao, it.quantidade, it.valor_unit);
+      else                              addAcess(it.descricao,  it.quantidade, it.valor_unit);
+    });
+  } else {
+    if ((o.mdf  || 0) > 0) addMDF('MDF (carregado)',         1, o.mdf  || 0);
+    if ((o.ferr || 0) > 0) addFerr('Ferragens (carregado)',  1, o.ferr || 0);
+    if ((o.acess|| 0) > 0) addAcess('Acessórios (carregado)',1, o.acess|| 0);
+  }
+
+  // Custos operacionais
+  const setVal = (id, v) => { const el = g(id); if (el) el.value = v || ''; };
+  setVal('c-corte',    o.corte    || o.custo_corte    || 0);
+  setVal('c-furacao',  o.furacao  || o.custo_furacao  || 0);
+  setVal('c-fita',     o.fita     || o.custo_fita     || 0);
+  setVal('c-montagem', o.montagem || o.custo_montagem || 0);
+  setVal('c-frete',    o.frete    || o.custo_frete    || 0);
+  setVal('c-projeto',  o.projeto  || o.custo_projeto  || 0);
+
+  // Pagamento
+  setVal('pgto-pix',    o.pgto_pix   || o.pgto_pix    || '');
+  setVal('pgto-banco',  o.pgto_banco || '');
+  setVal('pgto-cartao', o.pgto_cartao || '');
+  setVal('pgto-boleto', o.pgto_boleto || '');
+  setVal('pgto-avista-desc', o.pgto_desc_avista || o.pgto_desc_avista || 5);
+  setVal('pgto-10x-juros',   o.pgto_juros_10x  || 8);
+  setVal('pgto-12x-juros',   o.pgto_juros_12x  || 12);
+
+  // Comissão
+  if (o.comissao_pct > 0 && g('cb-comm')) {
+    g('cb-comm').checked = true;
+    if (g('comm-pct')) g('comm-pct').value = o.comissao_pct;
+  }
+
+  // Margem e venda
+  if (o.margem) {
+    g('margem-range').value = Math.min(Math.max(o.margem, 5), 300);
+    g('margem-val').textContent = o.margem.toFixed(0) + '%';
+  }
+
+  calc();
+  manualVenda = true;
+  if (g('venda-final')) g('venda-final').value = (o.venda || 0).toFixed(2);
+
+  showTab('interno');
+  toast(`📂 Orçamento ${o.id} carregado para edição`);
+}
+
+// ── Duplicar ─────────────────────────────────────────────────────────
+function duplicarOrc(id) {
+  const arr = dbLoad();
+  const o   = arr.find(x => x.id === id);
+  if (!o) return;
+  const novo = { ...o, id: gerarIdLocal(), status: 'aberto',
+    criadoEm: new Date().toISOString(), _local: true };
+  arr.unshift(novo);
+  dbSave(arr);
+  toast('⧉ Orçamento duplicado → ' + novo.id);
+  renderHistorico();
+}
+
+// ── Excluir ───────────────────────────────────────────────────────────
+async function excluirOrc(id, viaApi = false) {
+  if (!confirm(`Excluir o orçamento ${id}? Esta ação não pode ser desfeita.`)) return;
+
+  if (viaApi && _apiOnline) {
+    const u = getUsuario();
+    if (!u || !['admin','gerente'].includes(u.perfil)) {
+      toast('⚠️ Apenas Admin ou Gerente podem excluir orçamentos');
+      return;
+    }
+    loading(true, 'Excluindo...');
+    try {
+      await apiFetch(`/orcamentos/${id}`, { method: 'DELETE' });
+      toast(`🗑 Excluído: ${id}`);
+    } catch (e) {
+      toast(`⚠️ Erro ao excluir: ${e.message}`, 3500);
+    } finally { loading(false); }
+  }
+
+  // Remove do cache local
+  dbSave(dbLoad().filter(o => o.id !== id));
+  renderHistorico();
+}
+
+// ── Confirmar limpar tudo ─────────────────────────────────────────────
+function confirmarLimparTudo() {
+  if (!confirm('Apagar TODO o histórico local? Os dados na API não serão afetados.')) return;
+  localStorage.removeItem(DB_KEY);
+  renderHistorico();
+}
+
+// ── Exportar CSV ──────────────────────────────────────────────────────
+function exportarCSV() {
+  if (_apiOnline) {
+    const token = getToken();
+    const url = `${API_BASE}/orcamentos/exportar`;
+    // Para exportação autenticada usamos fetch + blob
+    fetch(url, { headers: { Authorization: `Bearer ${token}` } })
+      .then(r => { if (!r.ok) throw new Error(); return r.blob(); })
+      .then(blob => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `orcamentos-${new Date().toISOString().split('T')[0]}.csv`;
+        a.click(); URL.revokeObjectURL(a.href);
+        toast(`⬇ CSV exportado da API`);
+      })
+      .catch(() => exportarCSVLocal());
+  } else { exportarCSVLocal(); }
+}
+
+function exportarCSVLocal() {
+  const arr = dbLoad();
+  if (!arr.length) { toast('Nenhum orçamento para exportar'); return; }
+  const header = ['ID','Cliente','Tipo','Responsável','Data','Prazo','Custo','Venda','Lucro','Margem%','Status'];
+  const rows   = arr.map(o => [
+    o.id, o.cliente, o.tipo, o.resp, o.data, o.prazo,
+    (o.custo||0).toFixed(2), (o.venda||0).toFixed(2), (o.lucro||0).toFixed(2),
+    (o.margem||0).toFixed(1), o.status,
+  ].map(v => '"' + String(v || '').replace(/"/g, '""') + '"'));
+  const csv  = [header, ...rows].map(r => r.join(',')).join('\n');
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = 'orcamentos-local-' + new Date().toISOString().split('T')[0] + '.csv';
+  a.click(); URL.revokeObjectURL(url);
+  toast(`⬇ CSV local exportado (${arr.length} registros)`);
+}
+
+// ════════════════════════════════════════════════════════════════════
+// LIMPAR FORMULÁRIO
+// ════════════════════════════════════════════════════════════════════
+function limpar() {
+  if (!confirm('Limpar todos os campos?')) return;
+  ['f-id','f-cliente','f-resp','f-data','f-prazo',
+   'c-corte','c-furacao','c-fita','c-montagem','c-frete','c-projeto','venda-final']
+    .forEach(id => { const el = g(id); if (el) el.value = ''; });
+  if (g('f-id')) g('f-id').dataset.existeApi = 'false';
+  if (g('f-tipo')) g('f-tipo').value = '';
+  document.querySelectorAll('.amb-chip').forEach(c => c.classList.remove('selected'));
+  g('mdf-body').innerHTML  = '';
+  g('ferr-body').innerHTML = '';
+  g('acess-body').innerHTML = '';
+  const cb = g('cb-comm'); if (cb) cb.checked = false;
+  const cp = g('comm-pct'); if (cp) cp.value  = 5;
+  const mr = g('margem-range'); if (mr) mr.value = 50;
+  const mv = g('margem-val');   if (mv) mv.textContent = '50%';
+  mdfId = ferrId = acessId = 0; manualVenda = false;
+  calc(); toast('🗑️ Formulário limpo');
+}
+
+// ════════════════════════════════════════════════════════════════════
+// AMBIENTES MULTI-SELECT
+// ════════════════════════════════════════════════════════════════════
+const AMBIENTES = [
+  {id:'cozinha',     icon:'🍳', name:'Cozinha'},
+  {id:'quarto',      icon:'🛏️', name:'Dormitório'},
+  {id:'guarda',      icon:'🚪', name:'Guarda-Roupa'},
+  {id:'closet',      icon:'👗', name:'Closet'},
+  {id:'sala',        icon:'🛋️', name:'Sala de Estar'},
+  {id:'escritorio',  icon:'💼', name:'Escritório'},
+  {id:'banheiro',    icon:'🚿', name:'Banheiro'},
+  {id:'lavanderia',  icon:'👕', name:'Lavanderia'},
+  {id:'gourmet',     icon:'🍷', name:'Gourmet'},
+  {id:'varanda',     icon:'🌿', name:'Varanda'},
+  {id:'garagem',     icon:'🚗', name:'Garagem'},
+  {id:'corporativo', icon:'🏢', name:'Corporativo'},
+  {id:'medida',      icon:'📐', name:'Sob Medida'},
+];
+
+function buildAmbiChips() {
+  const wrap = g('f-tipo-wrap');
+  if (!wrap) return;
+  AMBIENTES.forEach(a => {
+    const div = document.createElement('div');
+    div.className  = 'amb-chip';
+    div.dataset.id = a.id;
+    div.innerHTML  = `<span class="ac-icon">${a.icon}</span><span class="ac-name">${a.name}</span>`;
+    div.addEventListener('click', () => {
+      div.classList.toggle('selected');
+      if (g('f-tipo')) g('f-tipo').value = getSelectedAmbientes().join(' + ');
+      sync();
+    });
+    wrap.appendChild(div);
+  });
+}
+
+function getSelectedAmbientes() {
+  return [...document.querySelectorAll('.amb-chip.selected')]
+    .map(c => AMBIENTES.find(a => a.id === c.dataset.id)?.name)
+    .filter(Boolean);
+}
+
+function getTipo() {
+  const sel = getSelectedAmbientes();
+  return sel.length ? sel.join(' + ') : (g('f-tipo')?.value || '');
+}
+
+// ════════════════════════════════════════════════════════════════════
+// PREVIEW CLIENTE / PROPOSTA
+// ════════════════════════════════════════════════════════════════════
+function sdq(sel) { return [...document.querySelectorAll(sel)]; }
+
+function updateCliente() {
+  const tipo    = getTipo() || 'Móveis Planejados';
+  const cliente = g('f-cliente').value || 'Cliente';
+  const prazo   = g('f-prazo').value   || '30';
+  const id      = g('f-id').value      || '—';
+  const rawDate = g('f-data').value;
+  const data    = rawDate ? new Date(rawDate + 'T12:00').toLocaleDateString('pt-BR') : '—';
+  const venda   = num(g('venda-final').value);
+
+  const phLefts = sdq('.ph-left strong');
+  if (phLefts[0]) phLefts[0].textContent = tipo;
+  if (phLefts[1]) phLefts[1].textContent = prazo + ' dias úteis';
+
+  const metaStrongs = sdq('.ph-meta strong');
+  if (metaStrongs[0]) metaStrongs[0].textContent = id;
+  if (metaStrongs[1]) metaStrongs[1].textContent = data;
+
+  sdq('.ph-right strong').forEach((el, i) => {
+    if (i % 2 === 0) el.textContent = id; else el.textContent = cliente;
+  });
+
+  const capaCliente = document.querySelector('.cb-nome');
+  if (capaCliente) capaCliente.textContent = cliente;
+  const capaAmb = document.querySelector('.cb-amb');
+  if (capaAmb) capaAmb.textContent = tipo;
+
+  const dataRows = sdq('.data-row .dr-val');
+  if (dataRows[0]) dataRows[0].textContent = cliente;
+  if (dataRows[3]) dataRows[3].textContent = (g('f-prazo').value || '30') + ' dias';
+
+  const ihValor = document.querySelector('.ih-valor');
+  if (ihValor && venda > 0) {
+    const moedaEl  = ihValor.querySelector('.ih-moeda');
+    const valorEls = ihValor.querySelectorAll('span');
+    if (moedaEl) moedaEl.textContent = 'R$';
+    if (valorEls[1]) valorEls[1].textContent = venda.toLocaleString('pt-BR', { minimumFractionDigits:0, maximumFractionDigits:0 });
+    const ihSub = document.querySelector('.ih-sub');
+    if (ihSub) ihSub.textContent = tipo + ' · Medidas e especificações conforme projeto aprovado';
+  }
+
+  const rows = calcPgto();
+  const pgtoTbody = document.querySelector('.pgto-table tbody');
+  if (pgtoTbody && rows && venda > 0) {
+    pgtoTbody.innerHTML = rows.map(r => {
+      const tagHtml    = r.tag ? '<span class="pgto-tag">' + r.tag + '</span>' : '';
+      const entradaStr = r.parcelas === 1 ? fmt(r.total) : r.parcelas <= 3 ? fmt(r.total / r.parcelas) : '—';
+      const parcelaStr = r.parcelas === 1 ? '—' : r.parcelas + '× de ' + fmt(r.parcela);
+      return '<tr class="' + (r.destaque ? 'pgto-destaque' : '') + '">' +
+        '<td>' + r.label + ' ' + tagHtml + '</td>' +
+        '<td>' + entradaStr + '</td>' +
+        '<td>' + parcelaStr + '</td>' +
+        '<td>' + fmt(r.total) + '</td>' + '</tr>';
+    }).join('');
+  }
+
+  const recChips = sdq('.rec-chip .rc-val');
+  if (recChips[0]) recChips[0].textContent = g('pgto-pix')?.value    || '—';
+  if (recChips[1]) recChips[1].textContent = g('pgto-banco')?.value  || '—';
+  if (recChips[2]) recChips[2].textContent = g('pgto-cartao')?.value || 'Visa / Master / Elo';
+  if (recChips[3]) recChips[3].textContent = g('pgto-boleto')?.value || 'Vencimento D+3';
+
+  const piVals = sdq('.pi-val');
+  if (piVals[0]) piVals[0].textContent = prazo;
+  if (piVals[2]) piVals[2].textContent = String(parseInt(prazo || 30) + 10);
+}
+
+// ─── Parcelamento ─────────────────────────────────────────────────────
+const PGTO_PLANOS = [
+  { label:'À vista — PIX / Transferência', parcelas:1,  descKey:'pgto-avista-desc', descTipo:'desconto', destaque:true },
+  { label:'2× — Cheque / Transferência',   parcelas:2,  juros:0 },
+  { label:'3× — Sem juros',                parcelas:3,  juros:0 },
+  { label:'6× — Cartão / Boleto',          parcelas:6,  juros:0 },
+  { label:'10× — Cartão de Crédito',       parcelas:10, jurosKey:'pgto-10x-juros' },
+  { label:'12× — Cartão de Crédito',       parcelas:12, jurosKey:'pgto-12x-juros' },
+];
+
+function calcPgto() {
+  const venda = num(g('venda-final')?.value);
+  return PGTO_PLANOS.map(p => {
+    let total, parcela, tag = '';
+    if (p.descTipo === 'desconto') {
+      const pct = num(g(p.descKey)?.value || 5) / 100;
+      total   = venda * (1 - pct);
+      parcela = total;
+      tag     = '-' + num(g(p.descKey)?.value || 5).toFixed(0) + '%';
+    } else if (p.jurosKey) {
+      const pct = num(g(p.jurosKey)?.value || 0) / 100;
+      total     = venda * (1 + pct);
+      parcela   = total / p.parcelas;
+      if (pct > 0) tag = '+' + (pct * 100).toFixed(0) + '%';
+    } else {
+      total   = venda;
+      parcela = total / p.parcelas;
+    }
+    return { ...p, total, parcela, tag };
+  });
+}
+
+function calcPgtoInterno() {
+  const body = g('pgto-preview-body');
+  if (!body) return;
+  const rows = calcPgto();
+  if (!rows) return;
+  body.innerHTML = rows.map(r => {
+    const tagHtml    = r.tag ? `<span class="pgto-tag">${r.tag}</span>` : '';
+    const entradaStr = r.parcelas === 1 ? fmt(r.total) : r.parcelas <= 3 ? fmt(r.total / r.parcelas) : '—';
+    const parcelaStr = r.parcelas === 1 ? '—' : `${r.parcelas}× de ${fmt(r.parcela)}`;
+    return `<tr class="${r.destaque ? 'pgto-destaque' : ''}">
+      <td>${r.label} ${tagHtml}</td><td>${entradaStr}</td>
+      <td>${parcelaStr}</td><td>${fmt(r.total)}</td></tr>`;
+  }).join('');
+}
+
+function toggleEditModeOrc() {
+  const wrap = g('orc-pages-wrap');
+  const btn  = g('btn-edit-orc');
+  if (!wrap) return;
+  const isEdit = wrap.classList.toggle('edit-mode');
+  if (btn) btn.textContent = isEdit ? '✅ Edição Ativa' : '✏️ Modo Edição';
+  document.querySelectorAll('#panel-preview [contenteditable]').forEach(el => {
+    el.contentEditable = isEdit ? 'true' : 'false';
+  });
+}
+
+function toggleEditMode() {
+  const wrap = document.getElementById('orc-pages-wrap');
+  const btn  = document.querySelector('.btn-edit');
+  const isEdit = wrap.classList.toggle('edit-mode');
+  if (btn) {
+    btn.textContent = isEdit ? '✅ Modo Edição Ativo' : '✏️ Modo Edição';
+    btn.style.background = isEdit ? 'rgba(184,146,74,.25)' : '';
+    btn.style.color = isEdit ? '#f0ead8' : '';
+  }
+  document.querySelectorAll('[contenteditable]').forEach(el => {
+    el.contentEditable = isEdit ? 'true' : 'false';
+  });
+}
+
+// ════════════════════════════════════════════════════════════════════
+// CARREGAR DADOS DA EMPRESA (preenche campos de pagamento)
+// ════════════════════════════════════════════════════════════════════
+async function carregarEmpresa() {
+  if (!_apiOnline) return;
+  try {
+    const emp = await apiFetch('/empresa');
+    const setVal = (id, v) => { const el = g(id); if (el && !el.value) el.value = v || ''; };
+    setVal('pgto-pix',        emp.pix_chave);
+    setVal('pgto-banco',      emp.banco_dados);
+    setVal('pgto-cartao',     emp.cartoes);
+    setVal('pgto-boleto',     emp.boleto_info);
+    setVal('pgto-avista-desc', emp.desc_avista);
+    setVal('pgto-10x-juros',   emp.juros_10x);
+    setVal('pgto-12x-juros',   emp.juros_12x);
+  } catch {}
+}
+
+// ════════════════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', async () => {
+
+  // 1. Verificar autenticação
+  if (!estaAutenticado()) {
+    location.href = `${location.origin}/login.html`;
+    return;
+  }
+  atualizarAuthBar();
+
+  // 2. Verificar backend
+  await verificarBackend();
+  // Re-verifica a cada 30s
+  setInterval(verificarBackend, 30000);
+
+  // 3. Carregar dados padrão da empresa (pagamento)
+  await carregarEmpresa();
+
+  // 4. Inicializar interface
+  buildAmbiChips();
+  g('f-data').value = new Date().toISOString().split('T')[0];
+
+  // Itens exemplo
+  addMDF('Chapa MDF 15mm — Estrutural', 15, 89.90);
+  addMDF('Chapa MDF 6mm — Fundo', 6, 52.00);
+  addFerr('Dobradiça amortecida Blum 110°', 20, 12.50);
+  addFerr('Corrediça telescópica 45cm', 10, 28.00);
+  addFerr('Parafusos (lote)', 1, 35.00);
+  addAcess('Puxador alumínio 128mm', 12, 18.00);
+  addAcess('Trilho perfil alumínio', 4, 45.00);
+
+  g('c-corte').value    = 350;
+  g('c-furacao').value  = 180;
+  g('c-fita').value     = 120;
+  g('c-montagem').value = 1200;
+  g('c-frete').value    = 300;
+  g('c-projeto').value  = 400;
+
+  calc();
+  updateCliente();
+
+  // 5. Desativa contenteditable no preview
+  document.querySelectorAll('[contenteditable]').forEach(el => {
+    el.contentEditable = 'false';
+  });
+
+  if (!_apiOnline) {
+    toast('⚠️ Backend offline — funcionando com dados locais', 4000);
+  }
+});
+</script>
+</body>
+</html>
