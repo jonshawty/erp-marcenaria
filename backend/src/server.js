@@ -27,11 +27,7 @@ const ORIGENS_PERMITIDAS = (
 
 app.use(cors({
   origin: (origin, cb) => {
-    // Permite requisições sem origin (Postman, curl, etc)
     if (!origin) return cb(null, true);
-
-    // Permite file:// (Live Server às vezes manda como null)
-    if (origin === 'null') return cb(null, true);
 
     if (ORIGENS_PERMITIDAS.includes(origin)) {
       return cb(null, true);
@@ -40,8 +36,8 @@ app.use(cors({
     console.log('⛔ CORS bloqueado:', origin);
     return cb(new Error(`CORS: origem não permitida — ${origin}`));
   },
-  methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
-  allowedHeaders: ['Content-Type','Authorization'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 }));
 
