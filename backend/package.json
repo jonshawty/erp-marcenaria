@@ -3,12 +3,12 @@
   "version": "2.0.0",
   "description": "ERP Marcenaria — Backend + Frontend integrados",
   "main": "src/server.js",
+
   "scripts": {
     "start": "node src/server.js",
-    "dev": "node --watch src/server.js",
-    "seed": "node src/db/seed.js",
-    "reset": "node -e \"try{require('fs').unlinkSync(process.env.DB_PATH || '/app/data/erp_marcenaria.db')}catch(e){}\" && node src/db/seed.js"
+    "start:prod": "node -e \"const db=require('./src/db/database'); const u=db.prepare('SELECT 1 FROM usuarios LIMIT 1').get(); if(!u){require('./src/db/seed');}\" && node src/server.js"
   },
+
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "better-sqlite3": "^11.8.1",
