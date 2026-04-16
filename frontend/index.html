@@ -2245,83 +2245,110 @@ function addAcess(desc, qty, price) {
 function delRow(rowId, tbl) { const el = g(rowId); if (el) { el.remove(); calcTbl(tbl); } }
 
 function calcTbl(tbl) {
-  let total = 0;
-  document.querySelectorAll(`#${tbl}-body tr`).forEach(tr => {
-    const nums = tr.querySelectorAll('input[type=number]');
-    const q = num(nums[0]?.value); const p = num(nums[1]?.value);
-    const sub = q * p; total += sub;
-    const sid = tbl + '-s-' + tr.id.split('-').pop();
-    const el = g(sid); if (el) el.textContent = fmt(sub);
-  });
-  const subEl = g(`${tbl}-subtotal`);
-  if (subEl) subEl.textContent = fmt(total);
-  calc();
-}
+  const body = g(`${tbl}-body`);
+  if (!body) return 0;
 
-function sumTbl(tbl) {
-  let t = 0;
-  document.querySelectorAll(`#${tbl}-body tr`).forEach(tr => {
-    const ns = tr.querySelectorAll('input[type=number]');
-    const q = num(ns[0]?.value), p = num(ns[1]?.value);
-    t += q * p;
+  let total = 0;
+
+  [...body.querySelectorAll('tr')].forEach(tr => {
+    const qtdEl   = tr.querySelector('.i-qtd');
+    const valorEl = tr.querySelector('.i-val');
+    const totalEl = tr.querySelector('.i-total');
+
+    const qtd   = num(qtdEl?.value);
+    const valor = num(valorEl?.value);
+    const sub   = qtd * valor;
+
+    total += sub;
+
+    if (totalEl) totalEl.textContent = fmt(sub);
   });
-  return t;
+
+  const subtotalMap = {
+    mdf: 'st-mdf',
+    ferr: 'st-ferr',
+    acess: 'st-acess'
+  };
+
+  const subEl = g(subtotalMap[tbl]);
+  if (subEl) subEl.textContent = fmt(total);
+
+  return total;
 }
 
 function calc() {
-  const mdf  = sumTbl('mdf');
-  const ferr = sumTbl('ferr');
-  const acess = sumTbl('acess');
-  const corte = num(g('c-corte').value);
-  const fur   = num(g('c-furacao').value);
-  const fita  = num(g('c-fita').value);
-  const mont  = num(g('c-montagem').value);
-  const frete = num(g('c-frete').value);
-  const proj  = num(g('c-projeto').value);
+  const mdf   = calcTbl('mdf');
+  const ferr  = calcTbl('ferr');
+  const acess = calcTbl('acess');
+
+  const corte = num(g('c-corte')?.value);
+  const fur   = num(g('c-furacao')?.value);
+  const fita  = num(g('c-fita')?.value);
+  const mont  = num(g('c-montagem')?.value);
+  const frete = num(g('c-frete')?.value);
+  const proj  = num(g('c-projeto')?.value);
+
   const opSub = corte + fur + fita + mont + frete + proj;
 
-  // Totais intermediários
-  const setEl = (id, v) => { const el = g(id); if (el) el.textContent = fmt(v); };
-  setEl('mdf-subtotal',  mdf);
-  setEl('ferr-subtotal', ferr);
-  setEl('acess-subtotal', acess);
-  setEl('op-subtotal',   opSub);
+  const setEl = (id, v) => {
+    const el = g(id);
+    if (el) el.textContent = fmt(v);
+  };
 
-  const base    = mdf + ferr + acess + opSub;
-  const comAtivo = g('cb-comm')?.checked;
+  // subtotais visíveis
+  setEl('st-mdf', mdf);
+  setEl('st-ferr', ferr);
+  setEl('st-acess', acess);
+  setEl('st-op', opSub);
+
+  const base     = mdf + ferr + acess + opSub;
+  const comAtivo = !!g('cb-comm')?.checked;
   const comPct   = num(g('comm-pct')?.value) / 100;
   const comVal   = comAtivo ? base * comPct : 0;
 
   const custo = base + comVal;
+
+  // resumo financeiro
+  setEl('r-mdf', mdf);
+  setEl('r-ferr', ferr);
+  setEl('r-acess', acess);
+  setEl('r-corte', corte);
+  setEl('r-fur', fur);
+  setEl('r-fita', fita);
+  setEl('r-mont', mont);
+  setEl('r-frete', frete);
+  setEl('r-proj', proj);
+  setEl('r-comm', comVal);
+
+  // custo total
   setEl('custo-total', custo);
-  const custoEl = g('custo-total');
-  if (custoEl) custoEl.textContent = fmt(custo);
+  setEl('pk-custo', custo);
 
-  // Resumo
-  setEl('res-mdf',  mdf);
-  setEl('res-ferr', ferr);
-  setEl('res-acess', acess);
-  setEl('res-op',   opSub);
-  setEl('res-comm', comVal);
-  setEl('res-base', custo);
+  const margemPct = num(g('margem-range')?.value);
+  const vendaSug  = custo * (1 + margemPct / 100);
 
-  if (!manualVenda) {
-    const margem = num(g('margem-range')?.value) / 100;
-    const vendaSug = custo * (1 + margem);
-    const lucro    = vendaSug - custo;
-    const lucroPct = custo > 0 ? (lucro / custo * 100) : 0;
-
-    setEl('venda-sugerida', vendaSug);
-    const vendaEl = g('venda-final');
-    if (vendaEl) vendaEl.value = vendaSug.toFixed(2);
-    setEl('lucro-val', lucro);
-    setEl('margem-display', lucroPct.toFixed(1) + '%');
-
-    const pct = custo > 0 ? Math.min((lucro / (custo + lucro)) * 100, 95) : 0;
-    const fill = g('pb-fill'); if (fill) fill.style.width = pct + '%';
+  if (!manualVenda && g('venda-final')) {
+    g('venda-final').value = vendaSug.toFixed(2);
   }
 
-  calcPgtoInterno();
+  const vendaFinal = num(g('venda-final')?.value) || vendaSug;
+  const lucro      = vendaFinal - custo;
+  const lucroPct   = vendaFinal > 0 ? (lucro / vendaFinal) * 100 : 0;
+
+  setEl('pk-venda', vendaSug);
+  setEl('pk-final', vendaFinal);
+  setEl('pk-lucro', lucro);
+
+  const lucroPctEl = g('lucro-pct');
+  if (lucroPctEl) lucroPctEl.textContent = `${lucroPct.toFixed(1)}%`;
+
+  const profitBar = g('profit-fill');
+  if (profitBar) {
+    const width = Math.max(0, Math.min(lucroPct, 100));
+    profitBar.style.width = `${width}%`;
+  }
+
+  //atualizaPagamentoCliente(vendaFinal);
 }
 
 function onMargem(v) { g('margem-val').textContent = v + '%'; manualVenda = false; calc(); }
