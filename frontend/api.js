@@ -5,7 +5,7 @@
 
 const API_BASE = (() => {
   // Se estiver rodando via file://, aponta para o backend local
-  if (location.protocol === 'file:') return 'http://localhost:3001/api';
+  if (location.protocol === 'file:') return 'https://erp-marcenaria-production.up.railway.app/api';
   // Se o frontend for servido pelo próprio backend, usa origin relativo
   return `${location.origin}/api`;
 })();
