@@ -85,7 +85,8 @@ body::before{content:'';pointer-events:none;position:fixed;inset:0;
 </div>
 
 <script>
-const API_BASE = 'http://localhost:3001/api';
+const API_BASE = '/api';
+const FRONTEND_HOME = '/frontend/index.html';
 
 document.addEventListener('DOMContentLoaded', () => {
   const token = localStorage.getItem('erp_jwt_token');
@@ -93,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const p = JSON.parse(atob(token.split('.')[1]));
       if (p.exp > Date.now() / 1000) {
-        location.href = './frontend/index.html';
+        location.href = FRONTEND_HOME;
         return;
       }
     } catch {}
@@ -111,8 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
 async function fazerLogin() {
   const email = document.getElementById('inp-email').value.trim();
   const senha = document.getElementById('inp-senha').value;
-  const btn   = document.getElementById('btn-login');
-  const erro  = document.getElementById('msg-erro');
+  const btn = document.getElementById('btn-login');
+  const erro = document.getElementById('msg-erro');
 
   if (!email || !senha) {
     mostrarErro('Preencha e-mail e senha.');
@@ -127,7 +128,7 @@ async function fazerLogin() {
     const res = await fetch(`${API_BASE}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, senha }),
+      body: JSON.stringify({ email, senha })
     });
 
     const data = await res.json();
@@ -139,7 +140,7 @@ async function fazerLogin() {
     localStorage.setItem('erp_jwt_token', data.token);
     localStorage.setItem('erp_usuario', JSON.stringify(data.usuario));
 
-    location.href = './frontend/index.html';
+    location.href = FRONTEND_HOME;
   } catch (e) {
     mostrarErro(e.message || 'Erro ao fazer login.');
   } finally {
