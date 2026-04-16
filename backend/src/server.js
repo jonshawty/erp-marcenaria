@@ -16,6 +16,10 @@ const usuariosRoutes   = require('./routes/usuarios');
 const app  = express();
 const PORT = process.env.PORT || 3001;
 
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+}
+
 app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false, crossOriginResourcePolicy: false }));
 
 const ORIGENS_PERMITIDAS = (
