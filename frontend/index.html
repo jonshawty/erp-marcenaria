@@ -1121,7 +1121,6 @@ body {
 </style>
 </head>
 <body>
-<!-- Auth Bar -->
 <div class="auth-bar" id="auth-bar">
   <div class="ab-user">
     <span>👤</span>
@@ -1134,14 +1133,12 @@ body {
   </div>
   <button class="btn btn-ghost btn-sm btn-logout" onclick="fazerLogout()">Sair</button>
 </div>
-<!-- Loading Overlay -->
 <div class="overlay-loading" id="overlay-loading">
   <div style="text-align:center">
     <div class="ol-spinner"></div>
     <div class="ol-msg" id="ol-msg">Carregando...</div>
   </div>
 </div>
-<!-- Toast -->
 <div id="toast" class="toast"></div>
 <div class="shell">
 
@@ -1168,10 +1165,8 @@ body {
     <button class="tab-btn" id="tab-historico" onclick="showTab('historico')">🗂 Histórico</button>
   </div>
 
-  <!-- PAINEL INTERNO -->
   <div id="panel-interno">
 
-    <!-- 1. IDENTIFICAÇÃO -->
     <div class="sec">
       <div class="sec-head"><div class="sec-num">01</div><div class="sec-title"><em>Identificação</em> do Projeto</div></div>
       <div class="card">
@@ -1184,8 +1179,7 @@ body {
               display:grid;grid-template-columns:repeat(5,1fr);gap:7px;
               margin-top:4px;
             ">
-              <!-- chips gerados pelo JS -->
-            </div>
+              </div>
             <input type="hidden" id="f-tipo" value=""/>
           </div>
           <div class="field"><label>Responsável Técnico</label><input id="f-resp" placeholder="Nome do responsável" oninput="sync()"/></div>
@@ -1195,7 +1189,6 @@ body {
       </div>
     </div>
 
-    <!-- 2. MDF -->
     <div class="sec">
       <div class="sec-head"><div class="sec-num">02</div><div class="sec-title"><em>Matéria-Prima</em> — MDF / Chapas</div></div>
       <div class="card">
@@ -1208,7 +1201,6 @@ body {
       </div>
     </div>
 
-    <!-- 3. FERRAGENS -->
     <div class="sec">
       <div class="sec-head"><div class="sec-num">03</div><div class="sec-title"><em>Ferragens</em> — Dobradiças, Corrediças, Parafusos</div></div>
       <div class="card">
@@ -1221,7 +1213,6 @@ body {
       </div>
     </div>
 
-    <!-- 4. ACESSÓRIOS -->
     <div class="sec">
       <div class="sec-head"><div class="sec-num">04</div><div class="sec-title"><em>Acessórios</em> — Puxadores, Trilhos, Divisores</div></div>
       <div class="card">
@@ -1234,7 +1225,6 @@ body {
       </div>
     </div>
 
-    <!-- 5. CUSTOS OPERACIONAIS -->
     <div class="sec">
       <div class="sec-head"><div class="sec-num">05</div><div class="sec-title"><em>Custos Operacionais</em> — Produção e Logística</div></div>
       <div class="card">
@@ -1250,7 +1240,6 @@ body {
       </div>
     </div>
 
-    <!-- 6. RESUMO -->
     <div class="sec">
       <div class="sec-head"><div class="sec-num">06</div><div class="sec-title"><em>Resumo Financeiro</em> — Custo Total Real</div></div>
       <div class="card">
@@ -1278,7 +1267,6 @@ body {
       </div>
     </div>
 
-    <!-- 7. FORMAÇÃO DE PREÇO -->
     <div class="sec">
       <div class="sec-head"><div class="sec-num">07</div><div class="sec-title"><em>Formação de Preço</em> — Inteligência ERP</div></div>
       <div class="card">
@@ -1329,14 +1317,12 @@ body {
           </div>
         </div>
 
-        <!-- CONDIÇÕES DE PAGAMENTO -->
         <div style="margin-top:18px;border-top:1px solid var(--line);padding-top:16px">
           <div class="sec-head" style="margin-bottom:12px">
             <div class="sec-num" style="width:24px;height:24px;font-size:.65rem">💳</div>
             <div class="sec-title"><em>Condições de Pagamento</em> — aplicadas na Proposta Completa</div>
           </div>
 
-          <!-- Desconto à vista -->
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px">
             <div class="field">
               <label>Desconto À Vista (%)</label>
@@ -1355,7 +1341,6 @@ body {
             </div>
           </div>
 
-          <!-- Preview da tabela de parcelamento -->
           <div style="background:var(--bg3);border:1px solid var(--line);border-radius:var(--r2);overflow:hidden;margin-bottom:12px">
             <div style="padding:8px 14px;background:var(--amberg2);border-bottom:1px solid var(--line);
               font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--amber)">
@@ -1373,7 +1358,6 @@ body {
             </table>
           </div>
 
-          <!-- Dados bancários -->
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
             <div class="field">
               <label>🔑 Chave PIX</label>
@@ -1396,10 +1380,7 @@ body {
       </div>
     </div>
 
-  </div><!-- /panel-interno -->
-
-  <!-- PAINEL CLIENTE -->
-  <div id="panel-cliente">
+  </div><div id="panel-cliente">
     <div class="cliente-wrap">
       <div class="cliente-doc">
         <div class="cd-head">
@@ -1451,12 +1432,8 @@ body {
   </div>
 
 
-<!-- ══════════════════════════════════════
-     PAINEL HISTÓRICO
-══════════════════════════════════════ -->
 <div id="panel-historico" style="display:none">
 
-  <!-- Stats -->
   <div class="hist-stats" id="hist-stats">
     <div class="hstat" style="--hs-acc:var(--amber)">
       <div class="hs-label">Total de Orçamentos</div>
@@ -1480,7 +1457,6 @@ body {
     </div>
   </div>
 
-  <!-- Toolbar pesquisa -->
   <div class="hist-toolbar">
     <div class="hist-search-wrap">
       <span class="hs-icon">🔍</span>
@@ -1497,17 +1473,12 @@ body {
     <button class="btn btn-ghost btn-sm" onclick="confirmarLimparTudo()">🗑 Limpar tudo</button>
   </div>
 
-  <!-- Lista de orçamentos -->
   <div id="hist-lista"></div>
 
 </div>
 
-<!-- ══════════════════════════════════════
-     PAINEL PREVIEW CLIENTE (template completo)
-══════════════════════════════════════ -->
 <div id="panel-preview" style="display:none">
 
-  <!-- Toolbar do preview -->
   <div style="display:flex;align-items:center;justify-content:space-between;
        background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);
        padding:12px 18px;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
@@ -1526,7 +1497,6 @@ body {
     </div>
   </div>
 
-  <!-- Aviso confidencial -->
   <div style="display:flex;align-items:center;justify-content:center;gap:8px;
        background:rgba(224,82,82,.07);border:1px solid rgba(224,82,82,.18);
        border-radius:8px;padding:9px 16px;margin-bottom:14px;
@@ -1536,7 +1506,6 @@ body {
 
   <div class="pages-wrap" id="orc-pages-wrap">
 
-  <!-- ════════════ CAPA ════════════ -->
   <div class="page page-capa">
     <div class="capa-sidebar"></div>
     <div class="capa-sidebar-r"></div>
@@ -1585,7 +1554,6 @@ body {
     </div>
   </div>
 
-  <!-- ════════════ PÁGINA 1 — RESUMO EXECUTIVO ════════════ -->
   <div class="page">
     <div class="p-header">
       <div class="ph-logo">
@@ -1636,7 +1604,6 @@ body {
     <div class="page-num">01 / 06</div>
   </div>
 
-  <!-- ════════════ PÁGINA 2 — ESPECIFICAÇÕES TÉCNICAS ════════════ -->
   <div class="page">
     <div class="p-header">
       <div class="ph-logo">
@@ -1736,7 +1703,6 @@ body {
     <div class="page-num">02 / 06</div>
   </div>
 
-  <!-- ════════════ PÁGINA 3 — DIFERENCIAIS ════════════ -->
   <div class="page page-diferenciais">
     <div class="p-header" style="background:var(--paper)">
       <div class="ph-logo">
@@ -1823,7 +1789,6 @@ body {
     <div class="page-num">03 / 06</div>
   </div>
 
-  <!-- ════════════ PÁGINA 4 — INVESTIMENTO ════════════ -->
   <div class="page page-invest">
     <div class="invest-header">
       <div class="ih-logo">
@@ -1909,7 +1874,6 @@ body {
     <div class="page-num" style="color:rgba(255,255,255,.3)">04 / 06</div>
   </div>
 
-  <!-- ════════════ PÁGINA 5 — PRAZO & CRONOGRAMA ════════════ -->
   <div class="page">
     <div class="p-header">
       <div class="ph-logo">
@@ -1982,7 +1946,6 @@ body {
     <div class="page-num">05 / 06</div>
   </div>
 
-  <!-- ════════════ PÁGINA 6 — OBSERVAÇÕES & ASSINATURA ════════════ -->
   <div class="page">
     <div class="p-header">
       <div class="ph-logo">
@@ -2066,9 +2029,7 @@ body {
     <div class="page-num">06 / 06</div>
   </div>
 
-</div><!-- /pages-wrap -->
-
-</div>
+</div></div>
 
 </div>
 
@@ -2192,57 +2153,58 @@ function showTab(id) {
 }
 
 // ════════════════════════════════════════════════════════════════════
-// CÁLCULOS
+// CÁLCULOS & LINHAS DA TABELA
 // ════════════════════════════════════════════════════════════════════
-function makeRow(bodyId, rowId, cells) {
-  const tr = document.createElement('tr'); tr.id = rowId;
-  cells.forEach(c => { const td = document.createElement('td'); td.innerHTML = c; tr.appendChild(td); });
-  return tr;
-}
 
 function addMDF(desc, qty, price) {
   mdfId++; const id = mdfId;
   const d = desc || ''; const q = qty != null ? qty : 15; const p = price != null ? price : 0;
   const rowId = 'mdf-r-' + id;
-  const tr = makeRow('mdf-body', rowId, [
-    `<input type="text" placeholder="Descrição" value="${d}" oninput="calcTbl('mdf')"/>`,
-    `<td class="qty-cell"><input type="number" value="${q}" min="0" step="0.5" oninput="calcTbl('mdf')"/></td>`,
-    `<td class="price-cell"><input type="number" value="${p}" min="0" step="0.01" oninput="calcTbl('mdf')"/></td>`,
-    `<td class="total-cell sub-cell" id="mdf-s-${id}">${fmt(q * p)}</td>`,
-    `<td><button class="btn btn-ghost btn-sm" style="padding:4px 8px;color:var(--red)" onclick="delRow('${rowId}','mdf')">✕</button></td>`,
-  ]);
-  g('mdf-body').appendChild(tr); calcTbl('mdf');
+  const tr = document.createElement('tr'); tr.id = rowId;
+  tr.innerHTML = `
+    <td><input type="text" placeholder="Descrição" value="${d}" oninput="calc()"/></td>
+    <td class="qty-cell"><input class="i-qtd" type="number" value="${q}" min="0" step="0.5" oninput="calc()"/></td>
+    <td class="price-cell"><input class="i-val" type="number" value="${p}" min="0" step="0.01" oninput="calc()"/></td>
+    <td class="total-cell sub-cell i-total" id="mdf-s-${id}">${fmt(q * p)}</td>
+    <td><button class="btn btn-ghost btn-sm" style="padding:4px 8px;color:var(--red)" onclick="delRow('${rowId}')">✕</button></td>
+  `;
+  g('mdf-body').appendChild(tr); calc();
 }
 
 function addFerr(desc, qty, price) {
   ferrId++; const id = ferrId;
   const d = desc || ''; const q = qty != null ? qty : 0; const p = price != null ? price : 0;
   const rowId = 'ferr-r-' + id;
-  const tr = makeRow('ferr-body', rowId, [
-    `<input type="text" placeholder="Descrição" value="${d}" oninput="calcTbl('ferr')"/>`,
-    `<td class="qty-cell"><input type="number" value="${q}" min="0" step="1" oninput="calcTbl('ferr')"/></td>`,
-    `<td class="price-cell"><input type="number" value="${p}" min="0" step="0.01" oninput="calcTbl('ferr')"/></td>`,
-    `<td class="total-cell sub-cell" id="ferr-s-${id}">${fmt(q * p)}</td>`,
-    `<td><button class="btn btn-ghost btn-sm" style="padding:4px 8px;color:var(--red)" onclick="delRow('${rowId}','ferr')">✕</button></td>`,
-  ]);
-  g('ferr-body').appendChild(tr); calcTbl('ferr');
+  const tr = document.createElement('tr'); tr.id = rowId;
+  tr.innerHTML = `
+    <td><input type="text" placeholder="Descrição" value="${d}" oninput="calc()"/></td>
+    <td class="qty-cell"><input class="i-qtd" type="number" value="${q}" min="0" step="1" oninput="calc()"/></td>
+    <td class="price-cell"><input class="i-val" type="number" value="${p}" min="0" step="0.01" oninput="calc()"/></td>
+    <td class="total-cell sub-cell i-total" id="ferr-s-${id}">${fmt(q * p)}</td>
+    <td><button class="btn btn-ghost btn-sm" style="padding:4px 8px;color:var(--red)" onclick="delRow('${rowId}')">✕</button></td>
+  `;
+  g('ferr-body').appendChild(tr); calc();
 }
 
 function addAcess(desc, qty, price) {
   acessId++; const id = acessId;
   const d = desc || ''; const q = qty != null ? qty : 0; const p = price != null ? price : 0;
   const rowId = 'acess-r-' + id;
-  const tr = makeRow('acess-body', rowId, [
-    `<input type="text" placeholder="Descrição" value="${d}" oninput="calcTbl('acess')"/>`,
-    `<td class="qty-cell"><input type="number" value="${q}" min="0" step="1" oninput="calcTbl('acess')"/></td>`,
-    `<td class="price-cell"><input type="number" value="${p}" min="0" step="0.01" oninput="calcTbl('acess')"/></td>`,
-    `<td class="total-cell sub-cell" id="acess-s-${id}">${fmt(q * p)}</td>`,
-    `<td><button class="btn btn-ghost btn-sm" style="padding:4px 8px;color:var(--red)" onclick="delRow('${rowId}','acess')">✕</button></td>`,
-  ]);
-  g('acess-body').appendChild(tr); calcTbl('acess');
+  const tr = document.createElement('tr'); tr.id = rowId;
+  tr.innerHTML = `
+    <td><input type="text" placeholder="Descrição" value="${d}" oninput="calc()"/></td>
+    <td class="qty-cell"><input class="i-qtd" type="number" value="${q}" min="0" step="1" oninput="calc()"/></td>
+    <td class="price-cell"><input class="i-val" type="number" value="${p}" min="0" step="0.01" oninput="calc()"/></td>
+    <td class="total-cell sub-cell i-total" id="acess-s-${id}">${fmt(q * p)}</td>
+    <td><button class="btn btn-ghost btn-sm" style="padding:4px 8px;color:var(--red)" onclick="delRow('${rowId}')">✕</button></td>
+  `;
+  g('acess-body').appendChild(tr); calc();
 }
 
-function delRow(rowId, tbl) { const el = g(rowId); if (el) { el.remove(); calcTbl(tbl); } }
+function delRow(rowId) { 
+  const el = g(rowId); 
+  if (el) { el.remove(); calc(); } 
+}
 
 function calcTbl(tbl) {
   const body = g(`${tbl}-body`);
@@ -2417,9 +2379,9 @@ function coletarDados() {
     data_orc:        g('f-data').value || new Date().toISOString().split('T')[0],
     prazo_dias:      parseInt(g('f-prazo').value) || 30,
     observacoes:     g('f-obs')?.value?.trim() || '',
-    custo_mdf:       sumTbl('mdf'),
-    custo_ferr:      sumTbl('ferr'),
-    custo_acess:     sumTbl('acess'),
+    custo_mdf:       calcTbl('mdf'),
+    custo_ferr:      calcTbl('ferr'),
+    custo_acess:     calcTbl('acess'),
     custo_corte:     num(g('c-corte').value),
     custo_furacao:   num(g('c-furacao').value),
     custo_fita:      num(g('c-fita').value),
