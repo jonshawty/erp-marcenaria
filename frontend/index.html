@@ -341,12 +341,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
   padding:10px 16px;margin-top:16px;font-size:.72rem;color:var(--red);font-weight:700;
   letter-spacing:1.5px;text-transform:uppercase;}
 .gerar-pdf-row{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap;}
-@media print{
-  body{background:#fff!important;}
-  .cliente-wrap{max-width:100%;}
-  .gerar-pdf-row,.tabs-bar,.top-header,.confidencial-badge{display:none!important;}
-  .cliente-doc{box-shadow:none;border-radius:0;}
-}
 @media(max-width:600px){.preco-grid{grid-template-columns:1fr 1fr;}.bene-grid{grid-template-columns:1fr;}
   .cd-conds{grid-template-columns:1fr;}.simple-costs{grid-template-columns:1fr 1fr;}}
 
@@ -357,8 +351,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 #panel-preview .screen-controls {
   display: none !important;
 }
-/* All proposal CSS from template */
-
 
 /* ══════════════════════════════════════════
    TOKENS
@@ -1041,16 +1033,41 @@ body {
 }
 .validade-lacre .vl-text span { font-family: var(--mono); font-weight: 700; }
 
-/* ══════════════════════════════════════════
-   PRINT
-══════════════════════════════════════════ */
-@page {
-  size: A4;
-  margin: 0;
+/* Override body styles that would conflict when inside ERP */
+#panel-preview .pages-wrap,
+#orc-pages-wrap {
+  padding: 0 0 20px !important;
+  background: transparent !important;
 }
-/* ══════════════════════════════════════════
-   PRINT - CORRIGIDO
-══════════════════════════════════════════ */
+#panel-preview .page {
+  margin-bottom: 12px !important;
+}
+
+/* ── API INTEGRATION STYLES ── */
+.auth-bar{display:flex;align-items:center;gap:10px;padding:8px 16px;
+  background:var(--bg2);border-bottom:1px solid var(--line);
+  font-size:.72rem;color:var(--text2);position:sticky;top:0;z-index:100;}
+.auth-bar .ab-user{display:flex;align-items:center;gap:7px;flex:1;}
+.auth-bar .ab-badge{background:var(--amberg);border:1px solid rgba(232,160,32,.2);
+  color:var(--amber);padding:2px 8px;border-radius:20px;font-size:.62rem;font-weight:700;}
+.auth-bar .btn-logout{padding:4px 12px;font-size:.68rem;}
+.api-status{display:flex;align-items:center;gap:5px;font-size:.65rem;}
+.api-dot{width:7px;height:7px;border-radius:50%;background:var(--text3);}
+.api-dot.online{background:var(--green);box-shadow:0 0 6px rgba(58,184,118,.5);}
+.api-dot.offline{background:var(--red);}
+.overlay-loading{position:fixed;inset:0;background:rgba(13,15,18,.85);
+  display:grid;place-items:center;z-index:9999;opacity:0;pointer-events:none;transition:.2s;}
+.overlay-loading.show{opacity:1;pointer-events:all;}
+.ol-spinner{width:48px;height:48px;border:3px solid var(--line);
+  border-top-color:var(--amber);border-radius:50%;animation:spin .8s linear infinite;}
+.ol-msg{color:var(--text2);font-size:.78rem;margin-top:14px;text-align:center;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.sync-badge{display:inline-flex;align-items:center;gap:4px;font-size:.62rem;
+  padding:2px 7px;border-radius:20px;margin-left:6px;}
+.sync-ok{background:rgba(58,184,118,.12);color:var(--green);border:1px solid rgba(58,184,118,.2);}
+.sync-err{background:rgba(224,82,82,.12);color:var(--red);border:1px solid rgba(224,82,82,.2);}
+.sync-pending{background:var(--amberg);color:var(--amber);border:1px solid rgba(232,160,32,.2);}
+
 /* ══════════════════════════════════════════
    PRINT - CORRIGIDO
 ══════════════════════════════════════════ */
@@ -1080,85 +1097,6 @@ body {
   .cliente-wrap { max-width: 100% !important; }
   .cliente-doc { box-shadow: none !important; border-radius: 0 !important; }
 }
-  
-  /* Se o painel estiver ativo, imprime. O resto oculta. */
-  #panel-interno, #panel-historico { display: none !important; }
-  
-  /* Oculta controles nativos do panel-preview */
-  #panel-preview > div:first-child,
-  #panel-preview > div:nth-child(2) { display: none !important; }
-  
-  /* Reseta layout para o papel */
-  body { background: #fff !important; }
-  .shell { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
-  
-  /* Ajustes Proposta Completa */
-  #orc-pages-wrap { padding: 0 !important; }
-  .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
-  
-  /* Ajustes Preview Simples */
-  .cliente-wrap { max-width: 100% !important; }
-  .cliente-doc { box-shadow: none !important; border-radius: 0 !important; }
-}
-
-/* ══════════════════════════════════════════
-   EDIÇÃO INLINE
-══════════════════════════════════════════ */
-[contenteditable="true"] { outline: none; cursor: text; }
-[contenteditable="true"]:focus {
-  background: rgba(184,146,74,.1);
-  border-radius: 3px;
-  box-shadow: 0 0 0 1.5px rgba(184,146,74,.4);
-  padding: 1px 4px;
-}
-.edit-mode [contenteditable="true"] {
-  box-shadow: 0 0 0 1px rgba(184,146,74,.25);
-  border-radius: 3px;
-}
-
-
-/* Override body styles that would conflict when inside ERP */
-#panel-preview .pages-wrap,
-#orc-pages-wrap {
-  padding: 0 0 20px !important;
-  background: transparent !important;
-}
-#panel-preview .page {
-  margin-bottom: 12px !important;
-}
-@media print {
-  body > *:not(#panel-preview) { display: none !important; }
-  #panel-preview { display: block !important; }
-  #panel-preview > div:first-child,
-  #panel-preview > div:nth-child(2) { display: none !important; }
-  #orc-pages-wrap { padding: 0 !important; }
-  .page { box-shadow: none !important; margin-bottom: 0 !important; page-break-after: always; }
-}
-
-/* ── API INTEGRATION STYLES ── */
-.auth-bar{display:flex;align-items:center;gap:10px;padding:8px 16px;
-  background:var(--bg2);border-bottom:1px solid var(--line);
-  font-size:.72rem;color:var(--text2);position:sticky;top:0;z-index:100;}
-.auth-bar .ab-user{display:flex;align-items:center;gap:7px;flex:1;}
-.auth-bar .ab-badge{background:var(--amberg);border:1px solid rgba(232,160,32,.2);
-  color:var(--amber);padding:2px 8px;border-radius:20px;font-size:.62rem;font-weight:700;}
-.auth-bar .btn-logout{padding:4px 12px;font-size:.68rem;}
-.api-status{display:flex;align-items:center;gap:5px;font-size:.65rem;}
-.api-dot{width:7px;height:7px;border-radius:50%;background:var(--text3);}
-.api-dot.online{background:var(--green);box-shadow:0 0 6px rgba(58,184,118,.5);}
-.api-dot.offline{background:var(--red);}
-.overlay-loading{position:fixed;inset:0;background:rgba(13,15,18,.85);
-  display:grid;place-items:center;z-index:9999;opacity:0;pointer-events:none;transition:.2s;}
-.overlay-loading.show{opacity:1;pointer-events:all;}
-.ol-spinner{width:48px;height:48px;border:3px solid var(--line);
-  border-top-color:var(--amber);border-radius:50%;animation:spin .8s linear infinite;}
-.ol-msg{color:var(--text2);font-size:.78rem;margin-top:14px;text-align:center;}
-@keyframes spin{to{transform:rotate(360deg);}}
-.sync-badge{display:inline-flex;align-items:center;gap:4px;font-size:.62rem;
-  padding:2px 7px;border-radius:20px;margin-left:6px;}
-.sync-ok{background:rgba(58,184,118,.12);color:var(--green);border:1px solid rgba(58,184,118,.2);}
-.sync-err{background:rgba(224,82,82,.12);color:var(--red);border:1px solid rgba(224,82,82,.2);}
-.sync-pending{background:var(--amberg);color:var(--amber);border:1px solid rgba(232,160,32,.2);}
 </style>
 </head>
 <body>
@@ -2350,8 +2288,6 @@ function calc() {
     const width = Math.max(0, Math.min(lucroPct, 100));
     profitBar.style.width = `${width}%`;
   }
-
-  //atualizaPagamentoCliente(vendaFinal);
 }
 
 function onMargem(v) { g('margem-val').textContent = v + '%'; manualVenda = false; calc(); }
@@ -3111,6 +3047,13 @@ function calcPgtoInterno() {
   }).join('');
 }
 
+// Garante que mexer nos campos de pagamento atualize tudo em tempo real
+document.querySelectorAll('input[id^="pgto-"]').forEach(el => {
+  el.addEventListener('input', () => {
+    sync();
+  });
+});
+
 function toggleEditModeOrc() {
   const wrap = g('orc-pages-wrap');
   const btn  = g('btn-edit-orc');
@@ -3205,13 +3148,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (!_apiOnline) {
     toast('⚠️ Backend offline — funcionando com dados locais', 4000);
   }
-});
-
-// Garante que mexer nos campos de pagamento atualize tudo em tempo real
-document.querySelectorAll('input[id^="pgto-"]').forEach(el => {
-  el.addEventListener('input', () => {
-    sync();
-  });
 });
 </script>
 </body>
