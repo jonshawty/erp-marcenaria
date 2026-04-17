@@ -1048,16 +1048,57 @@ body {
   size: A4;
   margin: 0;
 }
+/* ══════════════════════════════════════════
+   PRINT - CORRIGIDO
+══════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   PRINT - CORRIGIDO
+══════════════════════════════════════════ */
 @media print {
-  body { background: transparent; }
-  .screen-controls { display: none !important; }
-  .pages-wrap { padding: 0; gap: 0; background: transparent; }
-  .page {
-    box-shadow: none;
-    width: 210mm; min-height: 297mm;
-    page-break-after: always;
+  /* Oculta interface do sistema, botões e barras */
+  .auth-bar, .overlay-loading, #toast, .top-header, 
+  .tabs-bar, .gerar-pdf-row, .confidencial-badge { 
+    display: none !important; 
   }
-  .page:last-child { page-break-after: auto; }
+  
+  /* Se o painel estiver ativo, imprime. O resto oculta. */
+  #panel-interno, #panel-historico { display: none !important; }
+  
+  /* Oculta controles nativos do panel-preview */
+  #panel-preview > div:first-child,
+  #panel-preview > div:nth-child(2) { display: none !important; }
+  
+  /* Reseta layout para o papel */
+  body { background: #fff !important; }
+  .shell { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+  
+  /* Ajustes Proposta Completa */
+  #orc-pages-wrap { padding: 0 !important; }
+  .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
+  
+  /* Ajustes Preview Simples */
+  .cliente-wrap { max-width: 100% !important; }
+  .cliente-doc { box-shadow: none !important; border-radius: 0 !important; }
+}
+  
+  /* Se o painel estiver ativo, imprime. O resto oculta. */
+  #panel-interno, #panel-historico { display: none !important; }
+  
+  /* Oculta controles nativos do panel-preview */
+  #panel-preview > div:first-child,
+  #panel-preview > div:nth-child(2) { display: none !important; }
+  
+  /* Reseta layout para o papel */
+  body { background: #fff !important; }
+  .shell { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+  
+  /* Ajustes Proposta Completa */
+  #orc-pages-wrap { padding: 0 !important; }
+  .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
+  
+  /* Ajustes Preview Simples */
+  .cliente-wrap { max-width: 100% !important; }
+  .cliente-doc { box-shadow: none !important; border-radius: 0 !important; }
 }
 
 /* ══════════════════════════════════════════
@@ -2915,74 +2956,112 @@ function getTipo() {
 }
 
 // ════════════════════════════════════════════════════════════════════
-// PREVIEW CLIENTE / PROPOSTA
+// PREVIEW CLIENTE / PROPOSTA - CORRIGIDO
 // ════════════════════════════════════════════════════════════════════
 function sdq(sel) { return [...document.querySelectorAll(sel)]; }
 
 function updateCliente() {
   const tipo    = getTipo() || 'Móveis Planejados';
   const cliente = g('f-cliente').value || 'Cliente';
-  const prazo   = g('f-prazo').value   || '30';
+  const prazo   = parseInt(g('f-prazo').value) || 30;
   const id      = g('f-id').value      || '—';
   const rawDate = g('f-data').value;
   const data    = rawDate ? new Date(rawDate + 'T12:00').toLocaleDateString('pt-BR') : '—';
   const venda   = num(g('venda-final').value);
 
-  const phLefts = sdq('.ph-left strong');
-  if (phLefts[0]) phLefts[0].textContent = tipo;
-  if (phLefts[1]) phLefts[1].textContent = prazo + ' dias úteis';
+  // === 1. ATUALIZA O PREVIEW SIMPLES ===
+  const setTxt = (elId, val) => { const el = g(elId); if (el) el.textContent = val; };
+  setTxt('c-num-doc', id);
+  setTxt('c-data-doc', data);
+  setTxt('c-titulo-doc', tipo);
+  setTxt('c-prazo-doc', prazo + ' dias úteis');
 
-  const metaStrongs = sdq('.ph-meta strong');
+  if (venda > 0) {
+    setTxt('c-valor-final', fmt(venda));
+    const pgtoArr = calcPgto();
+    const p12x = pgtoArr.find(p => p.parcelas === 12);
+    setTxt('c-parcela', p12x ? `ou 12× de ${fmt(p12x.parcela)}` : '');
+  } else {
+    setTxt('c-valor-final', 'R$ —');
+    setTxt('c-parcela', 'ou 12× de R$ —');
+  }
+
+  // === 2. ATUALIZA A PROPOSTA COMPLETA ===
+  
+  // Cabeçalhos (ID e Data/Cliente)
+  sdq('.ph-right').forEach(ph => {
+    const strongs = ph.querySelectorAll('strong');
+    if (strongs.length >= 2) {
+      strongs[0].textContent = id;
+      strongs[1].textContent = ph.innerHTML.includes('Emitido em') ? data : cliente;
+    }
+  });
+
+  // Capa
+  const capaNome = document.querySelector('.cb-nome');
+  if (capaNome) capaNome.textContent = cliente;
+  const capaAmb = document.querySelector('.cb-amb');
+  if (capaAmb) capaAmb.textContent = tipo;
+  const metaStrongs = sdq('.capa-meta strong');
   if (metaStrongs[0]) metaStrongs[0].textContent = id;
   if (metaStrongs[1]) metaStrongs[1].textContent = data;
 
-  sdq('.ph-right strong').forEach((el, i) => {
-    if (i % 2 === 0) el.textContent = id; else el.textContent = cliente;
-  });
-
-  const capaCliente = document.querySelector('.cb-nome');
-  if (capaCliente) capaCliente.textContent = cliente;
-  const capaAmb = document.querySelector('.cb-amb');
-  if (capaAmb) capaAmb.textContent = tipo;
-
+  // Tabela de Identificação (Pág 1)
   const dataRows = sdq('.data-row .dr-val');
   if (dataRows[0]) dataRows[0].textContent = cliente;
-  if (dataRows[3]) dataRows[3].textContent = (g('f-prazo').value || '30') + ' dias';
+  if (dataRows[5]) dataRows[5].textContent = tipo; 
 
+  // Valor Total Gigante (Pág 4)
   const ihValor = document.querySelector('.ih-valor');
   if (ihValor && venda > 0) {
-    const moedaEl  = ihValor.querySelector('.ih-moeda');
-    const valorEls = ihValor.querySelectorAll('span');
-    if (moedaEl) moedaEl.textContent = 'R$';
-    if (valorEls[1]) valorEls[1].textContent = venda.toLocaleString('pt-BR', { minimumFractionDigits:0, maximumFractionDigits:0 });
+    const spans = ihValor.querySelectorAll('span');
+    if (spans.length >= 3) {
+      const fmtVenda = fmt(venda).replace('R$', '').trim();
+      const [inteiro, centavos] = fmtVenda.split(',');
+      spans[0].textContent = 'R$ ';
+      spans[1].textContent = inteiro;
+      spans[2].textContent = ',' + (centavos || '00');
+    }
     const ihSub = document.querySelector('.ih-sub');
     if (ihSub) ihSub.textContent = tipo + ' · Medidas e especificações conforme projeto aprovado';
   }
 
+  // Tabela de Pagamento da Proposta Completa
   const rows = calcPgto();
-  const pgtoTbody = document.querySelector('.pgto-table tbody');
+  const pgtoTbody = document.querySelector('.page-invest .pgto-table tbody');
   if (pgtoTbody && rows && venda > 0) {
     pgtoTbody.innerHTML = rows.map(r => {
       const tagHtml    = r.tag ? '<span class="pgto-tag">' + r.tag + '</span>' : '';
       const entradaStr = r.parcelas === 1 ? fmt(r.total) : r.parcelas <= 3 ? fmt(r.total / r.parcelas) : '—';
       const parcelaStr = r.parcelas === 1 ? '—' : r.parcelas + '× de ' + fmt(r.parcela);
-      return '<tr class="' + (r.destaque ? 'pgto-destaque' : '') + '">' +
-        '<td>' + r.label + ' ' + tagHtml + '</td>' +
-        '<td>' + entradaStr + '</td>' +
-        '<td>' + parcelaStr + '</td>' +
-        '<td>' + fmt(r.total) + '</td>' + '</tr>';
+      return `<tr class="${r.destaque ? 'pgto-destaque' : ''}">
+        <td><span contenteditable="true">${r.label}</span> ${tagHtml}</td>
+        <td contenteditable="true">${entradaStr}</td>
+        <td contenteditable="true">${parcelaStr}</td>
+        <td contenteditable="true">${fmt(r.total)}</td>
+      </tr>`;
     }).join('');
   }
 
+  // Formas de Recebimento (Chips Pág 4)
   const recChips = sdq('.rec-chip .rc-val');
   if (recChips[0]) recChips[0].textContent = g('pgto-pix')?.value    || '—';
   if (recChips[1]) recChips[1].textContent = g('pgto-banco')?.value  || '—';
   if (recChips[2]) recChips[2].textContent = g('pgto-cartao')?.value || 'Visa / Master / Elo';
   if (recChips[3]) recChips[3].textContent = g('pgto-boleto')?.value || 'Vencimento D+3';
 
+  // Prazos Totais (Pág 5)
   const piVals = sdq('.pi-val');
-  if (piVals[0]) piVals[0].textContent = prazo;
-  if (piVals[2]) piVals[2].textContent = String(parseInt(prazo || 30) + 10);
+  if (piVals.length >= 3) {
+     const instalacao = 5;
+     const producao = Math.max(prazo - instalacao, 1);
+     piVals[0].textContent = producao;
+     piVals[1].textContent = instalacao;
+     piVals[2].textContent = prazo;
+  }
+  
+  // Atualiza também a tabelinha de pagamento da aba interna
+  calcPgtoInterno();
 }
 
 // ─── Parcelamento ─────────────────────────────────────────────────────
@@ -3126,6 +3205,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (!_apiOnline) {
     toast('⚠️ Backend offline — funcionando com dados locais', 4000);
   }
+});
+
+// Garante que mexer nos campos de pagamento atualize tudo em tempo real
+document.querySelectorAll('input[id^="pgto-"]').forEach(el => {
+  el.addEventListener('input', () => {
+    sync();
+  });
 });
 </script>
 </body>
