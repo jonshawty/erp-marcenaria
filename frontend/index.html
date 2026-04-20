@@ -9,7 +9,7 @@
 :root{
   --bg:#0d0f12;--bg2:#13161b;--bg3:#1a1e26;--bg4:#222736;
   --surf:#1c2030;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.04);
-  --text:#e8e6e1;--text2:#9a9896;--text3:#4a4845;
+  --text:#e8e6e1;--text2:#b5b3b0;--text3:#6b6965;
   --amber:#e8a020;--amber2:#c47c0a;
   --amberg:rgba(232,160,32,.13);--amberg2:rgba(232,160,32,.06);
   --teal:#30c9b8;--green:#3ab876;--red:#e05252;
@@ -41,7 +41,7 @@ body::after{content:'';pointer-events:none;position:fixed;inset:0;z-index:0;
   display:grid;place-items:center;font-family:'Fraunces',serif;font-size:1.1rem;font-weight:900;
   color:var(--bg);box-shadow:0 4px 16px rgba(232,160,32,.4);flex-shrink:0;}
 .th-name{font-size:1.05rem;font-weight:800;letter-spacing:.2px;}
-.th-sub{font-size:.62rem;color:var(--text3);text-transform:uppercase;letter-spacing:2.5px;margin-top:2px;}
+.th-sub{font-size:.62rem;color:var(--text2);text-transform:uppercase;letter-spacing:2.5px;margin-top:2px;}
 .th-right{display:flex;gap:8px;flex-wrap:wrap;}
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--r2);
@@ -78,12 +78,12 @@ body::after{content:'';pointer-events:none;position:fixed;inset:0;z-index:0;
   outline:none;transition:all .16s;width:100%;}
 .field input:focus,.field select:focus{border-color:rgba(232,160,32,.5);
   box-shadow:0 0 0 3px rgba(232,160,32,.08);background:var(--bg4);}
-.field input::placeholder{color:var(--text3);}
+.field input::placeholder{color:var(--text2);}
 .field select option{background:var(--bg3);}
 /* COST TABLE */
 .cost-table{width:100%;border-collapse:collapse;font-size:.82rem;}
 .cost-table thead th{text-align:left;font-size:.6rem;font-weight:700;text-transform:uppercase;
-  letter-spacing:2px;color:var(--text3);padding:8px 10px;border-bottom:1px solid var(--line);}
+  letter-spacing:2px;color:var(--text2);padding:8px 10px;border-bottom:1px solid var(--line);}
 .cost-table tbody tr{border-bottom:1px solid var(--line2);transition:background .14s;}
 .cost-table tbody tr:hover{background:rgba(255,255,255,.02);}
 .cost-table tbody tr:last-child{border-bottom:none;}
@@ -104,13 +104,13 @@ body::after{content:'';pointer-events:none;position:fixed;inset:0;z-index:0;
 .subtotal-bar{display:flex;align-items:center;justify-content:space-between;
   background:var(--amberg2);border:1px solid rgba(232,160,32,.12);
   border-radius:var(--r2);padding:9px 14px;margin-top:10px;}
-.subtotal-bar .sb-label{font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--text2);font-weight:700;}
+.subtotal-bar .sb-label{font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--text);font-weight:700;}
 .subtotal-bar .sb-val{font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700;color:var(--amber);}
 /* SIMPLE COSTS */
 .simple-costs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
 @media(max-width:700px){.simple-costs{grid-template-columns:1fr 1fr;}}
 .sc-item{background:var(--bg3);border:1px solid var(--line);border-radius:var(--r2);padding:14px;}
-.sc-item .sc-label{font-size:.62rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);margin-bottom:6px;font-weight:700;}
+.sc-item .sc-label{font-size:.62rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text);margin-bottom:6px;font-weight:700;}
 .sc-item input{width:100%;padding:8px 10px;background:var(--bg4);border:1.5px solid var(--line);
   border-radius:var(--r2);font-family:'JetBrains Mono',monospace;font-size:.95rem;font-weight:700;
   color:var(--amber);outline:none;text-align:right;transition:all .14s;}
@@ -127,9 +127,9 @@ body::after{content:'';pointer-events:none;position:fixed;inset:0;z-index:0;
 .custo-total-box{background:linear-gradient(135deg,var(--bg4),var(--bg3));
   border:1px solid rgba(232,160,32,.25);border-radius:var(--r);padding:20px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;}
-.ctb-label{font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--text3);font-weight:700;}
+.ctb-label{font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--text2);font-weight:700;}
 .ctb-val{font-family:'Fraunces',serif;font-size:2.4rem;font-weight:900;color:var(--amber);line-height:1;}
-.ctb-sub{font-size:.72rem;color:var(--text3);}
+.ctb-sub{font-size:.72rem;color:var(--text2);}
 /* PRECO KPIs */
 .preco-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;}
 @media(max-width:700px){.preco-grid{grid-template-columns:1fr 1fr;}}
@@ -137,7 +137,7 @@ body::after{content:'';pointer-events:none;position:fixed;inset:0;z-index:0;
   position:relative;overflow:hidden;transition:border-color .18s,transform .18s;}
 .preco-kpi:hover{border-color:rgba(255,255,255,.12);transform:translateY(-2px);}
 .preco-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--acc,var(--amber));}
-.preco-kpi .pk-label{font-size:.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--text3);font-weight:700;margin-bottom:8px;}
+.preco-kpi .pk-label{font-size:.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--text2);font-weight:700;margin-bottom:8px;}
 .preco-kpi .pk-val{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:900;color:var(--text);line-height:1;margin-bottom:6px;}
 .preco-kpi .pk-badge{display:inline-block;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:20px;}
 .pk-amber{--acc:var(--amber);}
@@ -146,7 +146,7 @@ body::after{content:'';pointer-events:none;position:fixed;inset:0;z-index:0;
 /* SLIDER */
 .margem-slider-wrap{background:var(--bg3);border:1px solid var(--line);border-radius:var(--r);padding:20px;}
 .ms-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
-.ms-label{font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--text3);font-weight:700;}
+.ms-label{font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--text2);font-weight:700;}
 .ms-val{font-family:'JetBrains Mono',monospace;font-size:1.3rem;font-weight:700;color:var(--amber);}
 input[type=range]{width:100%;height:5px;-webkit-appearance:none;appearance:none;
   background:var(--line);border-radius:3px;outline:none;}
@@ -154,11 +154,11 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
   border-radius:50%;background:var(--amber);cursor:pointer;
   box-shadow:0 0 8px rgba(232,160,32,.5);border:2px solid var(--bg);}
 .ms-scale{display:flex;justify-content:space-between;margin-top:4px;}
-.ms-scale span{font-size:.62rem;color:var(--text3);font-family:'JetBrains Mono',monospace;}
+.ms-scale span{font-size:.62rem;color:var(--text2);font-family:'JetBrains Mono',monospace;}
 /* COMISSAO */
 .comissao-row{display:flex;align-items:center;gap:14px;background:var(--bg3);
   border:1px solid var(--line);border-radius:var(--r2);padding:12px 16px;margin-top:10px;}
-.comissao-row label{font-size:.78rem;color:var(--text2);flex:1;cursor:pointer;}
+.comissao-row label{font-size:.78rem;color:var(--text);flex:1;cursor:pointer;}
 .comissao-row input[type=checkbox]{width:16px;height:16px;accent-color:var(--amber);cursor:pointer;}
 .comm-pct{width:80px;padding:6px 10px;background:var(--bg4);border:1.5px solid var(--line);
   border-radius:var(--r2);font-family:'JetBrains Mono',monospace;font-size:.85rem;
@@ -166,7 +166,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 .comm-pct:focus{border-color:rgba(232,160,32,.4);}
 /* PROFIT BAR */
 .profit-bar-wrap{margin-top:14px;}
-.pb-label{display:flex;justify-content:space-between;font-size:.65rem;color:var(--text3);
+.pb-label{display:flex;justify-content:space-between;font-size:.65rem;color:var(--text2);
   margin-bottom:5px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;}
 .pb-track{height:8px;background:var(--bg4);border-radius:4px;overflow:hidden;}
 .pb-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--amber2),var(--green));
@@ -185,7 +185,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
   box-shadow:0 0 0 1px var(--amber) inset;
 }
 .amb-chip .ac-icon{font-size:1.2rem;line-height:1;}
-.amb-chip .ac-name{font-size:.62rem;font-weight:700;color:var(--text2);
+.amb-chip .ac-name{font-size:.62rem;font-weight:700;color:var(--text);
   text-transform:uppercase;letter-spacing:.8px;line-height:1.2;margin-top:2px;}
 .amb-chip.selected .ac-name{color:var(--amber);}
 @media(max-width:700px){#f-tipo-wrap{grid-template-columns:repeat(3,1fr)!important;}}
@@ -205,11 +205,11 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
   outline:none;transition:all .16s;
 }
 .hist-search-wrap input:focus{border-color:rgba(232,160,32,.45);box-shadow:0 0 0 3px rgba(232,160,32,.08);}
-.hist-search-wrap input::placeholder{color:var(--text3);}
-.hist-search-wrap .hs-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:.85rem;color:var(--text3);pointer-events:none;}
+.hist-search-wrap input::placeholder{color:var(--text2);}
+.hist-search-wrap .hs-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:.85rem;color:var(--text2);pointer-events:none;}
 .hist-filters{display:flex;gap:6px;flex-wrap:wrap;}
 .hf-chip{padding:6px 14px;border-radius:20px;border:1px solid var(--line);
-  background:var(--bg3);color:var(--text2);font-size:.75rem;font-weight:600;
+  background:var(--bg3);color:var(--text);font-size:.75rem;font-weight:600;
   cursor:pointer;transition:all .14s;font-family:'Syne',sans-serif;}
 .hf-chip:hover{background:var(--bg4);color:var(--text);}
 .hf-chip.hfc-all.active{background:var(--amberg);border-color:rgba(232,160,32,.35);color:var(--amber);}
@@ -223,14 +223,14 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 .hstat{background:var(--surf);border:1px solid var(--line);border-radius:var(--r2);
   padding:12px 14px;position:relative;overflow:hidden;}
 .hstat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--hs-acc,var(--amber));}
-.hstat .hs-label{font-size:.58rem;text-transform:uppercase;letter-spacing:2px;color:var(--text3);font-weight:700;margin-bottom:5px;}
+.hstat .hs-label{font-size:.58rem;text-transform:uppercase;letter-spacing:2px;color:var(--text2);font-weight:700;margin-bottom:5px;}
 .hstat .hs-val{font-family:'JetBrains Mono',monospace;font-size:1.3rem;font-weight:700;color:var(--text);}
-.hstat .hs-sub{font-size:.65rem;color:var(--text3);margin-top:2px;}
+.hstat .hs-sub{font-size:.65rem;color:var(--text2);margin-top:2px;}
 @media(max-width:700px){.hist-stats{grid-template-columns:1fr 1fr;}}
 
 /* Cards de orçamento */
-.hist-empty{text-align:center;padding:48px 20px;color:var(--text3);}
-.hist-empty .he-icon{font-size:2.5rem;margin-bottom:10px;opacity:.4;}
+.hist-empty{text-align:center;padding:48px 20px;color:var(--text2);}
+.hist-empty .he-icon{font-size:2.5rem;margin-bottom:10px;opacity:.6;}
 .hist-empty p{font-size:.82rem;}
 .orc-card{
   background:var(--surf);border:1px solid var(--line);border-radius:var(--r);
@@ -240,24 +240,23 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
   animation:fadeUp .3s ease both;
 }
 .orc-card:hover{border-color:rgba(255,255,255,.13);transform:translateY(-1px);}
-.orc-card .oc-left{}
 .orc-card .oc-id{
-  font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text3);
+  font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text2);
   margin-bottom:3px;letter-spacing:.5px;
 }
 .orc-card .oc-cliente{font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:3px;}
 .orc-card .oc-tipo{
-  font-size:.72rem;color:var(--text2);
+  font-size:.72rem;color:var(--text);
   display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:6px;
 }
-.orc-card .oc-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:.7rem;color:var(--text3);}
+.orc-card .oc-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:.7rem;color:var(--text2);}
 .orc-card .oc-meta span{display:flex;align-items:center;gap:4px;}
 .orc-card .oc-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
 .orc-card .oc-valor{
   font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:700;color:var(--amber);
   text-align:right;
 }
-.orc-card .oc-custo{font-size:.65rem;color:var(--text3);text-align:right;font-family:'JetBrains Mono',monospace;}
+.orc-card .oc-custo{font-size:.65rem;color:var(--text2);text-align:right;font-family:'JetBrains Mono',monospace;}
 .orc-card .oc-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
 
 /* Status badge */
@@ -276,7 +275,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 /* Select status inline */
 .status-select{
   padding:4px 8px;background:var(--bg3);border:1px solid var(--line);border-radius:var(--r2);
-  font-family:'Syne',sans-serif;font-size:.72rem;color:var(--text2);outline:none;cursor:pointer;
+  font-family:'Syne',sans-serif;font-size:.72rem;color:var(--text);outline:none;cursor:pointer;
 }
 .status-select:focus{border-color:rgba(232,160,32,.4);}
 @media(max-width:600px){
@@ -1046,13 +1045,13 @@ body {
 /* ── API INTEGRATION STYLES ── */
 .auth-bar{display:flex;align-items:center;gap:10px;padding:8px 16px;
   background:var(--bg2);border-bottom:1px solid var(--line);
-  font-size:.72rem;color:var(--text2);position:sticky;top:0;z-index:100;}
+  font-size:.72rem;color:var(--text);position:sticky;top:0;z-index:100;}
 .auth-bar .ab-user{display:flex;align-items:center;gap:7px;flex:1;}
 .auth-bar .ab-badge{background:var(--amberg);border:1px solid rgba(232,160,32,.2);
   color:var(--amber);padding:2px 8px;border-radius:20px;font-size:.62rem;font-weight:700;}
 .auth-bar .btn-logout{padding:4px 12px;font-size:.68rem;}
 .api-status{display:flex;align-items:center;gap:5px;font-size:.65rem;}
-.api-dot{width:7px;height:7px;border-radius:50%;background:var(--text3);}
+.api-dot{width:7px;height:7px;border-radius:50%;background:var(--text2);}
 .api-dot.online{background:var(--green);box-shadow:0 0 6px rgba(58,184,118,.5);}
 .api-dot.offline{background:var(--red);}
 .overlay-loading{position:fixed;inset:0;background:rgba(13,15,18,.85);
@@ -1060,13 +1059,8 @@ body {
 .overlay-loading.show{opacity:1;pointer-events:all;}
 .ol-spinner{width:48px;height:48px;border:3px solid var(--line);
   border-top-color:var(--amber);border-radius:50%;animation:spin .8s linear infinite;}
-.ol-msg{color:var(--text2);font-size:.78rem;margin-top:14px;text-align:center;}
+.ol-msg{color:var(--text);font-size:.78rem;margin-top:14px;text-align:center;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.sync-badge{display:inline-flex;align-items:center;gap:4px;font-size:.62rem;
-  padding:2px 7px;border-radius:20px;margin-left:6px;}
-.sync-ok{background:rgba(58,184,118,.12);color:var(--green);border:1px solid rgba(58,184,118,.2);}
-.sync-err{background:rgba(224,82,82,.12);color:var(--red);border:1px solid rgba(224,82,82,.2);}
-.sync-pending{background:var(--amberg);color:var(--amber);border:1px solid rgba(232,160,32,.2);}
 
 /* ══════════════════════════════════════════
    PRINT - CORRIGIDO
@@ -1133,7 +1127,7 @@ body {
       <button class="btn btn-ghost btn-sm" onclick="limpar()">🗑 Limpar</button>
       <button class="btn btn-ghost btn-sm" onclick="showTab('historico')" style="border-color:rgba(91,141,238,.3);color:var(--blue)">🗂 Histórico</button>
       <button class="btn btn-green btn-sm" onclick="verCliente()">👁 Preview Cliente</button>
-      <button class="btn btn-amber btn-sm" onclick="salvar()">💾 Salvar</button>
+      <button class="btn btn-amber btn-sm" onclick="salvar()">💾 Salvar na API</button>
     </div>
   </div>
 
@@ -1150,10 +1144,10 @@ body {
       <div class="sec-head"><div class="sec-num">01</div><div class="sec-title"><em>Identificação</em> do Projeto</div></div>
       <div class="card">
         <div class="id-grid">
-          <div class="field"><label>ID do Orçamento</label><input id="f-id" placeholder="ORC-2026-0001" oninput="sync()"/></div>
+          <div class="field"><label>ID do Orçamento (Automático na API)</label><input id="f-id" placeholder="Novo Orçamento" oninput="sync()"/></div>
           <div class="field"><label>Cliente</label><input id="f-cliente" placeholder="Nome do cliente" oninput="sync()"/></div>
           <div class="field" style="grid-column:span 2">
-            <label>Tipo de Projeto <span style="font-size:.55rem;color:var(--text3);letter-spacing:1px;font-weight:400;text-transform:none">(selecione um ou mais ambientes)</span></label>
+            <label>Tipo de Projeto <span style="font-size:.55rem;color:var(--text);letter-spacing:1px;font-weight:400;text-transform:none">(selecione um ou mais ambientes)</span></label>
             <div id="f-tipo-wrap" style="
               display:grid;grid-template-columns:repeat(5,1fr);gap:7px;
               margin-top:4px;
@@ -1214,6 +1208,7 @@ body {
           <div class="sc-item"><div class="sc-label">🔨 Custo de Montagem</div><input id="c-montagem" type="number" placeholder="0,00" min="0" step="0.01" oninput="calc()"/></div>
           <div class="sc-item"><div class="sc-label">🚚 Custo de Frete</div><input id="c-frete" type="number" placeholder="0,00" min="0" step="0.01" oninput="calc()"/></div>
           <div class="sc-item"><div class="sc-label">📐 Custo do Projeto</div><input id="c-projeto" type="number" placeholder="0,00" min="0" step="0.01" oninput="calc()"/></div>
+          <div class="sc-item"><div class="sc-label">📦 Embalagens/Etiq.</div><input id="c-embalagem" type="number" placeholder="0,00" min="0" step="0.01" oninput="calc()"/></div>
         </div>
         <div class="subtotal-bar" style="margin-top:12px"><span class="sb-label">Subtotal Operacional</span><span class="sb-val" id="st-op">R$ 0,00</span></div>
       </div>
@@ -1234,6 +1229,7 @@ body {
               <tr><td>🔨 Montagem</td><td id="r-mont">R$ 0,00</td></tr>
               <tr><td>🚚 Frete / Logística</td><td id="r-frete">R$ 0,00</td></tr>
               <tr><td>📐 Projeto (design)</td><td id="r-proj">R$ 0,00</td></tr>
+              <tr><td>📦 Embalagens/Etiq.</td><td id="r-emb">R$ 0,00</td></tr>
               <tr style="border-top:1px solid var(--line)!important"><td style="color:var(--red);font-weight:700">🔴 Comissão</td><td id="r-comm" style="color:var(--red)">R$ 0,00</td></tr>
             </table>
           </div>
@@ -1253,7 +1249,7 @@ body {
           <input type="checkbox" id="cb-comm" onchange="calc()"/>
           <label for="cb-comm">💸 Incluir comissão de vendas / parceiros</label>
           <input class="comm-pct" id="comm-pct" type="number" value="5" min="0" max="50" oninput="calc()"/>
-          <span style="font-size:.78rem;color:var(--text2)">%</span>
+          <span style="font-size:.78rem;color:var(--text)">%</span>
         </div>
         <div class="margem-slider-wrap" style="margin-top:12px">
           <div class="ms-top">
@@ -1291,7 +1287,7 @@ body {
               oninput="onVendaManual(this.value)"
               style="font-size:1.1rem;font-weight:700;color:var(--teal);background:var(--bg3);"/>
           </div>
-          <div style="font-size:.68rem;color:var(--text3);margin-top:4px;font-style:italic">
+          <div style="font-size:.68rem;color:var(--text);margin-top:4px;font-style:italic">
             Ajuste manualmente se necessário. Margem e lucro serão recalculados automaticamente.
           </div>
         </div>
@@ -1328,12 +1324,12 @@ body {
             <table style="width:100%;border-collapse:collapse;font-size:.78rem">
               <thead>
                 <tr style="border-bottom:1px solid var(--line2)">
-                  <th style="text-align:left;padding:7px 12px;font-size:.6rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);font-weight:700">Forma</th>
-                  <th style="text-align:right;padding:7px 12px;font-size:.6rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);font-weight:700">Total</th>
-                  <th style="text-align:right;padding:7px 12px;font-size:.6rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);font-weight:700">Parcela</th>
+                  <th style="text-align:left;padding:7px 12px;font-size:.6rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text);font-weight:700">Forma</th>
+                  <th style="text-align:right;padding:7px 12px;font-size:.6rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text);font-weight:700">Total</th>
+                  <th style="text-align:right;padding:7px 12px;font-size:.6rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text);font-weight:700">Parcela</th>
                 </tr>
               </thead>
-              <tbody id="pgto-preview-body"></tbody>
+              <tbody id="pgto-preview-body" style="color:var(--text)"></tbody>
             </table>
           </div>
 
@@ -1449,7 +1445,6 @@ body {
       <div class="hf-chip hfc-cancelado" data-status="cancelado" onclick="setFiltro(this)">🔴 Cancelado</div>
     </div>
     <button class="btn btn-ghost btn-sm" onclick="exportarCSV()">⬇ Exportar CSV</button>
-    <button class="btn btn-ghost btn-sm" onclick="confirmarLimparTudo()">🗑 Limpar tudo</button>
   </div>
 
   <div id="hist-lista"></div>
@@ -1465,7 +1460,7 @@ body {
       <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--amber)">
         📄 Preview do Cliente — Proposta Completa
       </div>
-      <div style="font-size:.68rem;color:var(--text3);margin-top:3px;font-style:italic">
+      <div style="font-size:.68rem;color:var(--text);margin-top:3px;font-style:italic">
         Os dados do formulário interno foram aplicados automaticamente · Clique em ✏️ para editar qualquer texto
       </div>
     </div>
@@ -2015,7 +2010,7 @@ body {
 
 <script>
 // ════════════════════════════════════════════════════════════════════
-// ERP MARCENARIA — Frontend v2.0 com integração API REST
+// ERP MARCENARIA — Frontend v2.0 com integração API REST Exclusiva
 // ════════════════════════════════════════════════════════════════════
 
 // ── Config ──────────────────────────────────────────────────────────
@@ -2111,7 +2106,7 @@ async function verificarBackend() {
     txt.textContent = 'API online';
   } else {
     dot.className = 'api-dot offline';
-    txt.textContent = 'API offline';
+    txt.textContent = 'API offline (Offline - Salvamento bloqueado)';
   }
   return _apiOnline;
 }
@@ -2228,8 +2223,9 @@ function calc() {
   const mont  = num(g('c-montagem')?.value);
   const frete = num(g('c-frete')?.value);
   const proj  = num(g('c-projeto')?.value);
+  const emb   = num(g('c-embalagem')?.value);
 
-  const opSub = corte + fur + fita + mont + frete + proj;
+  const opSub = corte + fur + fita + mont + frete + proj + emb;
 
   const setEl = (id, v) => {
     const el = g(id);
@@ -2259,6 +2255,7 @@ function calc() {
   setEl('r-mont', mont);
   setEl('r-frete', frete);
   setEl('r-proj', proj);
+  setEl('r-emb', emb);
   setEl('r-comm', comVal);
 
   // custo total
@@ -2329,8 +2326,7 @@ function coletarDados() {
   const margem   = parseFloat(g('margem-range').value) || 0;
   const lucro    = venda - custo;
 
-  const id = g('f-id').value.trim() || gerarIdLocal();
-  g('f-id').value = id;
+  const id = g('f-id').value.trim();
 
   // Coleta itens das tabelas
   const itens = [];
@@ -2365,6 +2361,7 @@ function coletarDados() {
     custo_montagem:  num(g('c-montagem').value),
     custo_frete:     num(g('c-frete').value),
     custo_projeto:   num(g('c-projeto').value),
+    custo_embalagem: num(g('c-embalagem').value),
     custo_total:     custo,
     comissao_pct:    g('cb-comm')?.checked ? num(g('comm-pct')?.value) : 0,
     comissao_val:    g('cb-comm')?.checked ? custo * num(g('comm-pct')?.value) / 100 : 0,
@@ -2384,7 +2381,7 @@ function coletarDados() {
 }
 
 // ════════════════════════════════════════════════════════════════════
-// SALVAR — via API com fallback localStorage
+// SALVAR — Exclusivo API
 // ════════════════════════════════════════════════════════════════════
 async function salvar() {
   const dados = coletarDados();
@@ -2392,86 +2389,40 @@ async function salvar() {
     toast('⚠️ Preencha o nome do cliente antes de salvar'); return;
   }
 
-  const online = _apiOnline;
-
-  if (online) {
-    loading(true, 'Salvando orçamento...');
-    try {
-      const idExiste = g('f-id').dataset.existeApi === 'true';
-      let resultado;
-      if (idExiste) {
-        resultado = await apiFetch(`/orcamentos/${dados.id}`, {
-          method: 'PUT', body: JSON.stringify(dados)
-        });
-        toast(`✅ Orçamento ${dados.id} atualizado na API`);
-      } else {
-        resultado = await apiFetch('/orcamentos', {
-          method: 'POST', body: JSON.stringify(dados)
-        });
-        g('f-id').value = resultado.id;
-        g('f-id').dataset.existeApi = 'true';
-        toast(`✅ Orçamento ${resultado.id} salvo na API`);
-      }
-      // Salva também no localStorage como cache
-      salvarLocalCache(dados);
-      renderHistorico();
-    } catch (e) {
-      toast(`⚠️ Erro API: ${e.message} — Salvo localmente`, 4000);
-      salvarLocal(dados);
-    } finally { loading(false); }
-  } else {
-    salvarLocal(dados);
-    toast('💾 Salvo localmente (API offline)');
-    renderHistorico();
+  if (!_apiOnline) {
+    toast('⚠️ Sistema offline. Não é possível salvar na API.');
+    return;
   }
-}
 
-// ── localStorage helpers ─────────────────────────────────────────────
-const DB_KEY = 'erp_orc_db';
-function dbLoad() { try { return JSON.parse(localStorage.getItem(DB_KEY) || '[]'); } catch { return []; } }
-function dbSave(arr) { localStorage.setItem(DB_KEY, JSON.stringify(arr)); }
-
-function salvarLocal(dados) {
-  const arr = dbLoad();
-  const idx = arr.findIndex(o => o.id === dados.id);
-  const local = {
-    id: dados.id, cliente: dados.cliente_nome, tipo: dados.tipo_projeto,
-    resp: dados.responsavel, data: dados.data_orc, prazo: dados.prazo_dias,
-    custo: dados.custo_total, venda: dados.venda_final, lucro: dados.lucro,
-    margem: dados.margem_pct, status: 'aberto',
-    criadoEm: new Date().toISOString(),
-    _local: true, _dados: dados,
-  };
-  if (idx >= 0) { local.status = arr[idx].status; local.criadoEm = arr[idx].criadoEm; arr[idx] = local; }
-  else arr.unshift(local);
-  dbSave(arr);
-}
-
-function salvarLocalCache(dados) {
-  // Cache da resposta da API no localStorage para uso offline
-  const arr = dbLoad();
-  const idx = arr.findIndex(o => o.id === dados.id);
-  const local = {
-    id: dados.id, cliente: dados.cliente_nome, tipo: dados.tipo_projeto,
-    resp: dados.responsavel, data: dados.data_orc, prazo: dados.prazo_dias,
-    custo: dados.custo_total, venda: dados.venda_final, lucro: dados.lucro,
-    margem: dados.margem_pct, status: 'aberto', criadoEm: new Date().toISOString(),
-    _local: false, _dados: dados,
-  };
-  if (idx >= 0) { local.status = arr[idx].status; local.criadoEm = arr[idx].criadoEm; arr[idx] = local; }
-  else arr.unshift(local);
-  dbSave(arr);
-}
-
-function gerarIdLocal() {
-  const ano = new Date().getFullYear();
-  const arr = dbLoad();
-  const seq = String(arr.length + 1).padStart(4, '0');
-  return `ORC-${ano}-${seq}`;
+  loading(true, 'Salvando orçamento...');
+  try {
+    const idExiste = g('f-id').dataset.existeApi === 'true' && dados.id !== '';
+    let resultado;
+    
+    if (idExiste) {
+      resultado = await apiFetch(`/orcamentos/${dados.id}`, {
+        method: 'PUT', body: JSON.stringify(dados)
+      });
+      toast(`✅ Orçamento ${dados.id} atualizado na API`);
+    } else {
+      // Cria novo orçamento (remove ID para API gerar)
+      delete dados.id;
+      resultado = await apiFetch('/orcamentos', {
+        method: 'POST', body: JSON.stringify(dados)
+      });
+      g('f-id').value = resultado.id;
+      g('f-id').dataset.existeApi = 'true';
+      toast(`✅ Orçamento ${resultado.id} salvo na API`);
+    }
+    
+    renderHistorico();
+  } catch (e) {
+    toast(`⚠️ Erro API: ${e.message}`, 4000);
+  } finally { loading(false); }
 }
 
 // ════════════════════════════════════════════════════════════════════
-// HISTÓRICO — combina API + localStorage
+// HISTÓRICO — Exclusivo API
 // ════════════════════════════════════════════════════════════════════
 let filtroStatus = 'todos';
 let _todosOrc    = [];
@@ -2498,42 +2449,38 @@ function filtrarHistorico() {
 }
 
 async function renderHistorico() {
-  const online = _apiOnline;
-
-  if (online) {
-    loading(true, 'Carregando histórico...');
-    try {
-      const resp = await apiFetch('/orcamentos?limite=100&ordenar=criado_em&direcao=DESC');
-      const apiOrcs = (resp.dados || []).map(o => ({
-        id:       o.id,
-        cliente:  o.cliente_nome,
-        tipo:     o.tipo_projeto,
-        resp:     o.responsavel,
-        data:     o.data_orc,
-        prazo:    o.prazo_dias,
-        custo:    o.custo_total,
-        venda:    o.venda_final,
-        lucro:    o.lucro,
-        margem:   o.margem_pct,
-        status:   o.status,
-        criadoEm: o.criado_em,
-        _local:   false,
-        _raw:     o,
-      }));
-
-      // Mescla com orçamentos locais ainda não sincronizados
-      const locais = dbLoad().filter(l => l._local);
-      _todosOrc = [...apiOrcs, ...locais];
-
-      // Sincroniza cache local
-      dbSave(_todosOrc.map(o => ({ ...o, _raw: undefined })));
-    } catch (e) {
-      console.error('Erro ao carregar histórico da API:', e);
-      _todosOrc = dbLoad();
-    } finally { loading(false); }
-  } else {
-    _todosOrc = dbLoad();
+  if (!_apiOnline) {
+    g('hist-lista').innerHTML = `<div class="hist-empty">
+      <div class="he-icon">🔌</div>
+      <p>Sistema offline.<br>
+      <span style="font-size:.72rem;opacity:.6">Conecte-se à internet e verifique a API para carregar o histórico.</span></p>
+    </div>`;
+    return;
   }
+
+  loading(true, 'Carregando histórico...');
+  try {
+    const resp = await apiFetch('/orcamentos?limite=100&ordenar=criado_em&direcao=DESC');
+    _todosOrc = (resp.dados || []).map(o => ({
+      id:       o.id,
+      cliente:  o.cliente_nome,
+      tipo:     o.tipo_projeto,
+      resp:     o.responsavel,
+      data:     o.data_orc,
+      prazo:    o.prazo_dias,
+      custo:    o.custo_total,
+      venda:    o.venda_final,
+      lucro:    o.lucro,
+      margem:   o.margem_pct,
+      status:   o.status,
+      criadoEm: o.criado_em,
+      _raw:     o,
+    }));
+  } catch (e) {
+    console.error('Erro ao carregar histórico da API:', e);
+    toast('⚠️ Falha ao carregar o histórico da API');
+    _todosOrc = [];
+  } finally { loading(false); }
 
   // Stats
   const fechados = _todosOrc.filter(o => o.status === 'fechado');
@@ -2572,13 +2519,10 @@ function renderCards(lista) {
     const dataFmt = o.data ? new Date(o.data + 'T12:00').toLocaleDateString('pt-BR') : '—';
     const lucroColor = (o.lucro || 0) >= 0 ? 'var(--green)' : 'var(--red)';
     const margemStr  = o.margem ? o.margem.toFixed(0) + '%' : '—';
-    const syncBadge  = o._local
-      ? '<span class="sync-badge sync-pending" title="Salvo localmente — pendente de sincronização">⚠ Local</span>'
-      : '<span class="sync-badge sync-ok" title="Sincronizado com o servidor">✓ API</span>';
 
     return `<div class="orc-card" id="card-${o.id.replace(/[^a-z0-9]/gi,'_')}">
       <div class="oc-left">
-        <div class="oc-id">${o.id} · ${dataFmt} ${syncBadge}</div>
+        <div class="oc-id">${o.id} · ${dataFmt}</div>
         <div class="oc-cliente">${o.cliente || '—'}</div>
         <div class="oc-tipo">${o.tipo && o.tipo !== '—' ? '📐 ' + o.tipo : ''}</div>
         <div class="oc-meta">
@@ -2594,7 +2538,7 @@ function renderCards(lista) {
         </div>
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end">
           <span class="st-badge ${stClass}">${stLabel}</span>
-          <select class="status-select" onchange="alterarStatus('${o.id}',this.value,${!o._local})" title="Alterar status">
+          <select class="status-select" onchange="alterarStatus('${o.id}',this.value)" title="Alterar status">
             <option value="aberto"    ${o.status==='aberto'   ?'selected':''}>🔵 Aberto</option>
             <option value="fechado"   ${o.status==='fechado'  ?'selected':''}>🟢 Fechado</option>
             <option value="enviado"   ${o.status==='enviado'  ?'selected':''}>🔷 Enviado</option>
@@ -2602,9 +2546,9 @@ function renderCards(lista) {
           </select>
         </div>
         <div class="oc-actions">
-          <button class="btn btn-ghost btn-sm" onclick="carregarOrc('${o.id}',${!o._local})" title="Abrir no editor">✏️ Editar</button>
+          <button class="btn btn-ghost btn-sm" onclick="carregarOrc('${o.id}')" title="Abrir no editor">✏️ Editar</button>
           <button class="btn btn-ghost btn-sm" onclick="duplicarOrc('${o.id}')" title="Duplicar">⧉ Clonar</button>
-          <button class="btn btn-ghost btn-sm" onclick="excluirOrc('${o.id}',${!o._local})" style="color:var(--red);border-color:rgba(224,82,82,.2)" title="Excluir">🗑</button>
+          <button class="btn btn-ghost btn-sm" onclick="excluirOrc('${o.id}')" style="color:var(--red);border-color:rgba(224,82,82,.2)" title="Excluir">🗑</button>
         </div>
       </div>
     </div>`;
@@ -2612,60 +2556,59 @@ function renderCards(lista) {
 }
 
 // ── Alterar status ────────────────────────────────────────────────────
-async function alterarStatus(id, novoStatus, viaApi = false) {
+async function alterarStatus(id, novoStatus) {
   const labels = { aberto:'🔵 Aberto', fechado:'🟢 Fechado', enviado:'🔷 Enviado', cancelado:'🔴 Cancelado' };
 
-  if (viaApi && _apiOnline) {
-    try {
-      await apiFetch(`/orcamentos/${id}/status`, {
-        method: 'PATCH',
-        body: JSON.stringify({ status: novoStatus }),
-      });
-    } catch (e) { toast(`⚠️ Erro ao alterar status: ${e.message}`, 3500); }
+  if (!_apiOnline) {
+    toast('⚠️ Sistema offline. Impossível alterar status.');
+    return;
   }
 
-  // Atualiza cache local também
-  const arr = dbLoad();
-  const idx = arr.findIndex(o => o.id === id);
-  if (idx >= 0) { arr[idx].status = novoStatus; dbSave(arr); }
-
-  toast('Status → ' + labels[novoStatus]);
-  renderHistorico();
+  try {
+    await apiFetch(`/orcamentos/${id}/status`, {
+      method: 'PATCH',
+      body: JSON.stringify({ status: novoStatus }),
+    });
+    toast('Status → ' + labels[novoStatus]);
+    renderHistorico();
+  } catch (e) { 
+    toast(`⚠️ Erro ao alterar status: ${e.message}`, 3500); 
+  }
 }
 
 // ── Carregar orçamento no editor ─────────────────────────────────────
-async function carregarOrc(id, viaApi = false) {
+async function carregarOrc(id) {
+  if (!_apiOnline) {
+    toast('⚠️ Sistema offline. Impossível carregar o orçamento da API.');
+    return;
+  }
+
   let o = null;
+  loading(true, 'Carregando orçamento...');
+  try {
+    const raw = await apiFetch(`/orcamentos/${id}`);
+    o = {
+      id: raw.id, cliente: raw.cliente_nome, tipo: raw.tipo_projeto,
+      resp: raw.responsavel, data: raw.data_orc, prazo: raw.prazo_dias,
+      custo: raw.custo_total, venda: raw.venda_final, margem: raw.margem_pct,
+      mdf: raw.custo_mdf, ferr: raw.custo_ferr, acess: raw.custo_acess,
+      corte: raw.custo_corte, furacao: raw.custo_furacao, fita: raw.custo_fita,
+      montagem: raw.custo_montagem, frete: raw.custo_frete, projeto: raw.custo_projeto,
+      embalagem: raw.custo_embalagem,
+      itens: raw.itens || [],
+      pgto_pix: raw.pgto_pix, pgto_banco: raw.pgto_banco,
+      pgto_cartao: raw.pgto_cartao, pgto_boleto: raw.pgto_boleto,
+      pgto_desc_avista: raw.pgto_desc_avista, pgto_juros_10x: raw.pgto_juros_10x,
+      pgto_juros_12x: raw.pgto_juros_12x, comissao_pct: raw.comissao_pct,
+      _existeApi: true,
+    };
+  } catch (e) {
+    toast('⚠️ Erro ao carregar da API');
+    loading(false);
+    return;
+  } 
 
-  if (viaApi && _apiOnline) {
-    loading(true, 'Carregando orçamento...');
-    try {
-      const raw = await apiFetch(`/orcamentos/${id}`);
-      o = {
-        id: raw.id, cliente: raw.cliente_nome, tipo: raw.tipo_projeto,
-        resp: raw.responsavel, data: raw.data_orc, prazo: raw.prazo_dias,
-        custo: raw.custo_total, venda: raw.venda_final, margem: raw.margem_pct,
-        mdf: raw.custo_mdf, ferr: raw.custo_ferr, acess: raw.custo_acess,
-        corte: raw.custo_corte, furacao: raw.custo_furacao, fita: raw.custo_fita,
-        montagem: raw.custo_montagem, frete: raw.custo_frete, projeto: raw.custo_projeto,
-        itens: raw.itens || [],
-        pgto_pix: raw.pgto_pix, pgto_banco: raw.pgto_banco,
-        pgto_cartao: raw.pgto_cartao, pgto_boleto: raw.pgto_boleto,
-        pgto_desc_avista: raw.pgto_desc_avista, pgto_juros_10x: raw.pgto_juros_10x,
-        pgto_juros_12x: raw.pgto_juros_12x, comissao_pct: raw.comissao_pct,
-        _existeApi: true,
-      };
-    } catch (e) {
-      toast('⚠️ Erro ao carregar da API, usando cache local');
-    } finally { loading(false); }
-  }
-
-  if (!o) {
-    const arr = dbLoad();
-    const local = arr.find(x => x.id === id);
-    if (!local) { toast('Orçamento não encontrado'); return; }
-    o = local._dados ? { ...local, ...local._dados } : local;
-  }
+  loading(false);
 
   // Limpa o formulário
   g('mdf-body').innerHTML = ''; g('ferr-body').innerHTML = ''; g('acess-body').innerHTML = '';
@@ -2690,7 +2633,7 @@ async function carregarOrc(id, viaApi = false) {
     });
   }
 
-  // Itens detalhados (da API) ou consolidados (do localStorage)
+  // Itens detalhados
   if (o.itens && o.itens.length > 0) {
     o.itens.forEach(it => {
       if (it.categoria === 'mdf')       addMDF(it.descricao,   it.quantidade, it.valor_unit);
@@ -2705,12 +2648,13 @@ async function carregarOrc(id, viaApi = false) {
 
   // Custos operacionais
   const setVal = (id, v) => { const el = g(id); if (el) el.value = v || ''; };
-  setVal('c-corte',    o.corte    || o.custo_corte    || 0);
-  setVal('c-furacao',  o.furacao  || o.custo_furacao  || 0);
-  setVal('c-fita',     o.fita     || o.custo_fita     || 0);
-  setVal('c-montagem', o.montagem || o.custo_montagem || 0);
-  setVal('c-frete',    o.frete    || o.custo_frete    || 0);
-  setVal('c-projeto',  o.projeto  || o.custo_projeto  || 0);
+  setVal('c-corte',     o.corte     || o.custo_corte     || 0);
+  setVal('c-furacao',   o.furacao   || o.custo_furacao   || 0);
+  setVal('c-fita',      o.fita      || o.custo_fita      || 0);
+  setVal('c-montagem',  o.montagem  || o.custo_montagem  || 0);
+  setVal('c-frete',     o.frete     || o.custo_frete     || 0);
+  setVal('c-projeto',   o.projeto   || o.custo_projeto   || 0);
+  setVal('c-embalagem', o.embalagem || o.custo_embalagem || 0);
 
   // Pagamento
   setVal('pgto-pix',    o.pgto_pix   || o.pgto_pix    || '');
@@ -2742,84 +2686,64 @@ async function carregarOrc(id, viaApi = false) {
 }
 
 // ── Duplicar ─────────────────────────────────────────────────────────
-function duplicarOrc(id) {
-  const arr = dbLoad();
-  const o   = arr.find(x => x.id === id);
-  if (!o) return;
-  const novo = { ...o, id: gerarIdLocal(), status: 'aberto',
-    criadoEm: new Date().toISOString(), _local: true };
-  arr.unshift(novo);
-  dbSave(arr);
-  toast('⧉ Orçamento duplicado → ' + novo.id);
-  renderHistorico();
+async function duplicarOrc(id) {
+  if (!_apiOnline) { toast('⚠️ API offline. Impossível duplicar.'); return; }
+  if (!confirm(`Deseja duplicar o orçamento ${id}?`)) return;
+  
+  loading(true, 'Duplicando...');
+  try {
+    const raw = await apiFetch(`/orcamentos/${id}`);
+    delete raw.id; // API gera novo ID
+    raw.cliente_nome = raw.cliente_nome + ' (Cópia)';
+    raw.status = 'aberto';
+    
+    await apiFetch('/orcamentos', { method: 'POST', body: JSON.stringify(raw) });
+    toast('⧉ Orçamento duplicado com sucesso');
+    renderHistorico();
+  } catch (e) {
+    toast(`⚠️ Erro ao duplicar: ${e.message}`);
+  } finally { loading(false); }
 }
 
 // ── Excluir ───────────────────────────────────────────────────────────
-async function excluirOrc(id, viaApi = false) {
-  if (!confirm(`Excluir o orçamento ${id}? Esta ação não pode ser desfeita.`)) return;
+async function excluirOrc(id) {
+  if (!confirm(`Excluir o orçamento ${id}? Esta ação não pode ser desfeita na API.`)) return;
 
-  if (viaApi && _apiOnline) {
-    const u = getUsuario();
-    if (!u || !['admin','gerente'].includes(u.perfil)) {
-      toast('⚠️ Apenas Admin ou Gerente podem excluir orçamentos');
-      return;
-    }
-    loading(true, 'Excluindo...');
-    try {
-      await apiFetch(`/orcamentos/${id}`, { method: 'DELETE' });
-      toast(`🗑 Excluído: ${id}`);
-    } catch (e) {
-      toast(`⚠️ Erro ao excluir: ${e.message}`, 3500);
-    } finally { loading(false); }
+  if (!_apiOnline) { toast('⚠️ API offline. Impossível excluir.'); return; }
+
+  const u = getUsuario();
+  if (!u || !['admin','gerente'].includes(u.perfil)) {
+    toast('⚠️ Apenas Admin ou Gerente podem excluir orçamentos');
+    return;
   }
-
-  // Remove do cache local
-  dbSave(dbLoad().filter(o => o.id !== id));
-  renderHistorico();
-}
-
-// ── Confirmar limpar tudo ─────────────────────────────────────────────
-function confirmarLimparTudo() {
-  if (!confirm('Apagar TODO o histórico local? Os dados na API não serão afetados.')) return;
-  localStorage.removeItem(DB_KEY);
-  renderHistorico();
+  
+  loading(true, 'Excluindo...');
+  try {
+    await apiFetch(`/orcamentos/${id}`, { method: 'DELETE' });
+    toast(`🗑 Excluído: ${id}`);
+    renderHistorico();
+  } catch (e) {
+    toast(`⚠️ Erro ao excluir: ${e.message}`, 3500);
+  } finally { loading(false); }
 }
 
 // ── Exportar CSV ──────────────────────────────────────────────────────
 function exportarCSV() {
-  if (_apiOnline) {
-    const token = getToken();
-    const url = `${API_BASE}/orcamentos/exportar`;
-    // Para exportação autenticada usamos fetch + blob
-    fetch(url, { headers: { Authorization: `Bearer ${token}` } })
-      .then(r => { if (!r.ok) throw new Error(); return r.blob(); })
-      .then(blob => {
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `orcamentos-${new Date().toISOString().split('T')[0]}.csv`;
-        a.click(); URL.revokeObjectURL(a.href);
-        toast(`⬇ CSV exportado da API`);
-      })
-      .catch(() => exportarCSVLocal());
-  } else { exportarCSVLocal(); }
-}
-
-function exportarCSVLocal() {
-  const arr = dbLoad();
-  if (!arr.length) { toast('Nenhum orçamento para exportar'); return; }
-  const header = ['ID','Cliente','Tipo','Responsável','Data','Prazo','Custo','Venda','Lucro','Margem%','Status'];
-  const rows   = arr.map(o => [
-    o.id, o.cliente, o.tipo, o.resp, o.data, o.prazo,
-    (o.custo||0).toFixed(2), (o.venda||0).toFixed(2), (o.lucro||0).toFixed(2),
-    (o.margem||0).toFixed(1), o.status,
-  ].map(v => '"' + String(v || '').replace(/"/g, '""') + '"'));
-  const csv = [header, ...rows].map(r => r.join(',')).join('\n');
-  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href = url; a.download = 'orcamentos-local-' + new Date().toISOString().split('T')[0] + '.csv';
-  a.click(); URL.revokeObjectURL(url);
-  toast(`⬇ CSV local exportado (${arr.length} registros)`);
+  if (!_apiOnline) { toast('⚠️ API offline. Impossível exportar.'); return; }
+  
+  const token = getToken();
+  const url = `${API_BASE}/orcamentos/exportar`;
+  
+  fetch(url, { headers: { Authorization: `Bearer ${token}` } })
+    .then(r => { if (!r.ok) throw new Error(); return r.blob(); })
+    .then(blob => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `orcamentos-${new Date().toISOString().split('T')[0]}.csv`;
+      a.click(); URL.revokeObjectURL(a.href);
+      toast(`⬇ CSV exportado da API`);
+    })
+    .catch(() => toast('⚠️ Erro ao exportar CSV'));
 }
 
 // ════════════════════════════════════════════════════════════════════
@@ -2828,7 +2752,7 @@ function exportarCSVLocal() {
 function limpar() {
   if (!confirm('Limpar todos os campos?')) return;
   ['f-id','f-cliente','f-resp','f-data','f-prazo',
-   'c-corte','c-furacao','c-fita','c-montagem','c-frete','c-projeto','venda-final']
+   'c-corte','c-furacao','c-fita','c-montagem','c-frete','c-projeto','c-embalagem','venda-final']
     .forEach(id => { const el = g(id); if (el) el.value = ''; });
   if (g('f-id')) g('f-id').dataset.existeApi = 'false';
   if (g('f-tipo')) g('f-tipo').value = '';
@@ -3042,8 +2966,8 @@ function calcPgtoInterno() {
     const entradaStr = r.parcelas === 1 ? fmt(r.total) : r.parcelas <= 3 ? fmt(r.total / r.parcelas) : '—';
     const parcelaStr = r.parcelas === 1 ? '—' : `${r.parcelas}× de ${fmt(r.parcela)}`;
     return `<tr class="${r.destaque ? 'pgto-destaque' : ''}">
-      <td>${r.label} ${tagHtml}</td><td>${entradaStr}</td>
-      <td>${parcelaStr}</td><td>${fmt(r.total)}</td></tr>`;
+      <td style="color:var(--text)">${r.label} ${tagHtml}</td><td style="color:var(--text)">${entradaStr}</td>
+      <td style="color:var(--text)">${parcelaStr}</td><td style="color:var(--text)">${fmt(r.total)}</td></tr>`;
   }).join('');
 }
 
@@ -3136,6 +3060,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   g('c-montagem').value = 1200;
   g('c-frete').value    = 300;
   g('c-projeto').value  = 400;
+  g('c-embalagem').value= 150;
 
   calc();
   updateCliente();
@@ -3145,9 +3070,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     el.contentEditable = 'false';
   });
 
-  if (!_apiOnline) {
-    toast('⚠️ Backend offline — funcionando com dados locais', 4000);
-  }
 });
 </script>
 </body>
