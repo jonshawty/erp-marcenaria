@@ -433,14 +433,17 @@ body {
 }
 .page {
   width: 210mm;
-  min-height: 297mm;
+  height: 297mm; /* MUDANÇA: Altura exata e fixa, não apenas mínima */
+  max-height: 297mm; /* Trava de segurança */
   background: var(--paper);
   position: relative;
   overflow: hidden;
   box-shadow: 0 4px 32px rgba(0,0,0,.18), 0 1px 4px rgba(0,0,0,.1);
   page-break-after: always;
+  page-break-inside: avoid; /* MUDANÇA: Impede que a página quebre no meio dela */
   display: flex; flex-direction: column;
 }
+
 .page:last-child { page-break-after: auto; }
 
 /* Grain overlay */
@@ -1074,6 +1077,12 @@ body {
    PRINT - CORRIGIDO
 ══════════════════════════════════════════ */
 @media print {
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  
   /* Oculta interface do sistema, botões e barras */
   .auth-bar, .overlay-loading, #toast, .top-header, 
   .tabs-bar, .gerar-pdf-row, .confidencial-badge { 
