@@ -570,8 +570,8 @@ body {
 /* Render 3D placeholder */
 .capa-render {
   width: 100%; 
-  flex: 1; 
-  max-height: 55mm; /* DIMINUA ESTE VALOR PARA REDUZIR A ALTURA (antes era 88mm) */
+  flex: 1; /* Isso faz a caixa crescer automaticamente até o rodapé */
+  /* max-height: 88mm; <-- APAGUE essa linha para não limitar o crescimento */
   background: linear-gradient(135deg, rgba(255,255,255,.04) 0%, rgba(255,255,255,.02) 100%);
   border: 1px solid rgba(255,255,255,.08);
   border-radius: 10px;
@@ -582,7 +582,7 @@ body {
   gap: 8px; 
   margin-bottom: 14mm;
   position: relative; 
-  overflow: hidden;
+  overflow: hidden; /* Corta qualquer excesso que tente vazar */
 }
 
 .capa-render::before {
@@ -1563,7 +1563,7 @@ body {
           <div class="cr-label">Clique em "Alterar Render" para inserir a imagem do projeto</div>
         </div>
 
-        <img id="render-image" src="" alt="Render 3D" style="display:none; width:100%; height:100%; object-fit:cover; border-radius:10px; position:absolute; top:0; left:0;">
+        <img id="render-image" src="" alt="Render 3D" style="display:none; width:100%; height:100%; object-fit:contain; border-radius:10px; position:absolute; top:0; left:0;">
       </div>
     </div>
 
