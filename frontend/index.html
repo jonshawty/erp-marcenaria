@@ -853,8 +853,8 @@ body {
 }
 .invest-header .ih-logo { display: flex; align-items: center; gap: 10px; }
 .invest-header .ih-mark {
-  width: 30px; height: 30px; border-radius: 7px;
-  background: var(--gold); display: grid; place-items: center;
+  width: 102px; height: 88px; border-radius: 7px;
+  background: white; display: grid; place-items: center;
   font-family: var(--serif); font-size: .85rem; font-weight: 900; color: var(--wood-2);
 }
 .invest-header .ih-name {
@@ -1090,6 +1090,8 @@ body {
   /* Ajustes Preview Simples */
   .cliente-wrap { max-width: 100% !important; }
   .cliente-doc { box-shadow: none !important; border-radius: 0 !important; }
+
+  .btn-upload-render { display: none !important; }
   
 }
 
@@ -1098,6 +1100,28 @@ body {
   height: 150%;
   object-fit: cover; /* Se a logo for vazar, troque 'cover' por 'contain' */
   border-radius: inherit; /* Isso faz a imagem seguir as bordas arredondadas da div */
+}
+
+/* Estilo do botão de upload do Render */
+.btn-upload-render {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(13, 15, 18, 0.75);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 10;
+  border: 1px solid rgba(184, 146, 74, 0.4); /* var(--gold) com opacidade */
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+}
+.btn-upload-render:hover {
+  background: rgba(184, 146, 74, 0.9);
+  border-color: #b8924a;
 }
 </style>
 </head>
@@ -1520,9 +1544,18 @@ body {
       <div class="capa-title-main">Móveis<br>Planejados</div>
       <div class="capa-title-sub">Sob Medida &amp; Acabamento Premium</div>
 
-      <div class="capa-render">
-        <div class="cr-icon">🏠</div>
-        <div class="cr-label">Inserir render 3D do projeto aqui</div>
+      <div class="capa-render" id="render-container">
+        <label for="render-upload" class="btn-upload-render" id="btn-upload-render">
+          📷 Alterar Render
+        </label>
+        <input type="file" id="render-upload" accept="image/*" style="display:none" onchange="loadRender(event)">
+
+        <div id="cr-placeholder" style="display:flex; flex-direction:column; align-items:center;">
+          <div class="cr-icon">🏠</div>
+          <div class="cr-label">Clique em "Alterar Render" para inserir a imagem do projeto</div>
+        </div>
+
+        <img id="render-image" src="" alt="Render 3D" style="display:none; width:100%; height:100%; object-fit:cover; border-radius:10px; position:absolute; top:0; left:0;">
       </div>
     </div>
 
@@ -3128,6 +3161,26 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
 });
+
+// ════════════════════════════════════════════════════════════════════
+// UPLOAD DO RENDER 3D (Imagem)
+// ════════════════════════════════════════════════════════════════════
+function loadRender(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    // Esconde o ícone/texto de placeholder
+    document.getElementById('cr-placeholder').style.display = 'none';
+    
+    // Exibe a imagem selecionada preenchendo a div
+    const img = document.getElementById('render-image');
+    img.src = e.target.result;
+    img.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
 </script>
 </body>
 </html>
