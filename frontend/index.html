@@ -3023,13 +3023,19 @@ function toggleEditMode() {
   });
 }
 
+
 // ════════════════════════════════════════════════════════════════════
-// CARREGAR DADOS DA EMPRESA (preenche campos de pagamento)
+// CARREGAR DADOS DA EMPRESA (preenche campos de pagamento e propostas)
 // ════════════════════════════════════════════════════════════════════
+let _dadosEmpresa = null;
+
 async function carregarEmpresa() {
   if (!_apiOnline) return;
   try {
     const emp = await apiFetch('/empresa');
+    _dadosEmpresa = emp; // Guarda os dados globalmente
+
+    // 1. Preenche os inputs do formulário interno
     const setVal = (id, v) => { const el = g(id); if (el && !el.value) el.value = v || ''; };
     setVal('pgto-pix',        emp.pix_chave);
     setVal('pgto-banco',      emp.banco_dados);
@@ -3038,7 +3044,38 @@ async function carregarEmpresa() {
     setVal('pgto-avista-desc', emp.desc_avista);
     setVal('pgto-10x-juros',   emp.juros_10x);
     setVal('pgto-12x-juros',   emp.juros_12x);
-  } catch {}
+
+    // 2. Aplica os dados da API na interface gráfica (Preview/Proposta)
+    aplicarDadosEmpresaDOM(emp);
+
+  } catch (e) {
+    console.error("Erro ao carregar os dados da empresa:", e);
+  }
+}
+
+function aplicarDadosEmpresaDOM(emp) {
+  if (!emp) return;
+
+  // A. Atualizar os rodapés (Footers) em todas as páginas
+  const footerText = `${emp.nome} · ${emp.telefone} · ${emp.email}`;
+  document.querySelectorAll('.footer-brand, .cf-empresa').forEach(el => {
+    el.textContent = footerText;
+  });
+
+  // B. Atualizar os Nomes da Empresa nos cabeçalhos e capas
+  document.querySelectorAll('.ph-name, .ih-name, .capa-logo-text h2, .cdh-marca').forEach(el => {
+    el.textContent = emp.nome;
+  });
+
+  // C. Atualizar CNPJ nas áreas de assinatura e Identificação do Cliente
+  document.querySelectorAll('.as-cnpj').forEach(el => {
+    if (el.textContent.includes('CNPJ')) {
+      el.textContent = `CNPJ ${emp.cnpj}`;
+    }
+  });
+
+  // D. (Opcional) Caso o "Responsável Técnico" precise refletir o nome cadastrado da empresa/usuário
+  // Se quiser manter o valor digitado no input "Responsável Técnico", não precisa alterar aqui.
 }
 
 // ════════════════════════════════════════════════════════════════════
