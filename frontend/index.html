@@ -1082,7 +1082,7 @@ body {
     size: A4;
     margin: 0;
   }
-  
+
   /* Oculta interface do sistema, botões e barras */
   .auth-bar, .overlay-loading, #toast, .top-header, 
   .tabs-bar, .gerar-pdf-row, .confidencial-badge { 
@@ -1101,7 +1101,11 @@ body {
   .shell { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
   
   /* Ajustes Proposta Completa */
-  #orc-pages-wrap { padding: 0 !important; }
+  /* Ajustes Proposta Completa */
+  #orc-pages-wrap { 
+    padding: 0 !important; 
+    display: block !important; /* Isso desliga o espaçamento (gap) na hora de imprimir */
+  }
   .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
   
   /* Ajustes Preview Simples */
