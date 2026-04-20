@@ -37,9 +37,9 @@ body::after{content:'';pointer-events:none;position:fixed;inset:0;z-index:0;
 .top-header{display:flex;align-items:center;justify-content:space-between;
   padding:22px 0 18px;border-bottom:1px solid var(--line);margin-bottom:24px;flex-wrap:wrap;gap:12px;}
 .th-left{display:flex;align-items:center;gap:14px;}
-.th-gem{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--amber),var(--amber2));
+.th-gem{width:44px;height:44px;
   display:grid;place-items:center;font-family:'Fraunces',serif;font-size:1.1rem;font-weight:900;
-  color:var(--bg);box-shadow:0 4px 16px rgba(232,160,32,.4);flex-shrink:0;}
+  color:var(--bg);flex-shrink:0;}
 .th-name{font-size:1.05rem;font-weight:800;letter-spacing:.2px;}
 .th-sub{font-size:.62rem;color:var(--text2);text-transform:uppercase;letter-spacing:2.5px;margin-top:2px;}
 .th-right{display:flex;gap:8px;flex-wrap:wrap;}
@@ -629,8 +629,8 @@ body {
   display: flex; align-items: center; gap: 10px;
 }
 .p-header .ph-mark {
-  width: 30px; height: 30px; border-radius: 7px;
-  background: var(--wood); display: grid; place-items: center;
+  width: 50px; height: 50px; border-radius: 7px;
+  display: grid; place-items: center;
   font-family: var(--serif); font-size: .85rem; font-weight: 900;
   color: var(--gold);
 }
@@ -1094,8 +1094,8 @@ body {
 }
 
 .th-gem img {
-  width: 100%;
-  height: 100%;
+  width: 200%;
+  height: 200%;
   object-fit: cover; /* Se a logo for vazar, troque 'cover' por 'contain' */
   border-radius: inherit; /* Isso faz a imagem seguir as bordas arredondadas da div */
 }
