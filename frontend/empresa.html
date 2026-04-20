@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ERP · Configurações da Empresa</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;700&family=Fraunces:ital,wght@0,300;0,600;0,900;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#0d0f12;--bg2:#13161b;--bg3:#1a1e26;--bg4:#222736;
+  --surf:#1c2030;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.04);
+  --text:#e8e6e1;--text2:#b5b3b0;--text3:#6b6965;
+  --amber:#e8a020;--amber2:#c47c0a;
+  --amberg:rgba(232,160,32,.13);--amberg2:rgba(232,160,32,.06);
+  --teal:#30c9b8;--green:#3ab876;--red:#e05252;
+  --r:12px;--r2:7px;--shadow:0 8px 32px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{font-size:14px;}
+body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+body::before{content:'';pointer-events:none;position:fixed;inset:0;z-index:0;
+  background:radial-gradient(ellipse 55% 35% at 12% 8%,rgba(232,160,32,.055) 0%,transparent 70%),
+             radial-gradient(ellipse 45% 40% at 88% 90%,rgba(48,201,184,.04) 0%,transparent 60%);}
+body::after{content:'';pointer-events:none;position:fixed;inset:0;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.028'/%3E%3C/svg%3E");}
+
+.shell{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:40px 20px 80px;}
+
+/* HEADER */
+.top-header{display:flex;align-items:center;justify-content:space-between;
+  padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:24px;}
+.th-left{display:flex;align-items:center;gap:14px;}
+.th-icon{width:44px;height:44px;border-radius:10px;background:var(--bg3);border:1px solid var(--line);
+  display:grid;place-items:center;font-size:1.4rem;color:var(--amber);}
+.th-name{font-size:1.05rem;font-weight:800;letter-spacing:.2px;}
+.th-sub{font-size:.62rem;color:var(--text2);text-transform:uppercase;letter-spacing:2.5px;margin-top:2px;}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--r2);
+  font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;border:none;
+  transition:all .16s;white-space:nowrap;letter-spacing:.3px;}
+.btn-amber{background:linear-gradient(135deg,var(--amber),var(--amber2));color:var(--bg);
+  box-shadow:0 2px 10px rgba(232,160,32,.35);}
+.btn-amber:hover{transform:translateY(-1px);box-shadow:0 4px 18px rgba(232,160,32,.5);}
+.btn-ghost{background:var(--bg3);color:var(--text);border:1px solid var(--line);}
+.btn-ghost:hover{background:var(--bg4);}
+
+/* CARDS E FORMS */
+.card{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);padding:24px;
+  margin-bottom:20px;animation:fadeUp .35s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+.card-title{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;
+  color:var(--amber);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.card-title::after{content:'';flex:1;height:1px;background:var(--line);}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr;}}
+
+.field{display:flex;flex-direction:column;gap:6px;}
+.field label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text2);}
+.field input{padding:10px 14px;background:var(--bg3);border:1.5px solid var(--line);
+  border-radius:var(--r2);font-family:'Syne',sans-serif;font-size:.85rem;color:var(--text);
+  outline:none;transition:all .16s;width:100%;}
+.field input:focus{border-color:rgba(232,160,32,.5);box-shadow:0 0 0 3px rgba(232,160,32,.08);background:var(--bg4);}
+.field input::placeholder{color:var(--text3);}
+
+.full-width{grid-column:1 / -1;}
+
+/* COMPONENTES GERAIS */
+.toast{position:fixed;bottom:24px;right:24px;z-index:9999;background:var(--bg3);
+  border:1px solid var(--line);color:var(--text);padding:11px 18px;border-radius:var(--r2);
+  font-size:.82rem;font-weight:600;box-shadow:var(--shadow);transform:translateY(60px);
+  opacity:0;transition:all .28s cubic-bezier(.4,0,.2,1);pointer-events:none;}
+.toast.show{transform:translateY(0);opacity:1;}
+</style>
+</head>
+<body>
+
+<div id="toast" class="toast"></div>
+
+<div class="shell">
+  
+  <div class="top-header">
+    <div class="th-left">
+      <div class="th-icon">⚙️</div>
+      <div>
+        <div class="th-name">Configurações da Empresa</div>
+        <div class="th-sub">Dados cadastrais e financeiros</div>
+      </div>
+    </div>
+    <div>
+      <button class="btn btn-ghost" onclick="voltar()">← Voltar ao ERP</button>
+      <button class="btn btn-amber" onclick="salvarEmpresa()" id="btn-salvar">💾 Salvar Alterações</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🏢 Dados Cadastrais</div>
+    <div class="form-grid">
+      <div class="field full-width">
+        <label>Nome da Empresa</label>
+        <input id="f-nome" type="text" placeholder="Ex: MadeirArte Marcenaria"/>
+      </div>
+      <div class="field">
+        <label>CNPJ</label>
+        <input id="f-cnpj" type="text" placeholder="00.000.000/0001-00"/>
+      </div>
+      <div class="field">
+        <label>Telefone / WhatsApp</label>
+        <input id="f-telefone" type="text" placeholder="(11) 90000-0000"/>
+      </div>
+      <div class="field full-width">
+        <label>E-mail Corporativo</label>
+        <input id="f-email" type="email" placeholder="contato@empresa.com.br"/>
+      </div>
+      <div class="field full-width">
+        <label>Endereço Completo</label>
+        <input id="f-endereco" type="text" placeholder="Rua, Número, Bairro, Cidade - Estado"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💳 Dados Financeiros e Recebimentos</div>
+    <div class="form-grid">
+      <div class="field">
+        <label>Chave PIX</label>
+        <input id="f-pix" type="text" placeholder="CNPJ, E-mail ou Celular"/>
+      </div>
+      <div class="field">
+        <label>Dados Bancários (Transferência)</label>
+        <input id="f-banco" type="text" placeholder="Banco, Agência e Conta"/>
+      </div>
+      <div class="field">
+        <label>Cartões Aceitos</label>
+        <input id="f-cartoes" type="text" placeholder="Visa / Master / Elo"/>
+      </div>
+      <div class="field">
+        <label>Informações de Boleto</label>
+        <input id="f-boleto" type="text" placeholder="Vencimento em D+3"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📈 Taxas e Padrões de Parcelamento</div>
+    <div style="font-size:.7rem;color:var(--text2);margin-bottom:16px;margin-top:-8px;">
+      Estes valores serão usados como padrão ao gerar novos orçamentos.
+    </div>
+    <div class="form-grid" style="grid-template-columns:1fr 1fr 1fr;">
+      <div class="field">
+        <label>Desconto à Vista (%)</label>
+        <input id="f-desc" type="number" step="0.5" min="0" max="100"/>
+      </div>
+      <div class="field">
+        <label>Taxa/Juros 10x (%)</label>
+        <input id="f-j10" type="number" step="0.5" min="0" max="100"/>
+      </div>
+      <div class="field">
+        <label>Taxa/Juros 12x (%)</label>
+        <input id="f-j12" type="number" step="0.5" min="0" max="100"/>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const API_BASE = 'https://erp-marcenaria-production.up.railway.app/api';
+const TOKEN_KEY = 'erp_jwt_token';
+
+// Utilitário para Toast
+let toastT;
+function toast(msg, ms = 3000) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => el.classList.remove('show'), ms);
+}
+
+// Utilitário de DOM
+const g = id => document.getElementById(id);
+
+// Redireciona para o index (ou a página principal do seu ERP)
+function voltar() {
+  window.location.href = 'index.html'; // Ajuste o nome do arquivo se o seu principal for diferente
+}
+
+// Wrapper do Fetch com Token
+async function apiFetch(path, options = {}) {
+  const token = localStorage.getItem(TOKEN_KEY);
+  if (!token) {
+    alert("Sessão expirada. Faça login novamente.");
+    window.location.href = 'login.html';
+    return;
+  }
+
+  const res = await fetch(`${API_BASE}${path}`, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+      ...options.headers,
+    },
+  });
+
+  if (res.status === 401 || res.status === 403) {
+    alert("Acesso negado. Você precisa ser administrador ou gerente para editar isso.");
+    throw new Error('Não autorizado');
+  }
+
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.erro || `Erro HTTP ${res.status}`);
+  return data;
+}
+
+// Carregar dados da empresa ao iniciar
+async function carregarEmpresa() {
+  try {
+    const btn = g('btn-salvar');
+    btn.textContent = 'Carregando...';
+    btn.disabled = true;
+
+    const data = await apiFetch('/empresa');
+    
+    // Preenche os inputs
+    g('f-nome').value = data.nome || '';
+    g('f-cnpj').value = data.cnpj || '';
+    g('f-telefone').value = data.telefone || '';
+    g('f-email').value = data.email || '';
+    g('f-endereco').value = data.endereco || '';
+    
+    g('f-pix').value = data.pix_chave || '';
+    g('f-banco').value = data.banco_dados || '';
+    g('f-cartoes').value = data.cartoes || '';
+    g('f-boleto').value = data.boleto_info || '';
+    
+    g('f-desc').value = data.desc_avista || 0;
+    g('f-j10').value = data.juros_10x || 0;
+    g('f-j12').value = data.juros_12x || 0;
+
+  } catch (error) {
+    toast('⚠️ ' + error.message);
+  } finally {
+    const btn = g('btn-salvar');
+    btn.textContent = '💾 Salvar Alterações';
+    btn.disabled = false;
+  }
+}
+
+// Salvar as alterações via PUT
+async function salvarEmpresa() {
+  const payload = {
+    nome: g('f-nome').value.trim(),
+    cnpj: g('f-cnpj').value.trim(),
+    telefone: g('f-telefone').value.trim(),
+    email: g('f-email').value.trim(),
+    endereco: g('f-endereco').value.trim(),
+    
+    pix_chave: g('f-pix').value.trim(),
+    banco_dados: g('f-banco').value.trim(),
+    cartoes: g('f-cartoes').value.trim(),
+    boleto_info: g('f-boleto').value.trim(),
+    
+    // Converte os campos numéricos, garantindo fallback para 0 se vazio
+    desc_avista: parseFloat(g('f-desc').value) || 0,
+    juros_10x: parseFloat(g('f-j10').value) || 0,
+    juros_12x: parseFloat(g('f-j12').value) || 0
+  };
+
+  try {
+    const btn = g('btn-salvar');
+    btn.textContent = 'Salvando...';
+    btn.disabled = true;
+
+    await apiFetch('/empresa', {
+      method: 'PUT',
+      body: JSON.stringify(payload)
+    });
+
+    toast('✅ Dados da empresa atualizados com sucesso!');
+  } catch (error) {
+    toast('⚠️ Erro ao salvar: ' + error.message);
+  } finally {
+    const btn = g('btn-salvar');
+    btn.textContent = '💾 Salvar Alterações';
+    btn.disabled = false;
+  }
+}
+
+// Inicialização
+document.addEventListener('DOMContentLoaded', () => {
+  carregarEmpresa();
+});
+</script>
+</body>
+</html>

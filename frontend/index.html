@@ -1104,6 +1104,9 @@ body {
     <div class="api-dot" id="api-dot"></div>
     <span id="api-status-txt">Conectando...</span>
   </div>
+  
+  <button id="btn-admin" class="btn btn-ghost btn-sm" onclick="window.location.href='empresa.html'" style="display: none;">⚙️ Empresa</button>
+  
   <button class="btn btn-ghost btn-sm btn-logout" onclick="fazerLogout()">Sair</button>
 </div>
 <div class="overlay-loading" id="overlay-loading">
@@ -2067,8 +2070,15 @@ function fazerLogout() {
 function atualizarAuthBar() {
   const u = getUsuario();
   if (!u) return;
+  
   g('ab-nome').textContent  = u.nome || u.email;
   g('ab-perfil').textContent = (u.perfil || '').charAt(0).toUpperCase() + (u.perfil || '').slice(1);
+  
+  // Exibe o botão de Admin/Empresa apenas se o perfil for admin ou gerente
+  const btnAdmin = g('btn-admin');
+  if (btnAdmin && (u.perfil === 'admin' || u.perfil === 'gerente')) {
+    btnAdmin.style.display = 'inline-flex';
+  }
 }
 
 // ════════════════════════════════════════════════════════════════════
