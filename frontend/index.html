@@ -2895,13 +2895,16 @@ function getTipo() {
 function sdq(sel) { return [...document.querySelectorAll(sel)]; }
 
 function updateCliente() {
-  const tipo    = getTipo() || 'Móveis Planejados';
-  const cliente = g('f-cliente').value || 'Cliente';
-  const prazo   = parseInt(g('f-prazo').value) || 30;
-  const id      = g('f-id').value      || '—';
-  const rawDate = g('f-data').value;
-  const data    = rawDate ? new Date(rawDate + 'T12:00').toLocaleDateString('pt-BR') : '—';
-  const venda   = num(g('venda-final').value);
+  const tipo        = getTipo() || 'Móveis Planejados';
+  const cliente     = g('f-cliente').value || 'Cliente';
+  const prazo       = parseInt(g('f-prazo').value) || 30;
+  const id          = g('f-id').value      || '—';
+  const rawDate     = g('f-data').value;
+  const data        = rawDate ? new Date(rawDate + 'T12:00').toLocaleDateString('pt-BR') : '—';
+  const venda       = num(g('venda-final').value);
+  
+  // CAPTURA DO RESPONSÁVEL TÉCNICO
+  const responsavel = g('f-resp').value || 'Responsável Técnico';
 
   // === 1. ATUALIZA O PREVIEW SIMPLES ===
   const setTxt = (elId, val) => { const el = g(elId); if (el) el.textContent = val; };
@@ -2940,10 +2943,21 @@ function updateCliente() {
   if (metaStrongs[0]) metaStrongs[0].textContent = id;
   if (metaStrongs[1]) metaStrongs[1].textContent = data;
 
+  // ATUALIZA: Capa - Responsável Técnico
+  const capaValidadeStrongs = sdq('.capa-validade strong');
+  if (capaValidadeStrongs[0]) capaValidadeStrongs[0].textContent = responsavel;
+
   // Tabela de Identificação (Pág 1)
   const dataRows = sdq('.data-row .dr-val');
   if (dataRows[0]) dataRows[0].textContent = cliente;
-  if (dataRows[5]) dataRows[5].textContent = tipo; 
+  if (dataRows[5]) dataRows[5].textContent = tipo;
+  
+  // ATUALIZA: Resumo Executivo - Responsável Técnico (Mantendo o CNPJ na mesma linha)
+  if (dataRows[7]) {
+    const txtAtual = dataRows[7].textContent;
+    const infoCnpj = txtAtual.includes('CNPJ') ? ' — ' + txtAtual.substring(txtAtual.indexOf('CNPJ')) : '';
+    dataRows[7].textContent = responsavel + infoCnpj;
+  }
 
   // Valor Total Gigante (Pág 4)
   const ihValor = document.querySelector('.ih-valor');
@@ -2994,6 +3008,10 @@ function updateCliente() {
      piVals[2].textContent = prazo;
   }
   
+  // ATUALIZA: Assinatura do Contrato (Pág 6)
+  const assinNomes = sdq('.assinaturas .as-nome');
+  if (assinNomes[0]) assinNomes[0].textContent = responsavel;
+
   // Atualiza também a tabelinha de pagamento da aba interna
   calcPgtoInterno();
 }
