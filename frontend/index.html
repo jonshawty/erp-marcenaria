@@ -689,21 +689,30 @@ body {
 
 /* Caixa de descrição do projeto */
 .desc-box {
-  background: var(--wood); border-radius: 8px;
-  padding: 16px 18px; margin: 6mm 0;
-  position: relative; overflow: hidden;
+  background: var(--wood); 
+  border-radius: 8px;
+  padding: 24px 28px; /* Espaço interno maior para respirar bem */
+  margin: 8mm 0; /* Margem externa ligeiramente maior */
+  position: relative; 
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,.08); /* Sombra sutil para dar profundidade */
 }
 .desc-box::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; 
+  width: 4px; /* Faixa dourada levemente mais evidente */
   background: var(--gold);
 }
 .desc-box .desc-label {
-  font-size: .58rem; text-transform: uppercase; letter-spacing: 2px;
-  color: var(--gold); font-weight: 700; margin-bottom: 8px;
+  font-size: .62rem; /* Título sutilmente maior */
+  text-transform: uppercase; letter-spacing: 2.5px;
+  color: var(--gold); font-weight: 700; 
+  margin-bottom: 12px;
 }
 .desc-box p {
-  font-size: .82rem; color: rgba(255,255,255,.8);
-  line-height: 1.7; font-style: italic;
+  font-size: .88rem; /* Texto maior e mais legível */
+  color: rgba(255,255,255,.95); /* Branco mais vivo (estava 80%, agora 95%) */
+  line-height: 1.8; /* Espaçamento entre as linhas bem confortável */
+  font-weight: 500; /* Peso médio para dar destaque na leitura */
 }
 
 /* Assinatura executiva */
@@ -3146,8 +3155,12 @@ function aplicarDadosEmpresaDOM(emp) {
     }
   });
 
-  // D. (Opcional) Caso o "Responsável Técnico" precise refletir o nome cadastrado da empresa/usuário
-  // Se quiser manter o valor digitado no input "Responsável Técnico", não precisa alterar aqui.
+  // D. Atualizar o texto "Por que escolher a [Nome da Empresa]" na página de diferenciais
+  const eyebrow = document.querySelector('.dh-eyebrow');
+  if (eyebrow) {
+    // Mantém o padrão "Por que escolher a" e adiciona o nome da empresa da API
+    eyebrow.textContent = `Por que escolher a ${emp.nome}`;
+  }
 }
 
 // ════════════════════════════════════════════════════════════════════
